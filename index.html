@@ -489,7 +489,7 @@ body.rm *{animation:none!important;transition:none!important}
   <label class="chk"><input type="checkbox" id="chkMotion"> Reduce motion</label>
   <p class="cb-note" id="cbNote"></p>
 </div>
-  <div class="hstep"><span class="hnum">3</span><h2 class="hlab">Run it</h2><button class="btn primary" type="button" id="startRun"><svg aria-hidden="true"><use href="#i-play"/></svg>Open Migration run</button><button class="btn" type="button" id="startHelp">How this works</button></div>
+  <div class="hstep"><span class="hnum">3</span><h2 class="hlab">Run it</h2><button class="btn primary" type="button" id="startRun"><svg aria-hidden="true"><use href="#i-play"/></svg>Open Migration run</button></div>
 </header>
 
 <!-- ============================ TABS ============================ -->
@@ -2694,7 +2694,6 @@ function bind(){
   $("dHelp").addEventListener("click", () => { S.drawer = "help"; render(); });
   $("helpEdge").addEventListener("click", () => openDrawer("help"));
   $("startRun").addEventListener("click", () => { setTab("run"); $("btnNext").focus(); });
-  $("startHelp").addEventListener("click", () => { S.drawer = "about"; render(); $("drawerClose").focus(); });
   $("stripToggle").addEventListener("click", () => { const x = $("stripExplain"); x.hidden = !x.hidden; $("stripToggle").setAttribute("aria-expanded", String(!x.hidden)); $("stripToggle").textContent = x.hidden ? "What does each box mean?" : "Hide explanation"; });
   document.addEventListener("toggle", e => { if(e.target && e.target.id==="sdTech") S.techOpen = e.target.open; }, true);
   $("drawerClose").addEventListener("click", closeDrawer);
