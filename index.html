@@ -83,7 +83,7 @@ select,input[type="search"]{background:var(--bg2);border:1px solid var(--line2);
 .spec{font-family:var(--mono);font-size:10.5px;color:var(--faint);white-space:nowrap}
 
 /* ---------- Header ---------- */
-.app-head{padding-block:18px 14px;display:grid;gap:14px}
+.app-head{padding-block:18px 14px;display:grid;gap:12px;padding-right:18px}
 .head-top{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-start;justify-content:space-between}
 .brand{display:flex;flex-direction:column;gap:6px;min-width:0;max-width:760px;flex:1 1 300px}
 .brand h1{font-size:var(--fs-xl);font-weight:720;letter-spacing:-.018em}
@@ -117,7 +117,11 @@ select,input[type="search"]{background:var(--bg2);border:1px solid var(--line2);
 .phase-pill:hover .pill{filter:brightness(1.2)}
 
 /* ---------- Control bar ---------- */
-.controlbar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;padding-block:12px;border-bottom:1px solid var(--line)}
+.controlbar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;padding:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2)}
+.hstep{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:4px}
+.hnum{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 12px var(--mono);color:var(--r1-ink);background:var(--r1);flex:none}
+.hlab{font-size:var(--fs-md);font-weight:680}
+.start ol{counter-reset:none}
 .controlbar .field select{min-width:0;width:100%}
 .cb-scn{flex:1 1 240px;max-width:360px}
 .cb-note{font-size:var(--fs-xs);color:var(--faint);flex-basis:100%}
@@ -155,10 +159,10 @@ main{padding-block:16px}
 .framework .fh{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;align-items:center}
 .r1-edge{border:1px dashed var(--r1-line);border-radius:6px;padding:8px;display:grid;gap:6px}
 .r1-edge .lbl{font-family:var(--mono);font-size:10.5px;color:var(--r1);letter-spacing:.05em}
-.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}
 .tile{border:1px solid var(--r1-line);background:var(--r1-dim);border-radius:5px;padding:6px 6px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:1px;min-width:0;color:var(--text)}
 .tile b{font-family:var(--mono);font-size:12px;color:var(--r1)}
-.tile span{font-size:10.5px;color:var(--muted);line-height:1.25;overflow-wrap:anywhere;hyphens:auto}
+.tile span{font-size:10.5px;color:var(--muted);line-height:1.25}
 .tile:hover{border-color:var(--r1)}
 .tile.used{box-shadow:inset 0 -2px 0 var(--r1)}
 .tile.unused{opacity:.55}
@@ -302,6 +306,47 @@ details.x>div{padding:0 10px 10px;display:grid;gap:8px}
 .kname b{color:#F2A93B;font-weight:760;margin-left:1px}
 .author{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start}
 .author .links{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:var(--fs-sm)}
+
+/* ---------- Strip explanation, help edge tab, step details ---------- */
+.strip-wrap{display:grid;gap:6px}
+.strip-h{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
+.strip-h .lab{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.07em;color:var(--r1);font-weight:700}
+.strip-h .btn{margin-left:auto;min-height:28px;padding:4px 10px}
+.strip-explain{margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+.strip-explain div{display:grid;gap:3px}
+.strip-explain dt{font-weight:680;font-size:var(--fs-sm);color:var(--text)}
+.strip-explain dd{margin:0;font-size:var(--fs-xs);color:var(--muted)}
+.help-edge{position:fixed;right:0;top:40%;z-index:40;display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 7px;border:1px solid var(--r1-line);border-right:0;border-radius:8px 0 0 8px;background:var(--panel2);color:var(--r1);cursor:pointer;box-shadow:-4px 4px 16px rgba(0,0,0,.35)}
+.help-edge .q{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--r1);display:grid;place-items:center;font-weight:800;font-size:12px}
+.help-edge .v{writing-mode:vertical-rl;transform:rotate(180deg);font-size:var(--fs-xs);font-weight:650;letter-spacing:.06em}
+.help-edge:hover{background:var(--raise)}
+.help-sec{display:grid;gap:8px}
+.help-sec dl{margin:0;display:grid;gap:8px}
+.help-sec dt{font-weight:650;font-size:var(--fs-sm)}
+.help-sec dd{margin:2px 0 0;font-size:var(--fs-sm);color:var(--muted)}
+#stepDetail{scroll-margin-top:64px}
+.sd-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sd-nav{display:flex;gap:6px;flex-wrap:wrap}
+.sd-plain{display:grid;gap:8px;max-width:80ch;font-size:var(--fs-md);line-height:1.55}
+.sd-who{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:var(--fs-xs);color:var(--muted)}
+.sd-prod{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin-top:14px;min-width:0}
+.sd-item{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;min-width:0}
+.sd-item h4{color:var(--text);text-transform:none;letter-spacing:0;font-size:var(--fs)}
+.sd-fmt{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:var(--fs-xs);color:var(--muted)}
+.sd-fmt .tag{color:var(--amber);border-color:rgba(241,179,74,.45);white-space:normal}
+#stepDetail,.report details.x>div{min-width:0;display:grid;grid-template-columns:minmax(0,1fr)}
+.sd-tech>div{grid-template-columns:minmax(0,1fr)}
+.sd-item table{min-width:560px}
+.sd-item td{font-size:var(--fs-sm)}
+.sd-tech{margin-top:14px}
+.sd-tech pre{max-height:420px;overflow:auto}
+.stepper .sd-link{background:none;border:0;padding:0;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.stepper .sd-link .nm{text-decoration:underline;text-decoration-color:var(--line2);text-underline-offset:3px}
+.stepper .sd-link:hover .nm{text-decoration-color:var(--r1)}
+.stepper li.viewing{box-shadow:inset 3px 0 0 var(--amber)}
+.report details.x{margin-bottom:8px}
+@media (max-width:900px){ .strip-explain{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:620px){ .help-edge{top:auto;bottom:calc(80px + env(safe-area-inset-bottom,0px))} .help-edge .v{display:none} .strip-h .btn{margin-left:0} }
 /* ---------- Footer ---------- */
 footer{border-top:1px solid var(--line);padding-block:16px 8px;font-size:var(--fs-sm);color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
 
@@ -405,6 +450,8 @@ body.rm *{animation:none!important;transition:none!important}
     </div>
   </div>
   <p class="context">Public AT&amp;T and Ericsson material on moving SON functionality toward a Non-RT RIC and rApp environment motivates this topic. All cells, numbers, rules, approvals and outcomes in this application are fictional. Nothing here controls a live RAN.</p>
+  <div class="strip-wrap">
+  <div class="strip-h"><span class="lab">Migration path at a glance</span><span class="xs muted">How a SON function works once it moves into an rApp. Read left to right: the contract feeds the rApp, the rApp only talks R1, and the platform reaches the network for it.</span><button class="btn ghost" type="button" id="stripToggle" aria-expanded="false" aria-controls="stripExplain">What does each box mean?</button></div>
   <div class="strip" aria-label="Architecture strip">
     <span class="n">Legacy SON contract</span><span class="arr" aria-hidden="true">→</span>
     <span class="n">rApp</span><span class="arr" aria-hidden="true">→</span>
@@ -413,18 +460,19 @@ body.rm *{animation:none!important;transition:none!important}
     <span class="n">O1 to managed RAN functions; A1 to Near-RT RIC where relevant</span><span class="arr" aria-hidden="true">→</span>
     <span class="n sim">Simulated RAN</span>
   </div>
-  <div class="uc-select" role="group" aria-label="Use case" id="ucSelect"></div>
-</header>
-
-<!-- ============================ TABS ============================ -->
-<nav class="tabs" aria-label="Workbench views">
-  <div class="tabs-inner">
-    <div class="tablist" role="tablist" id="tablist"></div>
-    <button type="button" class="phase-pill" id="phasePill" data-tab="run" aria-live="polite" title="Open Migration run"></button>
+  <dl class="strip-explain" id="stripExplain" hidden>
+    <div><dt>Legacy SON contract</dt><dd>A written description of what today's SON function does: what starts it, what it reads, what it decides, what it may change and how success is judged. It is extracted first, before any code moves.</dd></div>
+    <div><dt>rApp</dt><dd>The new application that holds the decision logic. It runs on the SMO platform and never talks to network equipment directly.</dd></div>
+    <div><dt>R1 services</dt><dd>The rApp's only doorway: service discovery and access control, data subscriptions, network information, alarms, measurements, configuration and A1 policies. R1 is a family of services, not one API.</dd></div>
+    <div><dt>SMO / Non-RT RIC</dt><dd>The platform that hosts rApps, checks what each one is allowed to do, and carries approved requests to the network on its behalf.</dd></div>
+    <div><dt>O1 and A1</dt><dd>The platform's own links toward the network. O1 configures and monitors RAN functions; A1 sends policies to the Near-RT RIC. The rApp uses them only indirectly, through R1.</dd></div>
+    <div><dt>Simulated RAN</dt><dd>The fictional cells in this demo. Nothing here reaches a real network.</dd></div>
+  </dl>
   </div>
-</nav>
-
-<!-- Scenario controls: shared by every view -->
+  <div class="start" id="startCue"><span class="k">Start here</span><span class="small">Three steps below: pick a SON function, choose how the run behaves, then step through the migration.</span></div>
+  <div class="hstep"><span class="hnum">1</span><h2 class="hlab">Pick a use case</h2></div>
+  <div class="uc-select" role="group" aria-label="Step 1: pick a use case" id="ucSelect"></div>
+  <div class="hstep"><span class="hnum">2</span><h2 class="hlab">Set scenario, mode and platform</h2><span class="xs muted">Shared by every tab. Changing any of these resets the run.</span></div>
 <div class="controlbar" id="controlbar">
   <div class="field cb-scn"><label for="selScenario">Scenario</label><select id="selScenario"></select></div>
   <div class="field"><span class="lab" id="lblMode">Mode</span>
@@ -441,6 +489,17 @@ body.rm *{animation:none!important;transition:none!important}
   <label class="chk"><input type="checkbox" id="chkMotion"> Reduce motion</label>
   <p class="cb-note" id="cbNote"></p>
 </div>
+  <div class="hstep"><span class="hnum">3</span><h2 class="hlab">Run it</h2><button class="btn primary" type="button" id="startRun"><svg aria-hidden="true"><use href="#i-play"/></svg>Open Migration run</button><button class="btn" type="button" id="startHelp">How this works</button></div>
+</header>
+
+<!-- ============================ TABS ============================ -->
+<nav class="tabs" aria-label="Workbench views">
+  <div class="tabs-inner">
+    <div class="tablist" role="tablist" id="tablist"></div>
+    <button type="button" class="phase-pill" id="phasePill" data-tab="run" aria-live="polite" title="Open Migration run"></button>
+  </div>
+</nav>
+
 
 <main id="main" tabindex="-1">
   <section class="view" id="view-overview" role="tabpanel" aria-labelledby="tab-overview"></section>
@@ -483,6 +542,7 @@ body.rm *{animation:none!important;transition:none!important}
           <div class="panel-h"><h2>Transaction trace</h2><div class="row"><span class="illus">Illustrative data</span><span id="traceFilterNote" class="xs muted"></span></div></div>
           <div id="trace"></div>
         </div>
+        <div class="panel" id="stepDetail"></div>
       </div>
       <aside class="insp" id="inspector" aria-label="Inspector"></aside>
     </div>
@@ -501,13 +561,15 @@ body.rm *{animation:none!important;transition:none!important}
 <aside class="drawer" id="drawer" hidden aria-labelledby="drawerTitle">
   <div class="drawer-h">
     <div class="drawer-tabs" role="group" aria-label="Drawer section">
-      <button class="btn" type="button" id="dAbout">About this model</button>
-      <button class="btn" type="button" id="dSources">Sources and limitations</button>
+      <button class="btn" type="button" id="dAbout">About</button>
+      <button class="btn" type="button" id="dHelp">Help</button>
+      <button class="btn" type="button" id="dSources">Sources</button>
     </div>
     <button class="btn ghost" type="button" id="drawerClose" aria-label="Close panel"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
   </div>
   <div class="drawer-b" id="drawerBody"><h2 id="drawerTitle" class="sr-only">Panel</h2></div>
 </aside>
+<button type="button" class="help-edge" id="helpEdge" aria-controls="drawer" aria-label="Open help for this tab"><span class="q">?</span><span class="v">Help for this tab</span></button>
 <div class="sr-only" id="live" aria-live="polite"></div>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
@@ -792,7 +854,7 @@ const S = {
   simSec:0, lastStep:null, conflict:null, restoration:null, flags:{}, stopFlag:false, justRan:null
 };
 let HISTORY = [];          // run snapshots for Step back
-const RUN_KEYS = ["phase","gate","block","completion","capabilities","networkSnapshot","recommendation","action","observation","evidence","auditEvents","trace","simSec","lastStep","conflict","restoration","flags","stopFlag"];
+const RUN_KEYS = ["phase","gate","block","completion","capabilities","networkSnapshot","recommendation","action","observation","evidence","auditEvents","trace","simSec","lastStep","conflict","restoration","flags","stopFlag","stepLog"];
 
 /* Deterministic PRNG (mulberry32) used only for illustrative identifiers */
 let rngState = SEED;
@@ -873,7 +935,7 @@ function resetUseCase(reason){
     how:"Press Run next step to extract the SON contract, then map it to R1 services.",
     why:"Each step records who acted, which R1 service family participated and why it passed, paused or blocked.",
     changes:"Nothing. Network snapshot revision " + S.networkSnapshot.revision + "."};
-  HISTORY = [];
+  HISTORY = []; S.stepLog = []; S.detailIdx = null; S.flags.traceMark = 0;
   log({actor:"Simulation", operation:"Run initialized", outcome:"info", phase:"contract",
     details:"Synthetic reference workflow. Use case " + UC().label + ", scenario " + scenarioObj().label + ", " + (S.mode==="recommendation"?"recommendation mode":"controlled action mode") + ", " + (S.platformProfile==="complete"?"Profile A":"Profile B") + (reason ? ". " + reason : "") + "."});
 }
@@ -920,6 +982,7 @@ function advancePhase(){
   const ph = S.phase;
   STEP[ph]();
   S.justRan = ph;
+  captureDetail(ph);
   return true;
 }
 function runAll(){
@@ -1131,7 +1194,11 @@ function createRecommendation(){
     const nbr = neighbors(target), nbrP = nbr.map(n=>cell(n).pci), res = new Set(nbrP.map(p=>p%3));
     const non = new Set(); nbr.forEach(n => neighbors(n).forEach(m => { if(m!==target) non.add(cell(m).pci); }));
     let cand = null; const cur = cell(target).pci;
-    for(let p = cur+1; p <= 1007 && cand===null; p++){ if(!nbrP.includes(p) && !non.has(p) && !res.has(p%3)) cand = p; }
+    const tested = [];
+    for(let p = cur+1; p <= 1007 && cand===null; p++){
+      const t = {value:p, nbr:nbrP.includes(p), non:non.has(p), mod:res.has(p%3), residue:p%3};
+      t.ok = !t.nbr && !t.non && !t.mod; tested.push(t); if(t.ok) cand = p;
+    }
     const writeOk = capRow("pci-cm-write").status==="ok";
     rec = {id:rid("rec"), proposal:"Change " + target + " PCI " + cur + " → " + cand, target, from:cur, to:cand, targets:[target], path:"CM",
       rationale:["Collision: " + pair.join(" and ") + " are neighbors in the relation data and share PCI " + cur + ".",
@@ -1140,7 +1207,8 @@ function createRecommendation(){
         "Candidate " + cand + ": not used by neighbors or neighbors-of-neighbors, mod-3 residue differs from direct neighbors (candidate rule is operator policy in this example, not a full 3GPP planning algorithm)."],
       evidence:"Confirmed: neighbor relation plus measurement evidence (illustrative)", inputRevision:s.revision,
       approval: S.mode==="recommendation" ? "Not requested (recommendation mode)" : "Pending", status:"proposed",
-      pathNote: writeOk ? "R1 CM Write configuration after approval" : "CM write not authorized on this profile: recommendation only"};
+      pathNote: writeOk ? "R1 CM Write configuration after approval" : "CM write not authorized on this profile: recommendation only",
+      worksheet:{kind:"pci", tested, coll:coll.map(x=>x.join(" and ")), conf, nbr:nbr.map(n=>({id:n, pci:cell(n).pci, residue:cell(n).pci%3})), non:[...non], residues:[...res]}};
   }
   if(S.useCase==="mlb"){
     const src = cell("NR-201");
@@ -1165,7 +1233,8 @@ function createRecommendation(){
         path==="A1" ? "A1 policy type example.mlbSteer.v1 is advertised for nrtric-demo-1." : (path==="CM" ? "A1 policy type not advertised. Separate CM path proposed because operator policy in this example permits it. This is a different action, not a silent substitute." : "A1 policy type not advertised and the CM path is not permitted by operator policy in this example.")],
       evidence: marginal ? "Marginal: target HO success " + chosen.ho + "% is close to the " + pol.mlbHoMin + "% floor" : "Sufficient: fresh load and indicators for both cells",
       inputRevision:s.revision, approval: S.mode==="recommendation" ? "Not requested (recommendation mode)" : "Pending", status:"proposed",
-      pathNote: path==="A1" ? "R1 A1 policy management after approval; framework delivers A1 toward the Near-RT RIC" : (path==="CM" ? "Separate CM path, explicitly named for approval" : "Capability gap: no permitted action path")};
+      pathNote: path==="A1" ? "R1 A1 policy management after approval; framework delivers A1 toward the Near-RT RIC" : (path==="CM" ? "Separate CM path, explicitly named for approval" : "Capability gap: no permitted action path"),
+      worksheet:{kind:"mlb", rows:checks, chosen:chosen.id, source:{id:src.id, load:src.load, ho:src.ho}, a1ok, cmok}};
   }
   if(S.useCase==="coc"){
     const nb = neighbors("NR-303").map(cell);
@@ -1179,7 +1248,8 @@ function createRecommendation(){
         "Bound: max " + pol.cocMaxCells + " cells, +1 step each (operator policy in this example).",
         "Alarm acknowledgement is available through FM but is not part of this action: acknowledging does not repair the cell."],
       evidence:"Confirmed: alarm plus correlated PM evidence (illustrative)", inputRevision:s.revision,
-      approval: S.mode==="recommendation" ? "Not requested (recommendation mode)" : "Pending", status:"proposed", pathNote:"R1 CM Write configuration after approval"};
+      approval: S.mode==="recommendation" ? "Not requested (recommendation mode)" : "Pending", status:"proposed", pathNote:"R1 CM Write configuration after approval",
+      worksheet:{kind:"coc", rows:nb.map(c => Object.assign({load:c.load, cov:c.cov, missing:!!c.pmMissing}, checks.find(k=>k.id===c.id))), chosen:elig.map(e=>e.id)}};
   }
   S.recommendation = rec;
   S.action = {path:rec.path, requestStatus:"Not executed", before:null, requested:rec.to, applied:null, timestamp:null};
@@ -1245,6 +1315,12 @@ function ruleLabel(r){ return {"hold":"Hold both for review","prefer-mlb":"Prefe
 function approveRecommendation(){
   if(!S.gate) return false;
   pushHistory();
+  const gateWas = S.gate;
+  const ok = approveGate();
+  if(ok) captureDetail("approve", {decision:"approve", gate:gateWas});
+  return ok;
+}
+function approveGate(){
   tick(240);
   const rec = S.recommendation;
   if(S.gate==="approval"){
@@ -1288,6 +1364,12 @@ function approveRecommendation(){
 function rejectRecommendation(){
   if(!S.gate) return false;
   pushHistory();
+  const gateWas = S.gate;
+  const ok = rejectGate();
+  if(ok) captureDetail("approve", {decision:"reject", gate:gateWas});
+  return ok;
+}
+function rejectGate(){
   tick(120);
   if(S.gate==="approval"){
     S.recommendation.approval = "Rejected by operator (illustrative)"; S.recommendation.status = "rejected";
@@ -1477,6 +1559,543 @@ function exportAudit(fmt){
 <script>
 "use strict";
 /* =====================================================================
+   STEP DETAIL LAYER
+   After every step the engine calls captureDetail(phase). It freezes a
+   record of what happened in three layers:
+     plain    : plain-English paragraphs for any reader
+     produced : every record the step created, with its format
+     api/code : illustrative exchanges and the code behind the step
+   Everything here reads S; it never changes the simulation.
+   ===================================================================== */
+const CONTRACT_SOURCES = {
+  "Trigger":"Legacy scheduler settings and run logs",
+  "Source observations":"Legacy function input list, confirmed in interview",
+  "Network objects":"Inventory export of the cluster",
+  "Decision":"Algorithm documentation plus SON specialist interview",
+  "Action candidates":"Legacy change history (what it has changed before)",
+  "Action path":"Target architecture decision (R1 only, no direct O1/A1)",
+  "Pre-checks":"Operator policy in this example",
+  "Post-checks":"Operator acceptance criteria",
+  "Stop conditions":"SON specialist interview and incident history",
+  "Rollback candidate":"Operator policy in this example",
+  "Responsible party":"Agreed responsibility model"
+};
+const CONTRACT_KEYS = {"Trigger":"trigger","Source observations":"sourceObservations","Network objects":"networkObjects","Decision":"decision","Action candidates":"actionCandidates","Action path":"actionPath","Pre-checks":"preChecks","Post-checks":"postChecks","Stop conditions":"stopConditions","Rollback candidate":"rollbackCandidate","Responsible party":"responsibleParty"};
+
+function tbl(title, format, note, cols, rows){ return {title, format, note, cols, rows}; }
+function doc(title, format, note, text){ return {title, format, note, doc:text}; }
+function yaml(o, ind){
+  ind = ind || "";
+  if(Array.isArray(o)) return o.map(v => (typeof v==="object" && v!==null) ? ind + "- " + yaml(v, ind + "  ").trimStart() : ind + "- " + yv(v)).join("\n");
+  return Object.keys(o).filter(k => o[k]!==undefined).map(k => { const v = o[k];
+    if(v!==null && typeof v==="object") return ind + k + ":\n" + yaml(v, ind + "  ");
+    return ind + k + ": " + yv(v); }).join("\n");
+}
+function yv(v){ if(typeof v==="string") return /[:#\-\[\]{}]|^\s|\s$/.test(v) ? JSON.stringify(v) : v; return String(v); }
+function statusWord(st){ return CAP_STATUS[st] ? CAP_STATUS[st].label : st; }
+function yes(b){ return b ? "Yes" : "No"; }
+
+/* Illustrative exchange text built from trace entries of this step.
+   Endpoints are placeholders on purpose: no normative R1 path is implied. */
+function apiFromTrace(entries){
+  return entries.map(t => {
+    const fam = FAMILIES[t.family]; const j = t.json || {};
+    let s = "// " + t.step + ". " + t.op + "   [" + (fam?fam.name:t.family) + (t.spec?" · " + t.spec:"") + "]\n";
+    s += "// Actor: " + t.actor + " · " + fmtSim(t.t) + "\n";
+    s += "REQUEST  → <" + (fam?fam.short:t.family) + " service endpoint from discovery>   (placeholder, not a normative path)\n";
+    s += j.request ? JSON.stringify(j.request, null, 2) + "\n" : "// " + t.req + "\n";
+    s += "RESPONSE ← " + (t.status==="ok"?"success":t.status) + "\n";
+    s += j.response ? JSON.stringify(j.response, null, 2) : (j.note ? "// " + j.note : "// " + t.resp);
+    return s;
+  }).join("\n\n");
+}
+
+/* ------------------------------ code behind (simplified from this file) ------------------------------ */
+const CODE = {
+contract:
+`// The contract is data. It is validated before any mapping starts.
+const REQUIRED = ["trigger", "sourceObservations", "networkObjects", "decision",
+  "actionCandidates", "actionPath", "preChecks", "postChecks",
+  "stopConditions", "rollbackCandidate", "responsibleParty"];
+
+function validateContract(contract) {
+  const missing = REQUIRED.filter(field => !contract[field]);
+  if (missing.length) throw new Error("Contract incomplete: " + missing.join(", "));
+  return { ...contract, version: "1.0", signedOffBy: ["SON specialist", "Operator"] };
+}`,
+map:
+`// One ledger row per input or action, evaluated against the platform profile.
+function evaluateCapabilities(profile) {
+  return ledger.map(row => {
+    let status = "ok";                                   // supported and authorized
+    if (profile === "limited" && gap.row === row.id) status = gap.status;
+    if (row.id === "pci-pm" && evidenceAgeMin > policy.freshnessMin) status = "stale";
+    return { ...row, status };
+  });
+}
+// Critical rows: "always" needed, or "controlled" = needed only to act.
+const applies = row => row.critical === "always" ||
+  (row.critical === "controlled" && mode === "controlled-action");`,
+register:
+`// The rApp introduces itself to the framework (SME rApp registration).
+const registration = {
+  exampleName: "son-migration-" + useCase,
+  exampleVendor: "Example Vendor",
+  exampleVersion: "0.9.0",
+  exampleRole: "consumer",          // it uses services, it offers none
+  exampleCredentials: "<client certificate reference>"
+};
+const reply = await sme.registerRapp(registration);   // illustrative client call
+rappId = reply.exampleRappId;                          // kept for every later call`,
+discover:
+`// Ask the framework which services this rApp may use.
+const found = await sme.discoverServices({ families: neededFamilies });
+const types = await dme.discoverTypes({ ids: neededDataTypes });  // type only, not data
+
+// Gate: a critical service that is missing or denied stops the run here.
+const critical = ledger.filter(r => r.family !== "DME" && applies(r) &&
+  (r.status === "unavailable" || r.status === "unauthorized"));
+if (critical.length) {
+  return blockRun(critical[0].status === "unavailable"
+    ? "BLOCK_SERVICE_UNAVAILABLE" : "BLOCK_UNAUTHORIZED", ...);
+}`,
+collect:
+`// Read the network, then check freshness and completeness before deciding anything.
+const snapshot = {
+  cells:     await ni.queryCells({ cluster }),
+  config:    await cm.readConfiguration({ targets: cellIds }),
+  measures:  await pm.queryPerformance({ targets: cellIds, granularityMin: 15 }),
+  alarms:    await fm.queryAlarms({ cluster }),
+  revision:  networkRevision
+};
+const bad = ledger.filter(r => applies(r) &&
+  (r.status === "no-instance" || r.status === "stale"));
+if (bad.length) return blockRun(bad.some(r => r.status === "no-instance")
+  ? "BLOCK_NO_DATA_INSTANCE" : "BLOCK_STALE_DATA", ...);`,
+assess_pci:
+`// 1. Find same-PCI neighbor pairs (collision) and cells that see two
+//    neighbors with the same PCI (confusion).
+const collisions = relations.filter(([a, b]) => pci(a) === pci(b));
+// 2. Change the cell of the pair with the higher ambiguity count.
+const target = ambiguity(a) >= ambiguity(b) ? a : b;
+// 3. Try values upward from the current PCI. Example rule, not a 3GPP algorithm:
+for (let p = current + 1; p <= 1007; p++) {
+  const usedByNeighbor       = neighborPcis.includes(p);
+  const usedByNeighborOfNbr  = neighborOfNeighborPcis.has(p);
+  const sameMod3AsNeighbor   = neighborResidues.has(p % 3);
+  if (!usedByNeighbor && !usedByNeighborOfNbr && !sameMod3AsNeighbor) {
+    candidate = p; break;
+  }
+}
+recommendation = { target, from: current, to: candidate, inputRevision: revision };`,
+assess_mlb:
+`// Source must be above the trigger; each neighbor is checked against guardrails.
+if (source.load <= policy.mlbSourceHigh) return blockRun("BLOCK_NO_TRIGGER", ...);
+const checks = neighbors(source).map(c => ({
+  id: c.id,
+  headroomOk: c.load < policy.mlbTargetMax,     // e.g. below 60 %
+  qualityOk:  c.ho   >= policy.mlbHoMin          // e.g. HO success at least 97 %
+}));
+// Prefer the strongest relation if eligible, otherwise the next eligible neighbor.
+const chosen = eligible("NR-202") ? "NR-202" : checks.find(c => c.headroomOk && c.qualityOk);
+// Action path: A1 only if the policy type is advertised; CM only if policy permits.
+const path = a1TypeAdvertised ? "A1" : (policy.allowCmFallback && cmWriteOk ? "CM" : "none");`,
+assess_coc:
+`// Outage is confirmed only when the alarm AND the traffic evidence agree.
+const confirmed = alarm.severity === "critical" && traffic(failedCell) === 0;
+// Neighbors must have fresh measurements and headroom.
+const eligible = neighbors(failedCell).filter(c =>
+  !c.measurementsMissing && c.load <= policy.cocHeadroomMax).slice(0, policy.cocMaxCells);
+recommendation = { targets: eligible, attribute: "illustrativeCoverageStep", from: 0, to: +1 };
+// FM acknowledgement exists, but it is not part of the action: it does not repair the cell.`,
+approve:
+`// Approval is an explicit record. Controlled action mode cannot bypass it.
+function approveRecommendation(approver) {
+  if (gate !== "approval") return false;
+  recommendation.approval = {
+    by: approver, at: simTime(), decision: "approved",
+    scope: recommendation.targets,
+    validFor: "input revision " + recommendation.inputRevision + " only"
+  };
+  audit.append({ actor: "Operator", operation: "Approve recommendation" });
+  phase = "execute";
+}`,
+execute:
+`// Never write from a stale proposal.
+const now = await ni.queryCells({ cluster });
+if (now.revision !== recommendation.inputRevision) {
+  recommendation.status = "superseded";
+  return phase = "assess";                    // fresh assessment required
+}
+if (path === "CM") {
+  const schema = await cm.getSchemas({ attribute });    // check type and range
+  const res = await cm.writeConfiguration({ changes }); // request, not a guarantee
+  action.requestStatus = res.exampleStatus;             // observation 1 of 3
+} else {
+  const res = await a1p.createPolicy({ policyType, nearRtRic, body });
+  action.requestStatus = res.exampleResult;
+}`,
+readback:
+`// Observation 2 of 3: read the value back, independently of the write status.
+const values = await cm.readConfiguration({ targets, attribute });
+const match = Object.values(values).every(v => v === recommendation.to);
+evidence.readback = match ? "pass" : "fail";
+// For an A1 policy the equivalent is: await a1p.queryPolicyStatus(policyId)
+// "Enforced" still does not prove the network goal improved.`,
+observe:
+`// Observation 3 of 3: did the network actually get better?
+await wait(policy.observationMin);                         // e.g. 30 min window
+const after = await pm.queryPerformance({ targets, window });
+const results = indicators.map(i => ({ ...i, pass: i.check(after[i.cell]) }));
+// Every guardrail must pass. A better source cell does not excuse a worse target.
+outcome = results.every(r => r.pass) ? "pass" : "fail";`,
+complete:
+`// The run is closed with three separate observations, never one merged "success".
+summary = {
+  requestStatus: evidence.request.status,
+  readback:      evidence.readback.status,
+  networkResult: evidence.outcome.status,
+  synthetic:     true
+};`,
+blocked:
+`// A block is terminal for this run and always carries a distinct reason code.
+function blockRun(code, title, detail) {
+  block = { code, title, detail };
+  audit.append({ operation: "Run blocked: " + title, outcome: "block" });
+  phase = "blocked";                     // nothing is written to the network
+}`
+};
+
+/* Where a blocked run can go next (plain English) */
+const BLOCK_FIX = {
+  BLOCK_SERVICE_UNAVAILABLE:{fix:"The platform team exposes the missing service on this platform, or the operator runs the rApp on a platform that has it (try Profile A).", owner:"SMO / Non-RT RIC platform team"},
+  BLOCK_UNAUTHORIZED:{fix:"The operator grants this rApp's role the missing permission, or the rApp runs in recommendation mode, which needs no write permission.", owner:"Operator with the platform team"},
+  BLOCK_NO_DATA_INSTANCE:{fix:"The platform team configures a data producer for this data type and cluster, then the rApp retries the subscription.", owner:"SMO / Non-RT RIC platform team"},
+  BLOCK_STALE_DATA:{fix:"RAN operations restores the measurement or alarm feed. The rApp retries when fresh windows arrive. Loosening the freshness gate is an operator decision, not a fix.", owner:"RAN operations"},
+  BLOCK_OWNERSHIP_REVIEW:{fix:"The operator and SON specialist agree the target design. In this example, choose Centralized SON to continue.", owner:"Operator and legacy SON specialist"},
+  BLOCK_CONFLICT:{fix:"The operator changes the conflict rule, or schedules the Energy Saving change outside the MLB window, then retries with a fresh snapshot.", owner:"Operator / automation owner"},
+  BLOCK_NO_ELIGIBLE_CANDIDATE:{fix:"Wait for a neighbor to regain headroom, or review the guardrails with RAN operations.", owner:"RAN operations"},
+  BLOCK_NO_TRIGGER:{fix:"Nothing to fix. The trigger condition is not met.", owner:"None"},
+  BLOCK_NO_EVIDENCE:{fix:"Nothing to fix. No collision exists in the current snapshot.", owner:"None"}
+};
+
+/* ------------------------------ builders per phase ------------------------------ */
+function cellsTable(){
+  const s = S.networkSnapshot;
+  if(S.useCase==="pci") return tbl("Cells read in this step", "Input snapshot, JSON, frozen at revision " + s.revision, "One row per cell. Values are illustrative.",
+    ["Cell","PCI","State","Active alarm","HO failures (count / 15 min)","PCI ambiguity (count / 15 min)","Neighbors"],
+    s.cells.map(c => [c.id, c.pci, c.state, c.alarm, c.pm.hoFail, c.pm.ambiguity, neighbors(c.id).join(", ")]));
+  if(S.useCase==="mlb") return tbl("Cells read in this step", "Input snapshot, JSON, frozen at revision " + s.revision, "Load is illustrative PRB utilization, 15 min average.",
+    ["Cell","Load (%)","HO success (%)","User throughput (Mbps)","State","Neighbors"],
+    s.cells.map(c => [c.id, c.load, NF1.format(c.ho), NF1.format(c.tput), c.state, neighbors(c.id).join(", ")]));
+  return tbl("Cells read in this step", "Input snapshot, JSON, frozen at revision " + s.revision, "Weak-coverage share is an illustrative indicator for the area each cell serves.",
+    ["Cell","State","Alarm","Load (%)","Weak-coverage share (%)","Coverage step","Measurements","Neighbors"],
+    s.cells.map(c => [c.id, c.state, c.alarm, c.state==="Outage"?"0 (no traffic)":c.load, c.cov, fmtStep(c.step), c.pmMissing?"Missing for 45 min":"Present", neighbors(c.id).join(", ")]));
+}
+
+const BUILD = {
+  contract(){
+    const u = UC(), s = S.networkSnapshot, p = S.policy;
+    const obj = {exampleContract:{useCase:u.label, cluster:s.cluster, version:"1.0", status:"signed off (illustrative)"}};
+    u.contract.forEach(f => obj.exampleContract[CONTRACT_KEYS[f.k]] = f.v);
+    obj.exampleContract.semanticMapping = Object.assign({}, u.semantic);
+    return {
+      plain:[
+        "Before anything touches the network, the legacy SON specialist and the operator write down exactly what today's " + u.label + " function does. This written agreement is the SON contract. It answers five questions: what starts the function, what it needs to know, what it decides, what it is allowed to change, and how anyone can tell that it worked.",
+        "The specialist collects the answers from the legacy function's settings and logs, its documentation, its change history and interviews with the people who run it. The operator adds the rules the new rApp must obey, such as data freshness limits and approvals.",
+        "Nothing is sent to the network in this step. The output is a document kept in version control, like code, so any later change to the behavior can be reviewed line by line. Every later step in this run is checked against it.",
+        "For this run the contract covers cluster " + s.cluster + " (fictional) and has " + u.contract.length + " fields, listed below with where each answer came from."
+      ],
+      produced:[
+        tbl("SON contract: all fields extracted", "Structured document (YAML) in version control", "Each row is one agreed rule. The right column says where the answer came from.",
+          ["Field","What was extracted","What it means in plain English","Where it came from"],
+          u.contract.map(f => [f.k, f.v, f.d, CONTRACT_SOURCES[f.k]])),
+        tbl("Semantic mapping card: " + u.semantic.field, "Part of the contract document", "The same label on two systems can mean different things. These five facts pin the meaning down.",
+          ["Property","Agreed value"],
+          [["Unit", u.semantic.unit],["Sample interval", u.semantic.interval],["Object identity", u.semantic.identity],["Freshness", u.semantic.freshness + " (gate: " + p.freshnessMin + " min)"],["If the value is missing", u.semantic.missing]]),
+        tbl("Operator policy attached to the contract", "Key-value settings, operator policy in this example", "These are example values, not standardized limits.",
+          ["Setting","Value"], policyRows()),
+        doc("Contract document as stored", "YAML (fictional keys)", "What the file in version control would look like.", yaml(obj))
+      ],
+      api:"// No network call in this step. The contract is a reviewed document.\n// Illustrative commit message:\n// \"" + u.short + " contract v1.0: signed off by SON specialist and operator\"",
+      code:CODE.contract
+    };
+  },
+  map(){
+    const rows = S.capabilities;
+    const counts = {}; rows.forEach(r => counts[r.status] = (counts[r.status]||0)+1);
+    const byFam = FAMILY_ORDER.filter(f => rows.some(r=>r.family===f)).map(f => [FAMILIES[f].name, rows.filter(r=>r.family===f).length, rows.filter(r=>r.family===f).map(r=>r.op).filter((v,i,a)=>a.indexOf(v)===i).join("; ")]);
+    const gaps = rows.filter(r => r.status!=="ok");
+    return {
+      plain:[
+        "The rApp developer goes through the contract line by line and asks one question for each: which R1 service would give the rApp this information, or carry this action to the network? The answer is written into a dependency ledger.",
+        "R1 is not one big API. It is a family of services: service discovery and access control (SME), data subscriptions (DME), network information, alarms (FM), measurements (PM), configuration (CM) and A1 policy management. Each ledger row names one of them, the operation the rApp will use, the permission it needs, how fresh the data must be, and what happens if the row cannot be satisfied.",
+        "The platform team then marks each row against the platform this rApp will run on (here " + (S.platformProfile==="complete"?"Profile A, the complete example":"Profile B, the limited example") + "): is the service there, and is this rApp allowed to use it?",
+        gaps.length ? gaps.length + " row(s) have a gap: " + gaps.map(r => r.item + " (" + statusWord(r.status).toLowerCase() + ")").join("; ") + ". A gap on a required row will stop the run later, at the step where it is used." : "Every row is supported and authorized on this profile, so nothing blocks the plan yet."
+      ],
+      produced:[
+        tbl("Dependency ledger", "JSON array, one object per dependency", "Full ledger for this use case on the selected profile.",
+          ["Needed input or action","Why it is needed","R1 service family","Operation the rApp will call","Permission","How critical","Status on this platform","If it fails"],
+          rows.map(r => [r.item, r.purpose, FAMILIES[r.family].name, r.op, r.perm, critLabel(r.critical), statusWord(r.status), r.fallback])),
+        tbl("Summary by service family", "Derived table", "How many dependencies each R1 family carries.", ["Service family","Rows","Operations"], byFam),
+        tbl("Summary by status", "Derived table", "", ["Status","Rows"], Object.keys(counts).map(k => [statusWord(k), counts[k]])),
+        doc("Ledger as stored", "JSON (fictional keys)", "First three rows shown; the rest follow the same shape.",
+          JSON.stringify(rows.slice(0,3).map(r => ({exampleId:r.id, exampleItem:r.item, exampleFamily:r.family, exampleOperation:r.op, examplePermission:r.perm, exampleCriticality:r.critical, exampleStatus:r.status, exampleFallback:r.fallback})), null, 2))
+      ],
+      api:"// No network call. The ledger is evaluated against the platform's published capabilities.",
+      code:CODE.map
+    };
+  },
+  register(){
+    const id = S.flags.rappId;
+    return {
+      plain:[
+        "The rApp is installed on the SMO / Non-RT RIC platform and introduces itself, much like a new contractor signing in at reception and getting a badge. It sends its name, vendor, software version, its role and its security credentials.",
+        "Its role is consumer: it only uses services. It does not offer any service to other rApps, so it does not need to register one. That is a separate procedure in the standard.",
+        "The platform could also hand out service addresses through an optional bootstrap step. In this example the platform team provisioned the address during installation, so bootstrap was not used.",
+        "The framework accepted the registration and returned the identifier " + id + ". Every later request from this rApp carries that identifier, so access control and the audit trail know exactly who asked."
+      ],
+      produced:[
+        tbl("Registration record", "JSON record held by the framework (SME)", "Values are illustrative.",
+          ["Field","Value sent or returned","Plain meaning"],
+          [["rApp name","son-migration-" + S.useCase,"Human-readable name"],["Vendor","Example Vendor","Who supplies the software"],["Software version","0.9.0","Exact build being run"],["Role","Consumer","Uses services, offers none"],["Credentials","Client certificate (reference only)","Proves it is who it says it is"],["Bootstrap","Not used","Address was provisioned at install time"],["Returned identifier",id,"The rApp's badge number for this platform"],["Registered at",fmtSim(S.trace.filter(t=>t.op==="Register rApp").slice(-1)[0].t),"Simulation time"]])
+      ],
+      code:CODE.register
+    };
+  },
+  discover(){
+    const rows = S.capabilities.filter(r => r.family!=="DME");
+    const fams = [...new Set(rows.map(r=>r.family))];
+    const svc = fams.map(f => { const rs = rows.filter(r=>r.family===f); const un = rs.some(r=>r.status==="unavailable"); const na = rs.filter(r=>r.status==="unauthorized");
+      return [FAMILIES[f].name, un?"No":"Yes", un?"n/a":(na.length? "Partly: " + na.map(r=>r.op).join(", ") + " denied" : "Yes"), rs.map(r=>r.op).filter((v,i,a)=>a.indexOf(v)===i).join("; "), un||na.length ? "Gap" : "Ready"]; });
+    const dme = S.capabilities.filter(r=>r.family==="DME");
+    const out = [tbl("Services this rApp asked for", "Discovery response, JSON list", "Found means the platform offers it. Authorized means this rApp's role may use it.",
+      ["Service family","Found","Authorized for this rApp","Operations planned","Result"], svc)];
+    if(dme.length) out.push(tbl("Data types discovered (DME)", "DME type list, JSON", "A discovered type is a promise that this kind of data can exist. It is not the data itself.",
+      ["Data type","Needed for","Discovered","Instance guaranteed?"], dme.map(r => [r.object.split(" ")[2], r.item, "Yes", "No. Checked when data is requested"])));
+    if(S.useCase==="mlb"){ const a1 = capRow("mlb-a1-types"); out.push(tbl("A1 policy types (MLB)", "A1 policy type list, JSON", "", ["Near-RT RIC","Policy type","Advertised"], [["nrtric-demo-1 (fictional)","example.mlbSteer.v1 (fictional)", a1.status==="ok"?"Yes":"No"]])); }
+    const blocked = S.phase==="blocked";
+    return {
+      plain:[
+        "Now the rApp asks the framework: which of the services I need are available to me here? The framework answers based on who the rApp is and what its role is allowed to do, so two rApps can get different answers on the same platform.",
+        dme.length ? "It also asks which data types exist. Finding a data type only means this kind of data can be produced. Whether data is actually flowing is only known when the rApp subscribes, in the next step." : "This use case does not depend on DME data types; it reads measurements through the PM service.",
+        S.useCase==="mlb" ? "For load balancing it also asks which A1 policy types the Near-RT RIC accepts. A1 is only usable if a suitable policy type is advertised." : "",
+        blocked ? "A required service was missing or denied, so the run stops here, before any data is read or any change is requested." : "All required services are present and authorized, so the rApp can start reading the network."
+      ].filter(Boolean),
+      produced: out,
+      code:CODE.discover
+    };
+  },
+  collect(){
+    const s = S.networkSnapshot, p = S.policy, blocked = S.phase==="blocked";
+    const q = [];
+    q.push(["Measurement freshness", s.pmAgeMin + " min old", "At most " + p.freshnessMin + " min", s.pmAgeMin<=p.freshnessMin && !(S.useCase==="coc" && s.cells.some(c=>c.pmMissing)) ? "Pass" : "Fail"]);
+    if(S.useCase==="coc") q.push(["Alarm freshness", s.alarmAgeMin + " min since last state change", "At most " + p.freshnessMin + " min", s.alarmAgeMin<=p.freshnessMin?"Pass":"Fail"]);
+    if(S.useCase==="coc") q.push(["Neighbor measurements complete", s.cells.filter(c=>c.pmMissing).map(c=>c.id).join(", ") ? "Missing: " + s.cells.filter(c=>c.pmMissing).map(c=>c.id).join(", ") : "All present", "No gaps for first-tier neighbors", s.cells.some(c=>c.pmMissing)?"Fail":"Pass"]);
+    if(S.useCase==="mlb") q.push(["Load data instance delivered", capRow("mlb-dme").status==="no-instance" ? "No instance in 2 windows" : "Delivered", "At least one fresh window", capRow("mlb-dme").status==="no-instance"?"Fail":"Pass"]);
+    q.push(["Object identity mapping", "Every platform object maps to one rApp cell key", "1:1 mapping", "Pass"]);
+    q.push(["Snapshot revision recorded", "Revision " + s.revision, "Stored with every decision", "Pass"]);
+    const out = [];
+    if(!(S.useCase==="mlb" && capRow("mlb-dme").status==="no-instance")) out.push(cellsTable());
+    out.push(tbl("Neighbor relations", "Relation list, JSON pairs", "From the Network Information service.", ["Cell A","Cell B"], s.relations.map(r=>[r[0],r[1]])));
+    out.push(tbl("Data quality checks", "Check results, recorded in the audit trail", "Rules are operator policy in this example.", ["Check","What was found","Rule","Result"], q));
+    return {
+      plain:[
+        "The rApp now reads the network through the services it discovered. " + ({pci:"It asks for the list of cells and which cells are neighbors, the current PCI of every cell, recent handover failure and PCI ambiguity counts, and any active alarms.", mlb:"It asks for the cells and their neighbors, subscribes to a feed of cell load every 15 minutes, and queries handover success and user throughput for every cell.", coc:"It asks for active alarms, which cells neighbor the failed one, and recent load and coverage measurements for every cell."})[S.useCase],
+        "Everything it reads is frozen into an input snapshot with a revision number (" + s.revision + "). Later, before any change is made, the rApp checks that the network is still at this revision. If it is not, the decision is thrown away and redone.",
+        "Before deciding anything, the rApp checks the quality of what it read: is it recent enough, is anything missing, and does every object map to exactly one cell. " + (blocked ? "One of these checks failed, so the run stops here. Acting on old or incomplete data could change the wrong thing." : "All checks passed.")
+      ],
+      produced: out,
+      code:CODE.collect
+    };
+  },
+  assess(){
+    const rec = S.recommendation, s = S.networkSnapshot, p = S.policy;
+    if(!rec) return {plain:["The rApp could not produce a recommendation. See the block report."], produced:[], code:CODE["assess_" + S.useCase]};
+    const w = rec.worksheet, out = [];
+    let plain = [];
+    if(w.kind==="pci"){
+      plain = [
+        "The rApp looks for two problems. A collision is when two neighboring cells use the same PCI, so phones cannot tell them apart. A confusion is when one cell has two different neighbors with the same PCI, so handovers from it can go to the wrong cell.",
+        "It found a collision between " + w.coll.join("; ") + (w.conf.length ? ", and a confusion seen from " + w.conf.join(", ") : "") + ". It decided to change " + rec.target + " because its ambiguity count was higher.",
+        "It then tried candidate PCI values one by one, starting just above the current value " + rec.from + ". A candidate is rejected if a neighbor already uses it, if a neighbor of a neighbor uses it, or if it has the same remainder when divided by 3 as a direct neighbor (a common planning habit, used here as an example rule). The first value that passed all three tests was " + rec.to + ".",
+        "The result is a recommendation, not a change. It records the snapshot revision it was based on (" + rec.inputRevision + "), so it can be refused later if the network moves on."
+      ];
+      out.push(tbl("Neighbors of " + rec.target, "Worksheet input", "", ["Neighbor","PCI","PCI mod 3"], w.nbr.map(n=>[n.id, n.pci, n.residue])));
+      out.push(tbl("Candidate PCI values tested", "Decision worksheet, kept with the recommendation", "Values are tested in order; the first one passing every test is proposed.",
+        ["Candidate","Used by a neighbor?","Used by a neighbor of a neighbor?","Same mod 3 as a neighbor?","Result"],
+        w.tested.map(t => [t.value, yes(t.nbr), yes(t.non), yes(t.mod) + " (" + t.residue + ")", t.ok ? "Proposed" : "Rejected"])));
+    }
+    if(w.kind==="mlb"){
+      plain = [
+        "Source cell " + w.source.id + " is at " + w.source.load + " % load, above the " + p.mlbSourceHigh + " % trigger in this example, so the rApp looks for a neighbor that can take some of its traffic.",
+        "Each neighbor is checked twice: does it have headroom (load below " + p.mlbTargetMax + " %), and is its handover success good enough (at least " + NF1.format(p.mlbHoMin) + " %)? The table shows every neighbor and why it passed or failed.",
+        "The rApp picked " + w.chosen + ". " + (rec.path==="A1" ? "The platform advertises a suitable A1 policy type, so the proposal is a bounded steering policy delivered by the framework toward the Near-RT RIC." : rec.path==="CM" ? "No suitable A1 policy type is advertised. The operator's policy allows a separate configuration change instead, so that is proposed and named clearly for approval. It is a different action, not a silent substitute." : "No suitable A1 policy type is advertised and the operator's policy does not allow the configuration path, so the rApp can only recommend."),
+        rec.evidence.startsWith("Marginal") ? "Note: the chosen neighbor is only just inside the quality guardrail. The recommendation says so, so the approver can weigh it." : "The evidence for both cells is fresh."
+      ];
+      out.push(tbl("Neighbor evaluation", "Decision worksheet, kept with the recommendation", "Thresholds are operator policy in this example.",
+        ["Neighbor","Load (%)","HO success (%)","Headroom check","Quality check","Result"],
+        w.rows.map(c => [c.id, c.load, NF1.format(c.ho), c.load < p.mlbTargetMax ? "Pass" : "Fail", c.ho >= p.mlbHoMin ? "Pass" : "Fail", c.id===w.chosen ? "Chosen" : (c.ok ? "Eligible, not chosen" : "Rejected")])));
+      out.push(tbl("Action path decision", "Decision worksheet", "", ["Path","Available","Chosen"], [["A1 policy management", yes(w.a1ok), yes(rec.path==="A1")],["Separate CM write", yes(w.cmok), yes(rec.path==="CM")]]));
+    }
+    if(w.kind==="coc"){
+      plain = [
+        "The rApp confirms the outage using two independent signals: a critical alarm on NR-303, and zero traffic from that cell in the latest measurement window. An alarm on its own is a warning, not proof.",
+        "It then checks every neighbor of NR-303. A neighbor can help only if its measurements are present and its load is at most " + p.cocHeadroomMax + " %, so that taking extra traffic does not overload it.",
+        "It proposes a small, bounded change: one step more coverage on at most " + p.cocMaxCells + " neighbors (" + w.chosen.join(" and ") + "). The coverage step is a fictional setting that stands in for whatever the real network would adjust.",
+        "The alarm can be acknowledged through FM, but that only records that someone has seen it. It does not repair the cell, so it is not part of the fix."
+      ];
+      out.push(tbl("Neighbor evaluation", "Decision worksheet, kept with the recommendation", "Thresholds are operator policy in this example.",
+        ["Neighbor","Load (%)","Measurements","Headroom check","Result"],
+        w.rows.map(c => [c.id, c.load, c.missing?"Missing":"Present", c.missing?"Not checked":(c.load<=p.cocHeadroomMax?"Pass":"Fail"), w.chosen.includes(c.id)?"Chosen":"Rejected: " + c.why])));
+    }
+    out.push(doc("Recommendation record", "JSON (fictional keys)", "Stored and shown to the approver.",
+      JSON.stringify({exampleRecommendationId:rec.id, exampleProposal:rec.proposal, exampleTargets:rec.targets, exampleFrom:rec.from, exampleTo:rec.to, exampleActionPath:rec.path, exampleEvidenceQuality:rec.evidence, exampleInputRevision:rec.inputRevision, exampleApproval:rec.approval, exampleRationale:rec.rationale}, null, 2)));
+    if(S.conflict){
+      plain.push("At the same moment an illustrative Energy Saving rApp asked to reduce capacity on the same target cell. The platform spotted the overlap and applied the operator's rule: " + ruleLabel(S.conflict.rule).toLowerCase() + ". Decision: " + (S.conflict.decision||"pending") + ".");
+      out.push(tbl("Conflict record", "Conflict record, JSON", "Both proposals are kept, whatever the decision.", ["rApp","Target","Objective","Window"], [["MLB", S.conflict.mlb.target, S.conflict.mlb.objective, S.conflict.mlb.window],["Energy Saving (illustrative)", S.conflict.es.target, S.conflict.es.objective, S.conflict.es.window]]));
+    }
+    if(S.mode==="recommendation") plain.push("This run is in recommendation mode, so it ends here. The proposal is recorded and nothing is sent to the network.");
+    else if(S.gate==="approval") plain.push("Controlled action mode: the run now waits for the operator to approve or reject.");
+    return {plain, produced:out, code:CODE["assess_" + S.useCase]};
+  },
+  approve(ctx){
+    const rec = S.recommendation, d = ctx || {};
+    const out = []; let plain = [];
+    if(d.gate==="approval"){
+      plain = d.decision==="approve" ? [
+        "The operator (the automation owner) reviewed the recommendation: the proposed change, the evidence behind it, the worksheet and the snapshot revision it was based on.",
+        "They approved it. The approval is limited to exactly the cells named and is valid only for the snapshot revision the proposal came from. If the network changes before the write, the approval no longer applies.",
+        S.flags.interveningDone && S.networkSnapshot.revision !== rec.inputRevision ? "While the approval was being recorded, the network changed: a new cell NR-106 was commissioned with PCI 214. The snapshot moved to revision " + S.networkSnapshot.revision + ". The next step will notice this." : "The network did not change while the approval was recorded."
+      ] : [
+        "The operator reviewed the recommendation and rejected it. Nothing is sent to the network. The rejection is recorded so the rApp team can see which proposals operators do not trust, and why."
+      ];
+      out.push(tbl("Approval record", "Approval record, JSON, append-only", "", ["Field","Value"],
+        [["Decision", d.decision==="approve"?"Approved":"Rejected"],["By","Operator / automation owner (illustrative)"],["When", fmtSim(S.simSec)],["Proposal", rec.proposal],["Scope", rec.targets.join(", ")],["Valid for","Input revision " + rec.inputRevision + " only"],["Conditions","One change per run; readback and observation required"]]));
+    } else if(d.gate==="conflict-review"){
+      plain = d.decision==="approve" ? [
+        "The operator reviewed both proposals and released the MLB change, deferring Energy Saving for this cell.",
+        "Before releasing it, the rApp re-read the network: the revision is still " + S.networkSnapshot.revision + " and the target cell still has headroom. A held proposal is never executed from an old view of the network."
+      ] : ["The operator held both proposals. Neither is executed. Both stay in the record for a later decision with fresh data."];
+      out.push(tbl("Conflict decision", "Conflict record, JSON", "", ["Field","Value"], [["Rule", ruleLabel(S.conflict.rule)],["Decision", S.conflict.decision],["Re-checked revision", String(S.networkSnapshot.revision)],["When", fmtSim(S.simSec)]]));
+    } else if(d.gate==="restoration-review"){
+      plain = [
+        d.decision==="approve" ? "RAN operations asked for a new approval for restoration. A new restoration proposal has to be built from today's values, not from the values before the outage." : "RAN operations paused restoration. The compensation settings stay in place until someone reviews them.",
+        "In both cases the rApp writes nothing. Putting back the old value blindly would undo a later, valid change made by another team."
+      ];
+      out.push(tbl("Restoration decision", "Restoration record, JSON", "", ["Cell","Before outage","Compensation value","Current value"], S.restoration.rows.map(r=>[r.cell, fmtStep(r.prior), fmtStep(r.compensation), fmtStep(r.current)])));
+    }
+    return {plain, produced:out, code:CODE.approve};
+  },
+  execute(){
+    const rec = S.recommendation, a = S.action, s = S.networkSnapshot;
+    if(rec.status==="superseded"){
+      return {
+        plain:[
+          "Right before writing, the rApp checks that the network is still the one it made its decision on. It is not: the proposal was based on revision " + rec.inputRevision + ", and the network is now at revision " + s.revision + ".",
+          "Something changed in between (here a new cell, NR-106, was commissioned using PCI 214). Writing the old proposal could create a brand-new clash, so the rApp refuses to write and throws the proposal away.",
+          "Nothing was written. The next step reassesses from the current network, and the new proposal will need a new approval."
+        ],
+        produced:[tbl("Stale proposal report", "Audit record", "", ["Field","Value"], [["Proposal", rec.proposal],["Based on revision", rec.inputRevision],["Current revision", s.revision],["What changed","NR-106 added with PCI 214 next to NR-104"],["Action taken","Proposal marked superseded; nothing written"],["Next","Fresh assessment and new approval"]])],
+        code:CODE.execute
+      };
+    }
+    const rows = a.path==="A1"
+      ? [["Action path","A1 policy management (through the framework)"],["Policy type","example.mlbSteer.v1 (fictional)"],["Near-RT RIC","nrtric-demo-1 (fictional)"],["What the policy says","Steer a bounded share of NR-201 traffic toward " + rec.target + " (cap " + S.policy.mlbShareCap + " %)"],["Policy identifier", a.policyId],["Request status", a.requestStatus],["Requested at", a.timestamp]]
+      : [["Action path","Configuration management (CM) write, carried over O1 by the framework"],["Attribute", a.attr + " (fictional)"],["Targets", Object.keys(a.before).join(", ")],["Value before", Object.keys(a.before).map(k=>k + " = " + fmtVal(a.before[k])).join(", ")],["Value requested", fmtVal(a.requested)],["Request identifier", a.requestId],["Request status", a.requestStatus],["Requested at", a.timestamp],["Network revision", "was " + rec.inputRevision + ", now " + s.revision]];
+    return {
+      plain:[
+        "First the rApp re-checks the network revision. It still matches the one the proposal was based on (" + rec.inputRevision + "), so it is safe to continue.",
+        a.path==="A1" ? "The rApp asks the framework to create an A1 policy. The framework, not the rApp, delivers it to the Near-RT RIC over the A1 interface." : "The rApp first reads the configuration schema, which says what type and range the setting accepts, so a wrong value is caught before it is sent. It then asks the framework to write the new value. The framework, not the rApp, carries the change to the network over O1.",
+        "The framework replied that the request was accepted. That is only the first of three checks. It proves the request arrived, not that the network now has the value, and not that the network got better."
+      ],
+      produced:[tbl(a.path==="A1" ? "Policy request record" : "Change request record", "Request record, JSON, append-only", "Evidence stage 1 of 3.", ["Field","Value"], rows)],
+      code:CODE.execute
+    };
+  },
+  readback(){
+    const a = S.action, rec = S.recommendation;
+    const rows = a.path==="A1" ? [["Policy " + a.policyId, "Enforced", "Enforced", "Yes"]] : Object.keys(a.applied).map(id => [id, fmtVal(rec.to), fmtVal(a.applied[id]), a.applied[id]===rec.to ? "Yes" : "No"]);
+    return {
+      plain:[
+        a.path==="A1" ? "The rApp asks the framework for the status of the policy it created. The answer is \"enforced\", meaning the Near-RT RIC is applying it." : "The rApp reads the setting back from the network as a separate request. This proves the network now actually holds the value, not just that a request was accepted.",
+        "This is the second of three checks. " + (a.path==="A1" ? "An enforced policy still does not prove the goal was met." : "A correct value still does not prove the network got better.") + " That is what the observation window is for."
+      ],
+      produced:[tbl(a.path==="A1" ? "Policy status check" : "Readback comparison", "Verification record, JSON", "Evidence stage 2 of 3.", [a.path==="A1"?"Policy":"Cell","Expected","Read back","Match"], rows)],
+      code:CODE.readback
+    };
+  },
+  observe(){
+    const o = S.observation;
+    const plain = [
+      "The rApp waits for the observation window (" + o.window + ") and then reads the same measurements again, so it can compare before and after on equal terms.",
+      "Every indicator has a limit set by the operator. The result is a pass only if every limit holds. " + (S.useCase==="mlb" ? "A lighter source cell does not count as success if the target cell or handover quality got worse." : ""),
+      o.status==="pass" ? "All indicators are inside the limits, so the network outcome passes. This is the third and final check." : "At least one indicator is outside its limit, so the outcome fails even though part of the picture improved. A rollback candidate is prepared, and it needs its own approval."
+    ];
+    const out = [tbl("Before and after", "Observation record, JSON", "Evidence stage 3 of 3. Window: " + o.window + ".", ["Cell","Indicator","Unit","Before","After","Limit (example policy)","Result"],
+      o.metrics.map(m => [m.cell, m.metric, m.unit, m.before, m.after, m.policy, m.pass?"Within limit":"Outside limit"]))];
+    if(S.restoration){
+      plain.push("Later the failed cell NR-303 recovered. The rApp would normally undo its compensation, but it found that NR-302 had been changed by RAN operations during the outage. Writing the old value back would wipe out that change, so the run stops for a restoration review instead.");
+      out.push(tbl("Restoration review", "Restoration record, JSON", "", ["Cell","Before outage","Compensation","Current","History"], S.restoration.rows.map(r=>[r.cell, fmtStep(r.prior), fmtStep(r.compensation), fmtStep(r.current), r.history.join(" → ")])));
+    }
+    return {plain, produced:out, code:CODE.observe};
+  },
+  complete(){
+    const c = S.completion, e = S.evidence;
+    const rows = e ? [["Request status", e.request.status, e.request.detail],["Readback / policy status", e.readback.status, e.readback.detail],["Network outcome", e.outcome.status, e.outcome.detail]] : [["Request status","not executed","No request was sent"],["Readback","not executed",""],["Network outcome","not executed",""]];
+    return {
+      plain:[
+        "The run is finished: " + c.label.toLowerCase() + ". " + c.detail,
+        "The three checks are kept separate on purpose, so anyone reviewing can see exactly where things stood: whether the request arrived, whether the value is in place, and whether the network improved.",
+        "The full audit trail (" + S.auditEvents.length + " events) can be exported from the Evidence and audit tab as JSON or CSV. Every export is flagged as synthetic."
+      ],
+      produced:[tbl("Run summary", "Run record, JSON", "", ["Check","Result","Detail"], rows.map(r=>[r[0], r[1], r[2]]))],
+      code:CODE.complete
+    };
+  },
+  blocked(){
+    const b = S.block, f = BLOCK_FIX[b.code] || {fix:"Review the block reason.", owner:"Operator"};
+    return {
+      plain:[
+        "The run stopped at the step \"" + phaseName(S.flags.blockedAt) + "\". Reason: " + b.title.toLowerCase() + ".",
+        b.detail,
+        "Nothing was written to the network. Stopping is the safe outcome: a missing or doubtful input must never turn into an automatic change.",
+        "How to move forward: " + f.fix
+      ],
+      produced:[tbl("Block report", "Audit record, JSON", "", ["Field","Value"], [["Reason code", b.code],["Stopped at", phaseName(S.flags.blockedAt)],["Reason", b.title],["Detail", b.detail],["Who can fix it", f.owner],["How", f.fix],["Written to network","Nothing"]])],
+      code:CODE.blocked
+    };
+  }
+};
+function policyRows(){ const p = S.policy; const r = [["Data freshness gate", p.freshnessMin + " min"],["Observation window", p.observationMin + " min"],["Approval before action","Always, in controlled action mode"]];
+  if(S.useCase==="pci") r.push(["Changes per run", String(p.maxChangesPerRun)]);
+  if(S.useCase==="mlb") r.push(["Source load trigger","Above " + p.mlbSourceHigh + " %"],["Target load limit","Below " + p.mlbTargetMax + " %"],["HO success floor", NF1.format(p.mlbHoMin) + " %"],["Steering share cap", p.mlbShareCap + " %"],["Separate CM path allowed", yes(p.allowCmFallback)],["Conflict rule", ruleLabel(p.conflictRule)]);
+  if(S.useCase==="coc") r.push(["Neighbor load limit","At most " + p.cocHeadroomMax + " %"],["Weak-coverage target","At most " + p.cocCovTarget + " %"],["Max cells changed", String(p.cocMaxCells)]);
+  return r; }
+
+function captureDetail(phase, ctx){
+  const mark = S.flags.traceMark || 0;
+  const entries = S.trace.filter(t => t.step > mark);
+  S.flags.traceMark = S.trace.length;
+  const b = BUILD[phase] ? BUILD[phase](ctx) : {plain:[], produced:[]};
+  const GT = {"approval":["Approval gate: approved","Approval gate: rejected"], "conflict-review":["Conflict review: MLB released","Conflict review: both held"], "restoration-review":["Restoration review: new approval requested","Restoration review: paused"]};
+  const title = phase==="approve" ? (GT[ctx.gate]||["Operator decision","Operator decision"])[ctx.decision==="reject"?1:0] : phaseName(phase);
+  const rec = {seq:S.stepLog.length+1, phase, title, at:fmtSim(S.simSec), cls:S.lastStep.cls, headline:S.lastStep.title,
+    owners:(PHASES.find(p=>p.id===phase)||{owner:[]}).owner, plain:b.plain, produced:b.produced,
+    api: entries.length ? apiFromTrace(entries) : (b.api || "// No R1 call in this step."), code:b.code || ""};
+  S.stepLog = S.stepLog.concat([rec]);
+  if(S.phase==="blocked" && phase!=="blocked") pushTerminal("blocked");
+  else if(S.phase==="complete" && !S.stepLog.some(x=>x.phase==="complete")) pushTerminal("complete");
+  S.detailIdx = null;
+}
+function pushTerminal(kind){
+  const b = BUILD[kind]();
+  S.stepLog = S.stepLog.concat([{seq:S.stepLog.length+1, phase:kind, title: kind==="blocked" ? "Run blocked: " + S.block.title : "Run complete", at:fmtSim(S.simSec), cls: kind==="blocked"?"bad":(S.completion.status==="pass"?"ok":"warn"), headline:"", owners:[], plain:b.plain, produced:b.produced, api:"// No R1 call.", code:b.code}]);
+}
+</script>
+<script>
+"use strict";
+/* =====================================================================
    RENDERING (pure reads of S; no state mutation here)
    ===================================================================== */
 const $ = id => document.getElementById(id);
@@ -1561,7 +2180,6 @@ function renderOverview(){
   const owners = currentOwners();
   const roles = Object.keys(ROLES).map(k => { const r = ROLES[k]; return '<div class="role' + (owners.includes(k)?" now":"") + '"><span class="ab">' + r.ab + (owners.includes(k)?" · acts now":"") + '</span><h3>' + esc(r.name) + '</h3><p>' + esc(r.resp) + '</p><span class="tp">Touch points: ' + esc(r.touch) + '</span></div>'; }).join("");
   $("view-overview").innerHTML =
-    '<div class="start"><span class="k">Start here</span><ol><li>Pick a use case above</li><li>Choose a scenario and mode</li><li>Open Migration run and press Run next step</li></ol><button class="btn primary" type="button" data-tab="run" id="startRun">' + icon("i-play") + 'Open Migration run</button></div>' +
     '<div class="grid2">' +
       '<div class="panel"><div class="panel-h"><h2>Public context</h2><span class="tag">contextual facts only</span></div><div class="prose small">' +
         '<p>AT&amp;T and Ericsson describe a move from disparate SON functionality to a unified, Non-RT RIC-based environment, with traffic steering, load balancing, outage compensation, energy savings and self-healing among the priorities. <span class="spec">[S1, S2]</span></p>' +
@@ -1653,7 +2271,10 @@ function renderStepper(){
     else if(S.phase==="complete"){ const c = PHASE_IDX[doneAt]; cls = (i<=c || p.id==="complete") ? "done" : "skip"; st = cls==="done" ? "Done" : (S.mode==="recommendation" ? "Not executed in recommendation mode" : "Not executed"); }
     else { cls = i<curIdx ? "done" : (i===curIdx ? (S.gate?"gate":"cur") : ""); st = i<curIdx ? "Done" : (i===curIdx ? (S.gate?"Waiting for decision":"Next") : "Pending"); if(S.mode==="recommendation" && i>=PHASE_IDX.approve && i<PHASE_IDX.complete) { cls = "skip"; st = "Skipped in recommendation mode"; } }
     const ic = cls==="done" ? icon("i-ok") : cls==="blk" ? icon("i-block") : cls==="gate" ? icon("i-warn") : String(i+1);
-    return '<li class="' + cls + '"' + (cls==="cur"||cls==="gate"?' aria-current="step"':'') + '><span class="ic">' + ic + '</span><span><span class="nm">' + esc(p.name) + '</span><br><span class="ow">' + p.owner.map(o=>ROLES[o].ab).join(" + ") + ' · ' + esc(st) + '</span></span></li>';
+    const recIdx = (S.stepLog||[]).map((x,k)=>[x,k]).filter(([x]) => x.phase===p.id || (p.id==="complete" && x.phase==="blocked")).map(([,k])=>k).pop();
+    const cd = currentDetail(); const viewing = recIdx!=null && cd && cd.i===recIdx;
+    const label = '<span class="nm">' + esc(p.name) + '</span><br><span class="ow">' + p.owner.map(o=>ROLES[o].ab).join(" + ") + ' · ' + esc(st) + '</span>';
+    return '<li class="' + cls + (viewing?" viewing":"") + '"' + (cls==="cur"||cls==="gate"?' aria-current="step"':'') + '><span class="ic">' + ic + '</span>' + (recIdx!=null ? '<button type="button" class="sd-link" id="sl-' + p.id + '" data-detail="' + recIdx + '" aria-label="Show details for ' + esc(p.name) + '">' + label + '</button>' : '<span>' + label + '</span>') + '</li>';
   }).join("");
 }
 function renderBanner(){
@@ -1776,6 +2397,7 @@ function renderRun(){
   $("whyDisabled").textContent = can ? (S.mode==="recommendation" ? "Recommendation mode: the run stops after the proposal. Action: Not executed." : "Run all stops at approval, a missing capability, denied access, stale data, a conflict or a terminal result.") : runDisabledReason();
   $("policyGrid").innerHTML = renderPolicy();
   $("runBanner").innerHTML = renderBanner();
+  renderStepDetail();
   $("archRun").innerHTML = archHTML("run");
   $("topo").innerHTML = renderTopo();
   $("cellList").innerHTML = renderCellList();
@@ -1806,6 +2428,7 @@ function renderEvidence(){
     '<div class="panel"><div class="panel-h"><h3>Before and after</h3><span class="small mono">' + (obs ? "Observation window: " + esc(obs.window) : "Observation window: " + S.policy.observationMin + " min (operator policy in this example)") + '</span></div>' + metrics +
       (a1 && obs ? '<p class="xs muted" style="margin-top:8px">Policy enforcement status alone does not prove the network goal improved; the network result is judged separately.</p>' : '') + '</div>' +
     (S.restoration ? restorationHTML() : '') + (S.conflict ? conflictHTML() : '') +
+    '<div class="panel report"><div class="panel-h"><h3>Step-by-step report</h3><span class="xs muted">Every step of this run in plain English, with its records</span></div>' + reportHTML() + '</div>' +
     '<div class="panel"><div class="panel-h"><h3>Audit timeline</h3><div class="row"><div class="seg" role="group" aria-label="Audit filter">' + ftabs + '</div></div></div><ul class="timeline" aria-label="Audit events">' + tl + '</ul></div>' +
     '<div class="panel export-box"><div class="panel-h"><h3>Export</h3><span class="xs muted">Real events from the current run, with synthetic: true</span></div><div class="row">' +
       '<button class="btn" type="button" id="expJson">' + icon("i-dl") + 'Export audit JSON</button><button class="btn" type="button" id="expCsv">' + icon("i-dl") + 'Export audit CSV</button>' +
@@ -1869,9 +2492,10 @@ function renderPortability(){
 function renderDrawer(){
   const d = $("drawer"); d.hidden = !S.drawer;
   $("btnAbout").setAttribute("aria-expanded", S.drawer==="about"); $("btnSources").setAttribute("aria-expanded", S.drawer==="sources");
+  $("helpEdge").setAttribute("aria-expanded", S.drawer==="help"); $("helpEdge").hidden = !!S.drawer;
   if(!S.drawer) return;
-  $("dAbout").setAttribute("aria-pressed", S.drawer==="about"); $("dSources").setAttribute("aria-pressed", S.drawer==="sources");
-  $("drawerBody").innerHTML = S.drawer==="about"
+  $("dAbout").setAttribute("aria-pressed", S.drawer==="about"); $("dSources").setAttribute("aria-pressed", S.drawer==="sources"); $("dHelp").setAttribute("aria-pressed", S.drawer==="help");
+  $("drawerBody").innerHTML = S.drawer==="help" ? helpHTML() : S.drawer==="about"
     ? '<h2 id="drawerTitle">About this model</h2><p class="small">A one-page workbench that traces how a legacy SON function could be migrated into an rApp that uses R1 services in an SMO / Non-RT RIC environment. Three example functions show the same method with different dependencies.</p>' +
       '<div class="callout warn">' + icon("i-flask") + '<div><b>Synthetic reference workflow.</b> Every cell, value, rule, approval and outcome is fictional and deterministic (seed ' + SEED + '). Nothing here controls a live RAN.</div></div>' +
       '<h3>How to read it</h3><ul class="small" style="margin:0;padding-left:18px;display:grid;gap:4px"><li>SON contract: what the legacy function needs and does.</li><li>R1 mapping: which service family supplies each input or carries each action.</li><li>Migration run: step through registration, discovery, collection, assessment, approval, execution, readback and observation.</li><li>Evidence and audit: three separate observations and an exportable record.</li><li>Portability: two fictional platform profiles and a small test matrix.</li></ul>' +
@@ -1883,6 +2507,130 @@ function renderDrawer(){
 let toastTimer = null;
 function toast(msg){ const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 2600); }
 function announce(msg){ $("live").textContent = ""; setTimeout(() => { $("live").textContent = msg; }, 30); }
+</script>
+<script>
+"use strict";
+/* =====================================================================
+   STEP DETAILS PANEL + PER-TAB HELP (render only)
+   ===================================================================== */
+function currentDetail(){
+  if(!S.stepLog || !S.stepLog.length) return null;
+  const i = (S.detailIdx==null || S.detailIdx>=S.stepLog.length) ? S.stepLog.length-1 : S.detailIdx;
+  return {rec:S.stepLog[i], i};
+}
+function producedHTML(items){
+  return items.map(it => '<div class="sd-item"><h4>' + esc(it.title) + '</h4><div class="sd-fmt"><span class="tag">Format: ' + esc(it.format) + '</span>' + (it.note ? '<span>' + esc(it.note) + '</span>' : '') + '</div>' +
+    (it.doc!=null ? '<pre class="json">' + esc(it.doc) + '</pre>' :
+      '<div class="tbl-wrap"><table><thead><tr>' + it.cols.map(c=>'<th>' + esc(c) + '</th>').join("") + '</tr></thead><tbody>' +
+      it.rows.map(r => '<tr>' + r.map(v => '<td>' + esc(v) + '</td>').join("") + '</tr>').join("") + '</tbody></table></div>') + '</div>').join("");
+}
+function detailBody(rec, techId){
+  const who = rec.owners && rec.owners.length ? '<div class="sd-who">Who acts: ' + rec.owners.map(o => '<span class="tag">' + esc(ROLES[o].name) + '</span>').join("") + '<span>· ' + esc(rec.at) + '</span></div>' : '<div class="sd-who">' + esc(rec.at) + '</div>';
+  return who +
+    '<div class="sd-plain" style="margin-top:10px">' + rec.plain.map(p => '<p>' + esc(p) + '</p>').join("") + '</div>' +
+    (rec.produced.length ? '<div class="sd-prod"><h3>What this step produced</h3>' + producedHTML(rec.produced) + '</div>' : '') +
+    '<details class="x sd-tech" id="' + techId + '"' + (S.techOpen?" open":"") + '><summary>For technical readers: API calls and code behind</summary><div>' +
+      '<div class="jt"><span>Illustrative exchange, simplified</span>' + ILL + '<span class="xs muted">Endpoints are placeholders and keys are fictional. No normative R1 path, body or schema is implied.</span></div><pre class="json">' + esc(rec.api) + '</pre>' +
+      (rec.code ? '<div class="jt"><span>Code behind, simplified from this demo\'s own JavaScript</span></div><pre class="json">' + esc(rec.code) + '</pre>' : '') +
+    '</div></details>';
+}
+function renderStepDetail(){
+  const cd = currentDetail(); const el = $("stepDetail");
+  if(!cd){ el.innerHTML = '<div class="sd-head"><h2>Step details</h2>' + ILL + '</div><p class="small muted">Press Run next step. After every step this panel explains, in plain English, exactly what happened, who did it and why, and shows every record the step produced with its format. Technical readers can open the API calls and the code behind each step.</p>'; return; }
+  const {rec, i} = cd, n = S.stepLog.length;
+  el.innerHTML = '<div class="sd-head"><div><span class="xs muted">Step details · record ' + (i+1) + ' of ' + n + (i<n-1?' (earlier step)':' (latest)') + '</span><h2>' + esc(rec.title) + '</h2></div>' +
+    '<div class="sd-nav"><button class="btn" type="button" id="sdPrev"' + (i===0?" disabled":"") + '>' + icon("i-back") + 'Previous</button><button class="btn" type="button" id="sdNext"' + (i>=n-1?" disabled":"") + '>Next</button><button class="btn" type="button" id="sdLatest"' + (i>=n-1?" disabled":"") + '>Latest</button></div></div>' +
+    detailBody(rec, "sdTech");
+}
+function reportHTML(){
+  if(!S.stepLog.length) return '<p class="small muted">No steps yet. Each step of the run will appear here with its full plain-English explanation and records.</p>';
+  return S.stepLog.map((r,i) => '<details class="x" id="rep-' + i + '"><summary>' + (i+1) + '. ' + esc(r.title) + ' <span class="xs muted">· ' + esc(r.at) + '</span></summary><div>' + detailBody(r, "repTech-" + i) + '</div></details>').join("");
+}
+
+/* ------------------------------ Help content per tab ------------------------------ */
+const HELP = {
+  overview:{title:"Help: Overview", intro:"The Overview is the map. It shows why this topic matters, how the architecture fits together, and who is responsible for what.",
+    sections:[
+      {h:"What you see", items:[
+        ["Public context","What AT&T and Ericsson have said publicly about moving SON functions to rApps. These are the only real-world facts in the app. Everything else is fictional."],
+        ["Selected use case","The use case, scenario, mode and platform profile you picked, and where the current run stands."],
+        ["Architecture","The same picture as the header strip, in more detail. The rApp talks only to R1 service tiles. The platform reaches the network over O1 and, for policies, A1."],
+        ["Who owns what","Five roles. The highlighted card is the role that must act at the current step of the run."]]},
+      {h:"Things to try", items:[
+        ["Click a service tile","Filters the R1 mapping ledger to that service and highlights matching transactions in the run."],
+        ["Switch use case","The whole app changes: contract, ledger, cells, scenarios and evidence. The run resets so nothing leaks from one use case to another."]]},
+      {h:"Words used here", items:[
+        ["SON","Self-Organizing Network: automation that tunes the radio network, for example fixing PCI clashes or balancing load."],
+        ["rApp","An application that runs on the Non-RT RIC inside the SMO and automates a RAN task, using only R1 services."],
+        ["SMO / Non-RT RIC","The Service Management and Orchestration platform and its non-real-time RAN Intelligent Controller. It hosts rApps and talks to the network for them."],
+        ["R1","The interface between rApps and the platform. A family of services, not a single API."]]}]},
+  contract:{title:"Help: SON contract", intro:"This tab shows the agreement written before migration: what today's SON function does, in a form that every later step can be checked against.",
+    sections:[
+      {h:"How to use it", items:[
+        ["Contract table","Eleven fields per use case. Click any row to see its plain-English definition on the right."],
+        ["Semantic mapping card","Shows why labels are not enough: the unit, sample interval, object identity, freshness and what to do if a value is missing."],
+        ["Centralized vs distributed (PCI only)","Choose who makes the PCI decision. With distributed SON the network picks from a list, so the run stops for an ownership review."]]},
+      {h:"Why it matters", items:[
+        ["No contract, no review","Without a written contract, nobody can check whether the new rApp behaves like the old function, or better."],
+        ["Where answers come from","The step details in the Migration run show where each field came from: settings, logs, change history, interviews or operator policy."]]}]},
+  mapping:{title:"Help: R1 mapping", intro:"The dependency ledger lists every input the rApp needs and every action it may take, and maps each one to an R1 service on the selected platform.",
+    sections:[
+      {h:"How to use it", items:[
+        ["Filters","All, Inputs, Actions, Missing and Unauthorized. Missing covers unavailable services, data types without data, and stale data."],
+        ["Search","Type any word: a service, an operation or an object."],
+        ["Click a row","Opens the full detail: purpose, service family, operation, permission, criticality, fallback, and why the row has its status."]]},
+      {h:"The five statuses", items:[
+        ["Supported and authorized","Ready to use."],
+        ["Service unavailable","The platform does not offer it. A required row stops the run at discovery."],
+        ["Service found but unauthorized","It exists, but this rApp's role may not use it. A required row stops the run at discovery."],
+        ["Data type discovered but data instance unavailable","The kind of data exists, but none is flowing. Stops the run at collection."],
+        ["Stale data","Data is older than the freshness gate or has gaps. Stops the run at collection."]]},
+      {h:"How critical is a row", items:[
+        ["Required","Needed in every mode."],["Required to act","Needed only in controlled action mode, for example a write permission."],["Action path option","One of several ways to act, such as A1 or CM."],["Optional","Nice to have; the run continues without it."]]}]},
+  run:{title:"Help: Migration run", intro:"This is the workbench. You step through the migration one action at a time and see exactly what each step did.",
+    sections:[
+      {h:"Controls", items:[
+        ["Run next step","Runs one step. The Step details panel then explains it in plain English and lists every record it produced."],
+        ["Run all until approval or block","Keeps going until a decision is needed, a gap or block appears, or the run ends. It never skips an approval."],
+        ["Approve / Reject","Enabled only at a decision point. The labels change for conflict review and restoration review."],
+        ["Step back","Undoes the last step or decision, like rewinding a recording."],
+        ["Reset","Starts the same scenario again from a clean state."]]},
+      {h:"Panels", items:[
+        ["Workflow (left)","The eleven steps and who owns each. Click a finished step to reread its details."],
+        ["Step details","Plain English first, then every record the step produced with its format. Open 'For technical readers' for the API calls and the code behind the step."],
+        ["Architecture","Tiles flash when a step uses that service. O1 or A1 lights up when the platform carries a change to the network."],
+        ["Simulated topology","The fictional cells. Teal is a proposal target, amber needs attention, red dashed is an outage. The list beside it is the same data as text."],
+        ["Transaction trace","Every R1 exchange in order. Switch to Developer transactions in the bar above to see the simplified request and response for each."],
+        ["Inspector (right)","The current step in short (who, what, how, why, what changes), the recommendation, conflicts, and anything you clicked."]]},
+      {h:"Operator policy", items:[
+        ["What it is","Example limits the operator sets: freshness gate, observation window, conflict rule and, for load balancing, whether a separate CM path is allowed. Changing one resets the run."]]}]},
+  evidence:{title:"Help: Evidence and audit", intro:"This tab answers: did it work, and can we prove what happened?",
+    sections:[
+      {h:"Three stages of evidence", items:[
+        ["1. Request status","The platform accepted the request. That proves it arrived, nothing more."],
+        ["2. Readback or policy status","The network now holds the value, or the policy is enforced."],
+        ["3. Network outcome","After the observation window, the indicators are inside the operator's limits. Only this shows the network got better."]]},
+      {h:"Other sections", items:[
+        ["Before and after","Every indicator measured, with its unit, limit and result."],
+        ["Step-by-step report","Every step of the run with its full plain-English explanation and records, ready to read top to bottom."],
+        ["Audit timeline","Every event in order: who acted, at which step, on which network revision, and why. Filter by warnings, actions or verification."],
+        ["Export","Download the audit trail as JSON or CSV, flagged synthetic. If the download is blocked, copy the text shown instead."]]}]},
+  portability:{title:"Help: Portability and sources", intro:"Will the same rApp work on another platform? This tab compares two fictional platforms and lists every public source used.",
+    sections:[
+      {h:"How to use it", items:[
+        ["Comparison table","Each dependency on Profile A (complete) and Profile B (limited). Profile B has one deliberate gap per use case."],
+        ["Test matrix","Registration, discovery, authorization, data mapping, action path and verification, pass or block, for both profiles."],
+        ["Switch profile","Makes the other profile active and resets the run so you can see the gap happen."]]},
+      {h:"Four layers of portability", items:[
+        ["Interface behavior","Can the rApp call the API and handle errors?"],["Service availability","Are the services there and allowed?"],["Data semantics","Does the data mean the same thing?"],["Network outcome","Does it actually help this operator's network?"]]},
+      {h:"Sources", items:[["What is real","Only the linked public documents. Section markers point to the exact clause where known."]]}]}
+};
+function helpHTML(){
+  const h = HELP[S.tab];
+  return '<h2 id="drawerTitle">' + esc(h.title) + '</h2><p class="small">' + esc(h.intro) + '</p>' +
+    h.sections.map(s => '<div class="help-sec"><h3>' + esc(s.h) + '</h3><dl>' + s.items.map(([t,d]) => '<div><dt>' + esc(t) + '</dt><dd>' + esc(d) + '</dd></div>').join("") + '</dl></div>').join("") +
+    '<div class="callout warn">' + icon("i-flask") + '<div><b>Synthetic reference workflow.</b> All cells, values and outcomes are fictional. Press Escape to close this panel.</div></div>';
+}
 </script>
 <script>
 "use strict";
@@ -1900,10 +2648,11 @@ function setTab(id, focus){
 }
 function reconfigure(patch, msg){ applyScenario(patch); render(); if(msg){ toast(msg); announce(msg); } }
 
-function onRunNext(){ if(advancePhase()){ render(); announce(S.lastStep.title + ". " + S.lastStep.why); } }
-function onRunAll(){ const n = runAll(); render(); announce("Ran " + n + " step(s). " + S.lastStep.title + "."); }
-function onApprove(){ if(approveRecommendation()){ render(); announce(S.lastStep.title); } }
-function onReject(){ if(rejectRecommendation()){ render(); announce(S.lastStep.title); } }
+function jumpToDetails(){ const p = $("stepDetail"); if(p && S.tab==="run") p.scrollIntoView({block:"start", behavior: S.reduceMotion ? "auto" : "smooth"}); }
+function onRunNext(){ if(advancePhase()){ render(); jumpToDetails(); announce(S.lastStep.title + ". " + S.lastStep.why); } }
+function onRunAll(){ const n = runAll(); render(); jumpToDetails(); announce("Ran " + n + " step(s). " + S.lastStep.title + "."); }
+function onApprove(){ if(approveRecommendation()){ render(); jumpToDetails(); announce(S.lastStep.title); } }
+function onReject(){ if(rejectRecommendation()){ render(); jumpToDetails(); announce(S.lastStep.title); } }
 function onBack(){ if(stepBack()){ render(); announce("Stepped back to " + phaseName(S.phase)); } }
 function onReset(){ applyScenario({reason:"Reset by user"}); render(); toast("Run reset to a clean initial state"); announce("Run reset"); }
 
@@ -1925,6 +2674,7 @@ function copyExport(){
   const fallback = () => { ta.focus(); ta.select(); toast("Text selected. Press Ctrl+C or Cmd+C to copy."); };
   try { if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(done, fallback); else fallback(); } catch(e){ fallback(); }
 }
+function closeDrawer(){ const w = S.drawer; S.drawer = null; render(); const b = $({sources:"btnSources", about:"btnAbout", help:"helpEdge"}[w] || "btnAbout"); if(b) b.focus(); }
 function openDrawer(which){ S.drawer = S.drawer===which ? null : which; render(); if(S.drawer) $("drawerClose").focus(); }
 
 function bind(){
@@ -1941,7 +2691,13 @@ function bind(){
   $("btnSources").addEventListener("click", () => openDrawer("sources"));
   $("dAbout").addEventListener("click", () => { S.drawer = "about"; render(); });
   $("dSources").addEventListener("click", () => { S.drawer = "sources"; render(); });
-  $("drawerClose").addEventListener("click", () => { const w = S.drawer; S.drawer = null; render(); $(w==="sources"?"btnSources":"btnAbout").focus(); });
+  $("dHelp").addEventListener("click", () => { S.drawer = "help"; render(); });
+  $("helpEdge").addEventListener("click", () => openDrawer("help"));
+  $("startRun").addEventListener("click", () => { setTab("run"); $("btnNext").focus(); });
+  $("startHelp").addEventListener("click", () => { S.drawer = "about"; render(); $("drawerClose").focus(); });
+  $("stripToggle").addEventListener("click", () => { const x = $("stripExplain"); x.hidden = !x.hidden; $("stripToggle").setAttribute("aria-expanded", String(!x.hidden)); $("stripToggle").textContent = x.hidden ? "What does each box mean?" : "Hide explanation"; });
+  document.addEventListener("toggle", e => { if(e.target && e.target.id==="sdTech") S.techOpen = e.target.open; }, true);
+  $("drawerClose").addEventListener("click", closeDrawer);
   // Run controls
   $("btnNext").addEventListener("click", onRunNext);
   $("btnAll").addEventListener("click", onRunAll);
@@ -1963,6 +2719,14 @@ function bind(){
 
   // Delegated clicks inside views
   document.addEventListener("click", e => {
+    const sd = e.target.closest("[data-detail],#sdPrev,#sdNext,#sdLatest");
+    if(sd){ const n = S.stepLog.length, cur = currentDetail() ? currentDetail().i : n-1;
+      if(sd.dataset.detail!=null) S.detailIdx = +sd.dataset.detail;
+      else if(sd.id==="sdPrev") S.detailIdx = Math.max(0, cur-1);
+      else if(sd.id==="sdNext") S.detailIdx = Math.min(n-1, cur+1);
+      else S.detailIdx = null;
+      if(S.detailIdx===n-1) S.detailIdx = null;
+      render(); const p = $("stepDetail"); if(p && sd.dataset.detail!=null) p.scrollIntoView({block:"start", behavior: S.reduceMotion?"auto":"smooth"}); return; }
     const el = e.target.closest("[data-tab],[data-fam],[data-cell],[data-row],[data-field],[data-lfilter],[data-afilter],[data-clearsvc],[data-pci],#expJson,#expCsv,#expCopy,#portSwitch");
     if(!el || el.closest("#tablist") || el.closest("#ucSelect")) return;
     if(el.dataset.tab){ setTab(el.dataset.tab); $("main").focus({preventScroll:false}); return; }
@@ -1981,7 +2745,7 @@ function bind(){
   });
   // Keyboard activation for focusable rows and SVG cells
   document.addEventListener("keydown", e => {
-    if(e.key==="Escape" && S.drawer){ const w = S.drawer; S.drawer = null; render(); $(w==="sources"?"btnSources":"btnAbout").focus(); return; }
+    if(e.key==="Escape" && S.drawer){ closeDrawer(); return; }
     if(e.key!=="Enter" && e.key!==" ") return;
     const el = e.target.closest && e.target.closest("tr[data-row],tr[data-field],g[data-cell]");
     if(el){ e.preventDefault(); el.dispatchEvent(new MouseEvent("click", {bubbles:true})); }
