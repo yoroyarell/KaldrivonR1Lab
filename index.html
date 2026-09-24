@@ -166,7 +166,9 @@ main{padding-block:16px}
 .tile span{font-size:10.5px;color:var(--muted);line-height:1.25}
 .tile:hover{border-color:var(--r1)}
 .tile.used{box-shadow:inset 0 -2px 0 var(--r1)}
-.tile.unused{opacity:.55}
+.tile.unused{opacity:.45;background:transparent;border-color:var(--line2)}
+.tile.unused b{color:var(--muted)}
+.tile.neutral{background:transparent;border-color:var(--line2)}
 .tile.flash{animation:flash .9s ease-out}
 .tile[aria-pressed="true"]{background:rgba(51,196,188,.28);border-color:var(--r1)}
 .authz{border:1px solid var(--line2);border-radius:5px;padding:6px 8px;font-size:var(--fs-xs);color:var(--muted);display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
@@ -213,7 +215,7 @@ td .op{font-family:var(--mono);font-size:12px}
 
 /* ---------- Run view ---------- */
 .run-grid{display:grid;grid-template-columns:272px minmax(0,1fr) 340px;gap:16px;align-items:start}
-.rail{display:grid;gap:14px;position:sticky;top:60px}
+.rail{display:grid;gap:14px;position:sticky;top:60px;max-height:calc(100vh - 72px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-right:4px;align-content:start}
 .stepper{list-style:none;margin:0;padding:0;display:grid;gap:2px}
 .stepper li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;padding:6px 6px;border-radius:6px;align-items:start}
 .stepper li.cur{background:var(--r1-dim)}
@@ -249,7 +251,7 @@ td .op{font-family:var(--mono);font-size:12px}
 .cell-btn b{font-family:var(--mono);font-size:12px}
 .cell-btn[aria-pressed="true"]{border-color:var(--r1)}
 .cell-btn .v{color:var(--muted);grid-column:1/-1}
-.insp{display:grid;gap:12px;position:sticky;top:60px}
+.insp{display:grid;gap:12px;position:sticky;top:60px;max-height:calc(100vh - 72px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-right:4px;align-content:start}
 .wwwh{display:grid;gap:8px;margin:0}
 .wwwh div{display:grid;grid-template-columns:92px minmax(0,1fr);gap:8px;font-size:var(--fs-sm)}
 .wwwh dt{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.07em;color:var(--r1);font-weight:700;padding-top:2px}
@@ -349,6 +351,21 @@ details.x>div{padding:0 10px 10px;display:grid;gap:8px}
 .report details.x{margin-bottom:8px}
 @media (max-width:900px){ .strip-explain{grid-template-columns:minmax(0,1fr)} }
 @media (max-width:620px){ .help-edge{top:auto;bottom:calc(80px + env(safe-area-inset-bottom,0px))} .help-edge .v{display:none} .strip-h .btn{margin-left:0} }
+/* ---------- Overview process list ---------- */
+.process{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px}
+.pstep{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start}
+.pstep .pn{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--r1-line);color:var(--r1);display:grid;place-items:center;font:700 12px var(--mono)}
+.pstep .pt{font-weight:650;font-size:var(--fs)}
+.pstep .po{font:600 10.5px var(--mono);color:var(--muted);margin-left:6px}
+.pstep p{font-size:var(--fs-sm);color:var(--muted);margin-top:2px}
+@media (max-width:900px){ .process{grid-template-columns:minmax(0,1fr)} }
+/* ---------- Hover / focus explanations ---------- */
+[data-tip]{cursor:help}
+.seg [data-tip],.chk[data-tip]{cursor:pointer}
+.tipbox{position:fixed;z-index:70;max-width:320px;padding:9px 11px;border-radius:7px;background:#1E2C4B;border:1px solid var(--r1-line);color:var(--text);font-size:var(--fs-sm);line-height:1.45;box-shadow:0 8px 24px rgba(0,0,0,.45);pointer-events:none}
+.jumpbtn{flex:none;align-self:center;border-color:var(--r1);color:var(--r1);background:var(--bg2);font-weight:650}
+.jumpbtn:hover:not(:disabled){background:var(--r1-dim)!important}
+@media (max-width:620px){ .banner{flex-wrap:wrap} .jumpbtn{width:100%;justify-content:center} }
 /* ---------- Footer ---------- */
 footer{border-top:1px solid var(--line);padding-block:16px 8px;font-size:var(--fs-sm);color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
 
@@ -365,12 +382,12 @@ body.rm *{animation:none!important;transition:none!important}
 /* ---------- Responsive ---------- */
 @media (max-width:1180px){
   .run-grid{grid-template-columns:250px minmax(0,1fr)}
-  .insp{grid-column:1/-1;position:static;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .insp{grid-column:1/-1;position:static;max-height:none;overflow:visible;grid-template-columns:repeat(2,minmax(0,1fr))}
   .roles{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (max-width:900px){
   .run-grid{grid-template-columns:minmax(0,1fr)}
-  .rail{position:static}
+  .rail{position:static;max-height:none;overflow:visible}
   .insp{grid-template-columns:minmax(0,1fr)}
   .arch{grid-template-columns:minmax(0,1fr);gap:0}
   .a-link,.southlinks{min-height:26px}
@@ -476,24 +493,24 @@ body.rm *{animation:none!important;transition:none!important}
   <div class="uc-select" role="group" aria-label="Step 1: pick a use case" id="ucSelect"></div>
   <div class="hstep"><span class="hnum">2</span><h2 class="hlab">Set scenario, mode and platform</h2><span class="xs muted">Shared by every tab. Changing any of these restarts a Migration run in progress.</span></div>
 <div class="controlbar" id="controlbar">
-  <div class="field cb-scn"><label for="selScenario">Scenario</label><select id="selScenario"></select></div>
+  <div class="field cb-scn" id="scnField" data-tip=""><label for="selScenario">Scenario</label><select id="selScenario"></select></div>
   <div class="field"><span class="lab" id="lblMode">Mode</span>
     <div class="seg" role="group" aria-labelledby="lblMode">
-      <button type="button" id="modeRec" data-mode="recommendation">Recommendation mode</button>
-      <button type="button" id="modeCtl" data-mode="controlled-action">Controlled action mode</button>
+      <button type="button" id="modeRec" data-mode="recommendation" data-tip="The rApp reads the network and proposes a change, but nothing is sent to the network. Used to compare the new rApp with today's SON before trusting it to act.">Recommendation mode</button>
+      <button type="button" id="modeCtl" data-mode="controlled-action" data-tip="After the operator approves, the rApp asks the platform to apply the change, then checks it was applied and that the network improved. Every safety gate still applies.">Controlled action mode</button>
     </div></div>
   <div class="field" id="pciDesignField"><span class="lab" id="lblPci">PCI design</span>
     <div class="seg" role="group" aria-labelledby="lblPci">
-      <button type="button" id="hdrPciC" data-pci="centralized">Centralized SON</button>
-      <button type="button" id="hdrPciD" data-pci="distributed">Distributed SON</button>
+      <button type="button" id="hdrPciC" data-pci="centralized" data-tip="A central SON function collects measurements, decides the new PCI and pushes it through provisioning (3GPP TS 28.313 §8.3.1.2). This decision can move into the rApp.">Centralized SON</button>
+      <button type="button" id="hdrPciD" data-pci="distributed" data-tip="A function inside the network picks the PCI from a list it was given (3GPP TS 28.313 §8.2.3.2). Moving that into an rApp changes who decides, so the run stops for an ownership review.">Distributed SON</button>
     </div></div>
-  <div class="field"><label for="selProfile">Platform profile</label><select id="selProfile"><option value="complete">Profile A: Complete example</option><option value="limited">Profile B: Limited example</option></select></div>
+  <div class="field" id="profField" data-tip=""><label for="selProfile">Platform profile</label><select id="selProfile"><option value="complete">Profile A: Complete example</option><option value="limited">Profile B: Limited example</option></select></div>
   <div class="field"><span class="lab" id="lblView">View</span>
     <div class="seg" role="group" aria-labelledby="lblView">
-      <button type="button" id="viewEng" data-view="engineer">Network engineer</button>
-      <button type="button" id="viewDev" data-view="developer">Developer transactions</button>
+      <button type="button" id="viewEng" data-view="engineer" data-tip="Transaction trace in plain summaries, with the specification section for each call.">Network engineer</button>
+      <button type="button" id="viewDev" data-view="developer" data-tip="Adds the simplified request and response for every R1 call. Keys are fictional; no normative API is implied.">Developer transactions</button>
     </div></div>
-  <label class="chk"><input type="checkbox" id="chkMotion"> Reduce motion</label>
+  <label class="chk" data-tip="Turns off animations and smooth scrolling."><input type="checkbox" id="chkMotion"> Reduce motion</label>
   <p class="cb-note" id="cbNote"></p>
 </div>
   <div class="hstep"><span class="hnum">3</span><h2 class="hlab">Run it</h2><button class="btn primary" type="button" id="startRun"><svg aria-hidden="true"><use href="#i-play"/></svg>Open Migration run</button></div>
@@ -578,6 +595,7 @@ body.rm *{animation:none!important;transition:none!important}
   <div class="drawer-b" id="drawerBody"><h2 id="drawerTitle" class="sr-only">Panel</h2></div>
 </aside>
 <button type="button" class="help-edge" id="helpEdge" aria-controls="drawer" aria-label="Open help for this tab"><span class="q">?</span><span class="v">Help for this tab</span></button>
+<div class="tipbox" id="tipbox" role="tooltip" hidden></div>
 <div class="sr-only" id="live" aria-live="polite"></div>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
@@ -2146,13 +2164,16 @@ function phaseStatus(){
   if(S.auditEvents.length<=1) return {cls:"idle", text:"Not started · step 1 of 11"};
   return {cls:"info", text:"Next: " + phaseName(S.phase)};
 }
-function renderPhasePill(){ const p = phaseStatus(); $("phasePill").innerHTML = '<span class="pp-lab">Run status</span>' + pill(p.cls, p.text); $("phasePill").setAttribute("aria-label", "Run status: " + p.text + ". Open Migration run"); }
+function renderPhasePill(){ $("phasePill").hidden = S.tab==="overview"; const p = phaseStatus(); $("phasePill").innerHTML = '<span class="pp-lab">Run status</span>' + pill(p.cls, p.text); $("phasePill").setAttribute("aria-label", "Run status: " + p.text + ". Open Migration run"); }
 function renderControlbar(){
   const sel = $("selScenario");
   sel.innerHTML = UC().scenarios.map(s => '<option value="' + s.id + '"' + (s.id===S.scenario?" selected":"") + '>' + esc(s.label) + '</option>').join("");
   $("modeRec").setAttribute("aria-pressed", S.mode==="recommendation"); $("modeCtl").setAttribute("aria-pressed", S.mode==="controlled-action");
   $("selProfile").value = S.platformProfile;
   $("pciDesignField").hidden = S.useCase!=="pci";
+  $("scnField").dataset.tip = "A variant of the use case. Some scenarios run cleanly; others show the process correctly stopping, for example on stale data or a changed network. Current: " + scenarioObj().label + ". " + scenarioObj().desc;
+  const gap = PROFILE_B_GAPS[S.useCase];
+  $("profField").dataset.tip = "The SMO / Non-RT RIC platform the rApp runs on. Profile A offers everything this use case needs. Profile B is missing one thing so you can watch the gap stop the run. For " + UC().short + " on Profile B: " + gap.note;
   $("hdrPciC").setAttribute("aria-pressed", S.pciDesign==="centralized"); $("hdrPciD").setAttribute("aria-pressed", S.pciDesign==="distributed");
   $("viewEng").setAttribute("aria-pressed", S.view==="engineer"); $("viewDev").setAttribute("aria-pressed", S.view==="developer");
   $("chkMotion").checked = S.reduceMotion;
@@ -2163,17 +2184,19 @@ function renderControlbar(){
 function usedFamilies(){ return new Set(S.capabilities.map(r=>r.family)); }
 function archHTML(p){
   const used = usedFamilies();
-  const lastFams = new Set(S.trace.filter(t => t.phase===S.justRan).map(t => t.family));
-  const ran = S.justRan;
+  const lastFams = new Set(p==="ov" ? [] : S.trace.filter(t => t.phase===S.justRan).map(t => t.family));
+  const ran = p==="ov" ? null : S.justRan;
   const o1On = S.action && S.action.path==="CM" && S.action.requestStatus && S.action.requestStatus.startsWith("Accepted") && ran==="execute";
   const a1On = S.action && S.action.path==="A1" && ran==="execute";
   const a1Rel = S.useCase==="mlb";
   const act = id => ({legacy: ran==="contract", rapp: ["map","assess","collect"].includes(ran)})[id] ? " active" : "";
-  const tiles = FAMILY_ORDER.map(f => '<button type="button" class="tile ' + (used.has(f)?"used":"unused") + (lastFams.has(f) && !S.reduceMotion ? " flash":"") + '" id="' + p + '-tile-' + f + '" data-fam="' + f + '" data-where="' + p + '" aria-pressed="' + (p==="ov" ? S.ovFamily===f : S.serviceFilter===f) + '" aria-label="' + esc(FAMILIES[f].name) + (used.has(f)?", used by this use case":", not used by this use case") + '"><b>' + FAMILIES[f].short + '</b><span>' + esc(FAMILIES[f].tile) + '</span></button>').join("");
+  const traced = new Set(p==="ov" ? [] : S.trace.map(t => t.family));
+  const tcount = f => S.trace.filter(t => t.family===f).length;
+  const tiles = FAMILY_ORDER.map(f => '<button type="button" class="tile ' + (p==="ov" ? "neutral" : (traced.has(f)?"used":"unused")) + (lastFams.has(f) && !S.reduceMotion ? " flash":"") + '" id="' + p + '-tile-' + f + '" data-fam="' + f + '" data-where="' + p + '" aria-pressed="' + (p==="ov" ? S.ovFamily===f : S.serviceFilter===f) + '" aria-label="' + esc(FAMILIES[f].name) + (p==="ov" ? ", select for an explanation" : (traced.has(f) ? ", " + tcount(f) + " transaction(s) in the trace" : ", no transactions yet")) + '"><b>' + FAMILIES[f].short + '</b><span>' + esc(FAMILIES[f].tile) + '</span></button>').join("");
   return '<div class="arch">' +
     '<div class="a-node' + act("legacy") + '"><h5>Legacy SON contract</h5><span class="d">' + esc(UC().short) + ': ' + UC().contract.length + ' fields. Owner: SON specialist</span></div>' +
     '<div class="a-link" aria-hidden="true"></div>' +
-    '<div class="a-node' + act("rapp") + '"><h5>rApp</h5><span class="d">Decision engine for ' + esc(UC().short) + '. Consumes R1 services only.</span><span class="d mono">' + esc(S.flags.rappId || "not registered") + '</span></div>' +
+    '<div class="a-node' + act("rapp") + '"><h5>rApp</h5><span class="d">Decision engine for ' + esc(UC().short) + '. Consumes R1 services only.</span><span class="d mono">' + esc(p==="ov" ? "registered at run time" : (S.flags.rappId || "not registered")) + '</span></div>' +
     '<div class="a-link r1' + (lastFams.size && ran!=="contract" && ran!=="map" ? " on":"") + '" aria-hidden="true"><span>R1</span></div>' +
     '<div class="framework"><div class="fh"><h5 style="margin:0;font-size:12.5px">SMO / Non-RT RIC framework</h5><span class="tag">exposes R1</span></div>' +
       '<div class="r1-edge"><span class="lbl">R1 SERVICE FAMILIES</span><div class="tiles">' + tiles + '</div></div>' +
@@ -2186,11 +2209,23 @@ function archHTML(p){
 function legendHTML(){ return '<div class="legend"><span><i></i>R1 service use (rApp to framework)</span><span><i class="s"></i>Southbound O1 / A1 from the framework (simulated)</span><span>' + pill("ok","Supported") + '</span><span>' + pill("warn","Needs review") + '</span><span>' + pill("bad","Blocked") + '</span>' + ILL + '</div>'; }
 
 /* ------------------------------ OVERVIEW ------------------------------ */
+const PROCESS_PLAIN = {
+  contract:"Write down exactly what today's SON function does: what starts it, what it reads, what it decides, what it may change and how success is judged. No network contact.",
+  map:"Match every input and action in the contract to an R1 service, and check each one is available and permitted on the target platform.",
+  register:"Install the rApp on the SMO platform. It introduces itself and receives an identity that every later request carries.",
+  discover:"The rApp asks which services and data types it may use. A missing or forbidden required service stops the process here.",
+  collect:"Read the network through R1: cells, neighbors, settings, measurements and alarms. Stale or missing data stops the process here.",
+  assess:"Apply the decision logic and produce a recommendation with its evidence. In recommendation mode the process ends here and nothing is changed.",
+  approve:"The operator reviews the proposal and approves or rejects it. Conflicts between rApps are also settled at this point.",
+  execute:"Re-check that the network has not changed, then ask the platform to apply the change. The platform, not the rApp, reaches the network.",
+  readback:"Read the value (or policy status) back to prove it is actually in place.",
+  observe:"Wait for an observation window and compare before and after against the operator's limits.",
+  complete:"Close with three separate pieces of evidence (request accepted, value in place, network better) and an exportable audit trail."
+};
 function renderOverview(){
-  const owners = currentOwners();
-  const started = S.auditEvents.length > 1, terminal = ["complete","blocked"].includes(S.phase);
-  const tagTxt = terminal ? "acted last" : (S.gate ? "must decide now" : (started ? "acts next" : "acts first"));
-  const roles = Object.keys(ROLES).map(k => { const r = ROLES[k]; return '<div class="role' + (owners.includes(k)?" now":"") + '"><span class="ab">' + r.ab + (owners.includes(k)?' · <span class="role-tag">' + tagTxt + '</span>':"") + '</span><h3>' + esc(r.name) + '</h3><p>' + esc(r.resp) + '</p><span class="tp">Touch points: ' + esc(r.touch) + '</span></div>'; }).join("");
+  const roles = Object.keys(ROLES).map(k => { const r = ROLES[k]; const steps = PHASES.filter(p => p.owner.includes(k)).map(p => p.name);
+    return '<div class="role"><span class="ab">' + r.ab + '</span><h3>' + esc(r.name) + '</h3><p>' + esc(r.resp) + '</p><span class="tp">Leads or co-leads: ' + esc(steps.join(", ")) + '</span></div>'; }).join("");
+  const steps = PHASES.map((p,i) => '<li class="pstep"><span class="pn">' + (i+1) + '</span><div><div class="pt">' + esc(p.name) + ' <span class="po">' + p.owner.map(o=>ROLES[o].ab).join(" + ") + '</span></div><p>' + esc(PROCESS_PLAIN[p.id]) + '</p></div></li>').join("");
   $("view-overview").innerHTML =
     '<div class="grid2">' +
       '<div class="panel"><div class="panel-h"><h2>Public context</h2><span class="tag">contextual facts only</span></div><div class="prose small">' +
@@ -2198,12 +2233,14 @@ function renderOverview(){
         '<p>The published aim is to migrate proven internal automation into rApps and engage other rApp suppliers. Ericsson reported a third-party rApp performing optimization on AT&amp;T\'s live network over R1 in July 2025. <span class="spec">[S2, S3]</span></p>' +
         '<p class="muted">The sources do not disclose algorithms, thresholds, APIs, migration sequence, approvals or a method of procedure. PCI is included as an educational SON example, not as a confirmed AT&amp;T migration module.</p>' +
       '</div></div>' +
-      '<div class="panel"><div class="panel-h"><h2>Selected use case</h2>' + pill(phaseStatus().cls, phaseStatus().text) + '</div>' +
-        '<dl class="kv"><dt>Use case</dt><dd>' + esc(UC().label) + '</dd><dt>Scenario</dt><dd>' + esc(scenarioObj().label) + '</dd><dt>Mode</dt><dd>' + (S.mode==="recommendation"?"Recommendation mode":"Controlled action mode") + '</dd><dt>Profile</dt><dd>' + (S.platformProfile==="complete"?"Profile A: Complete example":"Profile B: Limited example") + '</dd><dt>R1 families</dt><dd>' + [...usedFamilies()].map(f=>FAMILIES[f].short).join(", ") + '</dd></dl>' +
-        '<p class="small muted" style="margin-top:10px">' + esc(scenarioObj().desc) + '</p></div>' +
+      '<div class="panel"><div class="panel-h"><h2>Three example SON functions</h2><span class="tag">same method, different dependencies</span></div><div class="stack small">' +
+        Object.keys(USE_CASES).map(k => '<div><b>' + esc(USE_CASES[k].label) + '.</b> <span class="muted">' + esc(USE_CASES[k].blurb) + ' Uses ' + [...new Set(USE_CASES[k].ledger.map(r=>r.family))].map(f=>FAMILIES[f].short).join(", ") + '.</span></div>').join("") +
+        '<p class="muted">Each has several scenarios, including ones where the process correctly stops: missing data, denied access, a changed network, or two rApps wanting opposite things.</p>' +
+      '</div></div>' +
     '</div>' +
+    '<div class="panel"><div class="panel-h"><h2>The migration process, step by step</h2><span class="xs muted">The same eleven steps apply to every use case</span></div><ol class="process">' + steps + '</ol></div>' +
     '<div class="panel"><div class="panel-h"><h2>Architecture</h2><span class="xs muted">The rApp talks only to R1. O1 and A1 are southbound from the framework.</span></div>' + archHTML("ov") + '<div style="margin-top:10px">' + legendHTML() + '</div>' + ovFamilyHTML() + '</div>' +
-    '<div class="panel"><div class="panel-h"><h2>Who owns what</h2><span class="tag">illustrative responsibility model</span></div><p class="small muted" style="margin:-4px 0 12px">Highlighted cards are the roles responsible for ' + (["complete","blocked"].includes(S.phase) ? "the step where the run ended" : "the next step of the Migration run") + ': <b style="color:var(--text)">' + esc(phaseName(S.phase==="blocked" ? S.flags.blockedAt : S.phase)) + '</b>. The highlight moves as the run advances.</p><div class="roles">' + roles + '</div></div>';
+    '<div class="panel"><div class="panel-h"><h2>Who owns what</h2><span class="tag">illustrative responsibility model</span></div><div class="roles">' + roles + '</div></div>';
 }
 
 function ovFamilyHTML(){
@@ -2223,15 +2260,7 @@ function renderContract(){
   const rows = u.contract.map((c,i) => '<tr class="clickable' + (i===selIdx?" sel":"") + '" id="cf-' + i + '" tabindex="0" data-field="' + i + '" aria-label="Contract field ' + esc(c.k) + '"><td><b>' + esc(c.k) + '</b>' + (c.semantic?' <span class="tag">semantic</span>':'') + '</td><td>' + esc(c.v) + '</td></tr>').join("");
   const sm = u.semantic;
   let extra = "";
-  if(S.useCase==="pci"){
-    extra = '<div class="panel"><div class="panel-h"><h2>Centralized SON or distributed SON</h2><span class="spec">' + SPEC.CSON + ' · ' + SPEC.DSON + '</span></div>' +
-      '<div class="grid2"><div class="stack small"><p><b>Centralized (C-SON).</b> The central function collects PCI-related measurements, analyzes network resource model data and measurements, determines the new PCI and invokes provisioning. The decision can move into an rApp that uses R1 CM.</p>' +
-      '<p><b>Distributed (D-SON).</b> A network-side function selects a PCI from a configured list. Migrating that behavior changes who decides, so ownership needs explicit review.</p>' +
-      '<p class="muted">This app does not assert which design any operator uses. The same choice is in the header, step 2.</p></div>' +
-      '<div class="stack"><div class="seg" role="group" aria-label="PCI design"><button type="button" id="pciC" data-pci="centralized" aria-pressed="' + (S.pciDesign==="centralized") + '">Centralized SON</button><button type="button" id="pciD" data-pci="distributed" aria-pressed="' + (S.pciDesign==="distributed") + '">Distributed SON</button></div>' +
-      (S.pciDesign==="distributed" ? '<div class="callout warn">' + icon("i-warn") + '<div><b>Ownership review required.</b> With distributed SON selected, the run stops at mapping until the operator and SON specialist agree the target design.</div></div>' : '<div class="callout">' + icon("i-info") + '<div>Centralized design selected. The rApp takes the decision and requests a CM write after approval.</div></div>') +
-      '</div></div></div>';
-  }
+  if(S.useCase==="pci" && S.pciDesign==="distributed") extra = '<div class="callout warn">' + icon("i-warn") + '<div><b>Distributed SON is selected in the header.</b> A network-side function picks the PCI from a configured list (' + SPEC.DSON + '), so moving the decision into an rApp needs an ownership review first. The Migration run stops at step 2 until you choose Centralized SON.</div></div>';
   if(S.useCase==="coc") extra = '<div class="callout warn">' + icon("i-warn") + '<div><b>Acknowledging an alarm is not resolving the fault.</b> FM offers a change of acknowledgement state (' + SPEC.FM + '). It records that someone has seen the alarm; the cell stays out of service until it is repaired.</div></div>';
   if(S.useCase==="mlb") extra = '<div class="callout">' + icon("i-info") + '<div><b>Two action paths, two approvals.</b> An A1 policy toward the Near-RT RIC and a CM write are separate choices with different evidence. No handover offset or A1 policy schema shown here is standardized for this scenario.</div></div>';
   $("view-contract").innerHTML =
@@ -2299,7 +2328,7 @@ function renderStepper(){
     return '<li class="' + cls + (viewing?" viewing":"") + '"' + (cls==="cur"||cls==="gate"?' aria-current="step"':'') + '><span class="ic">' + ic + '</span>' + (recIdx!=null ? '<button type="button" class="sd-link" id="sl-' + p.id + '" data-detail="' + recIdx + '" aria-label="Show details for ' + esc(p.name) + '">' + label + '</button>' : '<span>' + label + '</span>') + '</li>';
   }).join("");
 }
-function renderBanner(){
+function renderBanner(extra){
   let cls = "info", ic = "i-info", title = "", body = "";
   if(S.phase==="blocked"){ cls="bad"; ic="i-block"; title = "Blocked: " + S.block.title; body = S.block.detail + " (" + S.block.code + ")"; }
   else if(S.phase==="complete"){ const st = S.completion.status; cls = st==="pass"?"ok":(st==="fail"?"bad":"warn"); ic = st==="pass"?"i-ok":(st==="fail"?"i-block":"i-warn"); title = S.completion.label; body = S.completion.detail + (S.completion.rollback ? " Rollback candidate: " + S.completion.rollback + "." : ""); }
@@ -2308,7 +2337,7 @@ function renderBanner(){
   else if(S.gate==="restoration-review"){ cls="warn"; ic="i-warn"; title="Restoration review required: RAN operations must act"; body = "NR-303 recovered, but NR-302 changed during the outage. The app will not write the original value. Request a new approval or pause."; }
   else if(S.flags.reassess && S.phase==="assess"){ cls="warn"; ic="i-warn"; title="Fresh assessment required"; body = "The proposal was computed from an older snapshot revision. Run next step reassesses from revision " + S.networkSnapshot.revision + "."; }
   else { title = S.auditEvents.length>1 ? "Next: " + phaseName(S.phase) : "Ready to run"; body = S.auditEvents.length>1 ? "Owner: " + PHASES[PHASE_IDX[S.phase]].owner.map(o=>ROLES[o].name).join(" and ") + "." : "Press Run next step to begin, or Run all to stop at the first approval, gap or block."; }
-  return '<div class="banner ' + cls + '" role="status">' + icon(ic) + '<div><div class="bt">' + esc(title) + '</div><div class="bd">' + esc(body) + '</div></div></div>';
+  return '<div class="banner ' + cls + '" role="status">' + icon(ic) + '<div style="flex:1;min-width:0"><div class="bt">' + esc(title) + '</div><div class="bd">' + esc(body) + '</div></div>' + (extra||"") + '</div>';
 }
 function cellValue(c){
   if(S.useCase==="pci") return "PCI " + c.pci;
@@ -2419,7 +2448,7 @@ function renderRun(){
   $("lblApprove").textContent = lab[0]; $("lblReject").textContent = lab[1];
   $("whyDisabled").textContent = can ? (S.mode==="recommendation" ? "Recommendation mode: the run stops after the proposal. Action: Not executed." : "Run all stops at approval, a missing capability, denied access, stale data, a conflict or a terminal result.") : runDisabledReason();
   $("policyGrid").innerHTML = renderPolicy();
-  $("runBanner").innerHTML = renderBanner();
+  $("runBanner").innerHTML = renderBanner(S.stepLog && S.stepLog.length ? '<button class="btn jumpbtn" type="button" id="bannerJump">Read what this step did ↓</button>' : '');
   renderStepDetail();
   $("archRun").innerHTML = archHTML("run");
   $("topo").innerHTML = renderTopo();
@@ -2576,9 +2605,10 @@ const HELP = {
     sections:[
       {h:"What you see", items:[
         ["Public context","What AT&T and Ericsson have said publicly about moving SON functions to rApps. These are the only real-world facts in the app. Everything else is fictional."],
-        ["Selected use case","The use case, scenario, mode and platform profile you picked, and where the current run stands."],
+        ["Three example SON functions","PCI optimization, mobility load balancing and cell outage compensation, and which R1 service families each uses."],
+        ["The migration process, step by step","The eleven steps every migration goes through, who leads each one, and what happens there."],
         ["Architecture","The same picture as the header strip, in more detail. The rApp talks only to R1 service tiles. The platform reaches the network over O1 and, for policies, A1."],
-        ["Who owns what","Five roles. Highlighted cards are the roles responsible for the next step of the Migration run; the highlight moves as the run advances."]]},
+        ["Who owns what","Five roles. Each card lists the steps that role leads or co-leads. The Overview does not follow a run; the Migration run tab does."]]},
       {h:"Things to try", items:[
         ["Click a service tile","Filters the R1 mapping ledger to that service and highlights matching transactions in the run."],
         ["Switch use case","The whole app changes: contract, ledger, cells, scenarios and evidence. Any run in progress restarts so nothing leaks from one use case to another."]]},
@@ -2592,7 +2622,7 @@ const HELP = {
       {h:"How to use it", items:[
         ["Contract table","Eleven fields per use case. Click any row to see its plain-English definition on the right."],
         ["Semantic mapping card","Shows why labels are not enough: the unit, sample interval, object identity, freshness and what to do if a value is missing."],
-        ["Centralized vs distributed (PCI only)","Choose who makes the PCI decision. With distributed SON the network picks from a list, so the run stops for an ownership review."]]},
+        ["Centralized vs distributed (PCI only)","Chosen in the header, step 2. With distributed SON the network picks the PCI from a list, so the run stops for an ownership review. Hover the buttons for a short explanation."]]},
       {h:"Why it matters", items:[
         ["No contract, no review","Without a written contract, nobody can check whether the new rApp behaves like the old function, or better."],
         ["Where answers come from","The step details in the Migration run show where each field came from: settings, logs, change history, interviews or operator policy."]]}]},
@@ -2621,7 +2651,7 @@ const HELP = {
       {h:"Panels", items:[
         ["Workflow (left)","The eleven steps and who owns each. Click a finished step to reread its details."],
         ["Step details","Plain English first, then every record the step produced with its format. Open 'For technical readers' for the API calls and the code behind the step."],
-        ["Architecture","Tiles flash when a step uses that service. O1 or A1 lights up when the platform carries a change to the network."],
+        ["Architecture","A service tile lights up once the transaction trace contains a call to that service, and flashes when the latest step used it. O1 or A1 lights up when the platform carries a change to the network."],
         ["Simulated topology","The fictional cells. Teal is a proposal target, amber needs attention, red dashed is an outage. The list beside it is the same data as text."],
         ["Transaction trace","Every R1 exchange in order. Switch to Developer transactions in the bar above to see the simplified request and response for each."],
         ["Inspector (right)","The current step in short (who, what, how, why, what changes), the recommendation, conflicts, and anything you clicked."]]},
@@ -2732,6 +2762,7 @@ function bind(){
   $("btnReject").addEventListener("click", onReject);
   $("btnBack").addEventListener("click", onBack);
   $("btnReset").addEventListener("click", onReset);
+  $("runBanner").addEventListener("click", e => { if(e.target.closest("#bannerJump")) $("btnJump").click(); });
   $("btnJump").addEventListener("click", () => { jumpToDetails(); const h = document.querySelector("#stepDetail h2"); if(h){ h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); } });
   $("phasePill").addEventListener("click", () => setTab("run"));
 
@@ -2799,13 +2830,33 @@ function bind(){
   });
 }
 
+/* ------------------------------ hover / focus explanations ------------------------------ */
+let tipOwner = null;
+function showTip(t){
+  const text = t.dataset.tip; if(!text) return;
+  const box = $("tipbox"); box.textContent = text; box.hidden = false; tipOwner = t;
+  t.setAttribute("aria-describedby", "tipbox");
+  const r = t.getBoundingClientRect(), W = document.documentElement.clientWidth, bw = box.offsetWidth, bh = box.offsetHeight;
+  let left = Math.min(Math.max(8, r.left), W - bw - 8), top = r.bottom + 8;
+  if(top + bh > window.innerHeight - 8) top = r.top - bh - 8;
+  box.style.left = left + "px"; box.style.top = top + "px";
+}
+function hideTip(){ if(tipOwner) tipOwner.removeAttribute("aria-describedby"); tipOwner = null; $("tipbox").hidden = true; }
+function bindTips(){
+  document.addEventListener("mouseover", e => { const t = e.target.closest("[data-tip]"); if(t && t!==tipOwner) showTip(t); else if(!t && tipOwner) hideTip(); });
+  document.addEventListener("focusin", e => { const t = e.target.closest("[data-tip]"); if(t) showTip(t); else hideTip(); });
+  document.addEventListener("focusout", () => hideTip());
+  window.addEventListener("scroll", hideTip, {passive:true});
+  document.addEventListener("keydown", e => { if(e.key==="Escape" && tipOwner) hideTip(); });
+}
+
 /* ------------------------------ boot ------------------------------ */
 (function boot(){
   loadPrefs();
   const h = (location.hash || "").replace("#","");
   if(TABS.some(t=>t.id===h)) S.tab = h;
   resetUseCase();
-  bind();
+  bind(); bindTips();
   render();
 })();
 </script>
