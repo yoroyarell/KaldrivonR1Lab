@@ -112,7 +112,9 @@ select,input[type="search"]{background:var(--bg2);border:1px solid var(--line2);
 .tab{border:0;background:transparent;color:var(--muted);padding:11px 12px;font-size:var(--fs-sm);font-weight:600;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}
 .tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--r1)}
 .tab:hover{color:var(--text)}
-.phase-pill{flex:none}
+.phase-pill{flex:none;display:inline-flex;align-items:center;gap:7px;border:0;background:transparent;cursor:pointer;padding:4px 0}
+.phase-pill .pp-lab{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:650}
+.phase-pill:hover .pill{filter:brightness(1.2)}
 
 /* ---------- Control bar ---------- */
 .controlbar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;padding-block:12px;border-bottom:1px solid var(--line)}
@@ -418,7 +420,7 @@ body.rm *{animation:none!important;transition:none!important}
 <nav class="tabs" aria-label="Workbench views">
   <div class="tabs-inner">
     <div class="tablist" role="tablist" id="tablist"></div>
-    <span class="phase-pill" id="phasePill" aria-live="polite"></span>
+    <button type="button" class="phase-pill" id="phasePill" data-tab="run" aria-live="polite" title="Open Migration run"></button>
   </div>
 </nav>
 
@@ -1514,9 +1516,10 @@ function phaseStatus(){
   if(S.phase==="blocked") return {cls:"bad", text:"Blocked: " + S.block.title};
   if(S.phase==="complete") return {cls: S.completion.status==="pass"?"ok":(S.completion.status==="fail"?"bad":"warn"), text:S.completion.label};
   if(S.gate) return {cls:"warn", text: S.gate==="approval" ? "Awaiting approval" : (S.gate==="conflict-review" ? "Conflict review" : "Restoration review required")};
-  return {cls: S.auditEvents.length>1 ? "info":"idle", text:"Next: " + phaseName(S.phase)};
+  if(S.auditEvents.length<=1) return {cls:"idle", text:"Not started · step 1 of 11"};
+  return {cls:"info", text:"Next: " + phaseName(S.phase)};
 }
-function renderPhasePill(){ const p = phaseStatus(); $("phasePill").innerHTML = pill(p.cls, p.text); }
+function renderPhasePill(){ const p = phaseStatus(); $("phasePill").innerHTML = '<span class="pp-lab">Run status</span>' + pill(p.cls, p.text); $("phasePill").setAttribute("aria-label", "Run status: " + p.text + ". Open Migration run"); }
 function renderControlbar(){
   const sel = $("selScenario");
   sel.innerHTML = UC().scenarios.map(s => '<option value="' + s.id + '"' + (s.id===S.scenario?" selected":"") + '>' + esc(s.label) + '</option>').join("");
@@ -1946,6 +1949,7 @@ function bind(){
   $("btnReject").addEventListener("click", onReject);
   $("btnBack").addEventListener("click", onBack);
   $("btnReset").addEventListener("click", onReset);
+  $("phasePill").addEventListener("click", () => setTab("run"));
 
   // Tabs with arrow-key navigation
   $("tablist").addEventListener("click", e => { const t = e.target.closest("[data-tab]"); if(t) setTab(t.dataset.tab); });
