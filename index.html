@@ -451,6 +451,17 @@ body.rm *{animation:none!important;transition:none!important}
   .strip{font-size:var(--fs-xs)}
   .phase-pill{display:none}
 }
+
+/* ---------- Header help buttons ---------- */
+.hq{width:22px;height:22px;min-height:0;padding:0;border-radius:50%;border:1px solid var(--line2);background:transparent;color:var(--muted);font:700 12px var(--mono);cursor:pointer;display:inline-grid;place-items:center;flex:none;vertical-align:middle}
+.hq:hover,.hq:focus-visible{color:var(--r1);border-color:var(--r1)}
+.strip-h .hq{margin-left:0}
+.start .hh-open{margin-left:auto;min-height:28px;padding:4px 10px;gap:6px}
+.hq-i{width:16px;height:16px;border-radius:50%;border:1px solid currentColor;display:inline-grid;place-items:center;font:700 10px var(--mono)}
+.hh-pointer{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:8px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);margin:0}
+.hh-pointer .btn{min-height:28px;padding:4px 10px}
+.hh-now{padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2)}
+.drawer-tabs{flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -501,7 +512,7 @@ body.rm *{animation:none!important;transition:none!important}
   </div>
   <p class="context">Public AT&amp;T and Ericsson material on moving SON functionality toward a Non-RT RIC and rApp environment motivates this topic. All cells, numbers, rules, approvals and outcomes in this application are fictional. Nothing here controls a live RAN.</p>
   <div class="strip-wrap">
-  <div class="strip-h"><span class="lab">Migration path at a glance</span><span class="xs muted">How a SON function works once it moves into an rApp. Read left to right: the contract feeds the rApp, the rApp only talks R1, and the platform reaches the network for it.</span><button class="btn ghost" type="button" id="stripToggle" aria-expanded="false" aria-controls="stripExplain">What does each box mean?</button></div>
+  <div class="strip-h"><span class="lab">Migration path at a glance</span><button class="hq" type="button" data-headhelp="path" aria-label="Help: migration path" title="Help: migration path">?</button><span class="xs muted">How a SON function works once it moves into an rApp. Read left to right: the contract feeds the rApp, the rApp only talks R1, and the platform reaches the network for it.</span><button class="btn ghost" type="button" id="stripToggle" aria-expanded="false" aria-controls="stripExplain">What does each box mean?</button></div>
   <div class="strip" aria-label="Architecture strip">
     <span class="n">Legacy SON contract</span><span class="arr" aria-hidden="true">→</span>
     <span class="n">rApp</span><span class="arr" aria-hidden="true">→</span>
@@ -519,10 +530,10 @@ body.rm *{animation:none!important;transition:none!important}
     <div><dt>Simulated RAN</dt><dd>The fictional cells in this demo. Nothing here reaches a real network.</dd></div>
   </dl>
   </div>
-  <div class="start" id="startCue"><span class="k">Start here</span><span class="small">Three steps below: pick a SON function, choose how the run behaves, then step through the migration.</span></div>
-  <div class="hstep"><span class="hnum">1</span><h2 class="hlab">Pick a use case</h2></div>
+  <div class="start" id="startCue"><span class="k">Start here</span><span class="small">Three steps below: pick a SON function, choose how the run behaves, then step through the migration.</span><button class="btn ghost hh-open" type="button" data-headhelp="start"><span class="hq-i" aria-hidden="true">?</span>Header help</button></div>
+  <div class="hstep"><span class="hnum">1</span><h2 class="hlab">Pick a use case</h2><button class="hq" type="button" data-headhelp="uc" aria-label="Help: pick a use case" title="Help: pick a use case">?</button></div>
   <div class="uc-select" role="group" aria-label="Step 1: pick a use case" id="ucSelect"></div>
-  <div class="hstep"><span class="hnum">2</span><h2 class="hlab">Set scenario, mode and platform</h2><span class="xs muted">Shared by every tab. Changing any of these restarts a Migration run in progress.</span></div>
+  <div class="hstep"><span class="hnum">2</span><h2 class="hlab">Set scenario, mode and platform</h2><button class="hq" type="button" data-headhelp="scn" aria-label="Help: scenario, mode and platform" title="Help: scenario, mode and platform">?</button><span class="xs muted">Shared by every tab. Changing any of these restarts a Migration run in progress.</span></div>
 <div class="controlbar" id="controlbar">
   <div class="field cb-scn" id="scnField" data-tip=""><label for="selScenario">Scenario</label><select id="selScenario"></select></div>
   <div class="field"><span class="lab" id="lblMode">Mode</span>
@@ -544,7 +555,7 @@ body.rm *{animation:none!important;transition:none!important}
   <label class="chk" data-tip="Turns off animations and smooth scrolling."><input type="checkbox" id="chkMotion"> Reduce motion</label>
   <p class="cb-note" id="cbNote"></p>
 </div>
-  <div class="hstep"><span class="hnum">3</span><h2 class="hlab">Run it</h2><button class="btn primary" type="button" id="startRun"><svg aria-hidden="true"><use href="#i-play"/></svg>Open Migration run</button></div>
+  <div class="hstep"><span class="hnum">3</span><h2 class="hlab">Run it</h2><button class="hq" type="button" data-headhelp="run" aria-label="Help: run it" title="Help: run it">?</button><button class="btn primary" type="button" id="startRun"><svg aria-hidden="true"><use href="#i-play"/></svg>Open Migration run</button></div>
 </header>
 
 <!-- ============================ TABS ============================ -->
@@ -618,7 +629,8 @@ body.rm *{animation:none!important;transition:none!important}
   <div class="drawer-h">
     <div class="drawer-tabs" role="group" aria-label="Drawer section">
       <button class="btn" type="button" id="dAbout">About</button>
-      <button class="btn" type="button" id="dHelp">Help</button>
+      <button class="btn" type="button" id="dHelp">Tab help</button>
+      <button class="btn" type="button" id="dHead">Header help</button>
       <button class="btn" type="button" id="dSources">Sources</button>
     </div>
     <button class="btn ghost" type="button" id="drawerClose" aria-label="Close panel"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
@@ -2951,8 +2963,9 @@ function renderDrawer(){
   $("btnAbout").setAttribute("aria-expanded", S.drawer==="about"); $("btnSources").setAttribute("aria-expanded", S.drawer==="sources");
   $("helpEdge").setAttribute("aria-expanded", S.drawer==="help"); $("helpEdge").hidden = !!S.drawer;
   if(!S.drawer) return;
-  $("dAbout").setAttribute("aria-pressed", S.drawer==="about"); $("dSources").setAttribute("aria-pressed", S.drawer==="sources"); $("dHelp").setAttribute("aria-pressed", S.drawer==="help");
-  $("drawerBody").innerHTML = S.drawer==="help" ? helpHTML() : S.drawer==="about"
+  $("dAbout").setAttribute("aria-pressed", S.drawer==="about"); $("dSources").setAttribute("aria-pressed", S.drawer==="sources"); $("dHelp").setAttribute("aria-pressed", S.drawer==="help"); $("dHead").setAttribute("aria-pressed", S.drawer==="headhelp");
+  document.querySelectorAll("[data-headhelp]").forEach(x => { if(!x.closest("#drawer")) x.setAttribute("aria-expanded", String(S.drawer==="headhelp")); });
+  $("drawerBody").innerHTML = S.drawer==="help" ? helpHTML() : S.drawer==="headhelp" ? headerHelpHTML() : S.drawer==="about"
     ? '<h2 id="drawerTitle">About this model</h2><p class="small">A one-page workbench that traces how a legacy SON function could be migrated into an rApp that uses R1 services in an SMO / Non-RT RIC environment. Three example functions show the same method with different dependencies.</p>' +
       '<div class="callout warn">' + icon("i-flask") + '<div><b>Synthetic reference workflow.</b> Every cell, value, rule, approval and outcome is fictional and deterministic (seed ' + SEED + '). Nothing here controls a live RAN.</div></div>' +
       '<h3>How to read it</h3><ul class="small" style="margin:0;padding-left:18px;display:grid;gap:4px"><li>SON contract: what the legacy function needs and does.</li><li>R1 mapping: which service family supplies each input or carries each action.</li><li>Migration run: step through registration, discovery, collection, assessment, approval, execution, readback and observation.</li><li>Evidence and audit: three separate observations and an exportable record.</li><li>Portability: two fictional platform profiles and a small test matrix.</li></ul>' +
@@ -3007,31 +3020,6 @@ function reportHTML(){
 
 /* ------------------------------ Help content per tab ------------------------------ */
 /* ------------------------------ Help content per tab (complete reference) ------------------------------ */
-const HELP_COMMON = {h:"Header, steps and navigation (all tabs)", items:[
-  ["KaldrivonR1Lab logo and name","The name of this workbench. The amber badge beside it, Synthetic reference workflow, is a reminder that every cell, value and outcome here is fictional."],
-  ["About this model","Opens a side panel explaining what the app is, how to read it, and which parts come from standards and which are simulated. Includes the author card."],
-  ["Sources and limitations","Opens a side panel with every public source (S1 to S8) and the limits of the simulation."],
-  ["Guided tour","Walks you through the whole app one element at a time, switching tabs as needed. Use Next, Back or End tour, or the arrow keys and Escape."],
-  ["Context line","One sentence on why the topic matters and a reminder that nothing here reaches a live RAN."],
-  ["Migration path at a glance","The strip of six boxes: legacy SON contract, rApp, R1 services, SMO / Non-RT RIC, O1 and A1, simulated RAN. Read left to right. What does each box mean? opens a plain-English explanation of every box; Hide explanation closes it."],
-  ["Start here","Introduces the three numbered steps below it."],
-  ["Step 1: Pick a use case","Three cards: PCI Optimization, Mobility Load Balancing, Cell Outage Compensation. Choosing one changes the whole app: contract, ledger, cells, scenarios, evidence and help examples. A run in progress restarts so nothing carries over."],
-  ["Step 2: Scenario","A variant of the use case. Some run cleanly, others show the process correctly stopping. Hover it for the current scenario's description."],
-  ["Step 2: Mode","Recommendation mode proposes a change and sends nothing. Controlled action mode can act after the operator approves. Hover each button for details."],
-  ["Step 2: PCI design","Shown only for PCI Optimization. Centralized SON lets the rApp make the PCI decision. Distributed SON means a network-side function picks the PCI from a list, so the run stops at step 2 for an ownership review."],
-  ["Step 2: Platform profile","Profile A offers everything the use case needs. Profile B is missing one thing, different per use case, so you can watch the gap stop the run. Hover it to see the gap."],
-  ["Step 2: View","Network engineer shows plain summaries in the transaction trace. Developer transactions adds the simplified request and response for every R1 call. Your choice is remembered in this browser."],
-  ["Step 2: Reduce motion","Turns off animations and smooth scrolling. Also follows your system setting. Remembered in this browser."],
-  ["Step 2: note line","Describes the selected scenario and reminds you that changing any setting restarts a Migration run in progress."],
-  ["Hover explanations","Every control in step 2 shows a short explanation when you hover it or reach it with the Tab key."],
-  ["Step 3: Open Migration run","Switches to the Migration run tab and puts the keyboard focus on Run next step."],
-  ["Tabs","Overview, SON contract, R1 mapping, Migration run, Evidence and audit, Portability and sources. All share one state. With a tab focused, the Left and Right arrow keys move between tabs, Home and End jump to the first and last. The bar stays at the top while you scroll."],
-  ["Run status","Right side of the tab bar, hidden on the Overview. Shows Not started, the next step, Awaiting approval, Conflict review, Restoration review required, Blocked with its reason, or the final result. Click it to open Migration run."],
-  ["Help for this tab","The ? tab on the right edge of the screen opens this panel for whichever tab you are on. Close it with ×, Escape, or by clicking anywhere outside it."],
-  ["Messages","Short notes appear at the bottom of the screen after actions such as switching profile or exporting. Screen readers hear the same messages."],
-  ["Direct links","Adding #overview, #contract, #mapping, #run, #evidence or #portability to the page address opens that tab."],
-  ["Footer","Author credit with links to kaldrivon.com, LinkedIn and info@kaldrivon.com, and a statement that the app is not affiliated with AT&T, Ericsson, ETSI, O-RAN ALLIANCE or 3GPP."]]};
-
 const HELP_GLOSSARY = {h:"Words used in this app", items:[
   ["SON","Self-Organizing Network: automation that tunes the radio network, for example fixing PCI clashes, balancing load or compensating for an outage."],
   ["rApp","An application on the Non-RT RIC that automates a RAN task and talks to the platform only through R1."],
@@ -3075,7 +3063,7 @@ const HELP = {
         ["Legend","Line styles and the status colors used across the app. Every status also has words and an icon, never color alone."]]},
       {h:"Who owns what", items:[
         ["Role cards","Five roles, each with responsibilities and the steps it leads or co-leads. This is an illustrative responsibility model, not a published operator RACI."]]},
-      HELP_GLOSSARY, HELP_COMMON]},
+      HELP_GLOSSARY]},
   contract:{title:"Help: SON contract", intro:"The written agreement made before migration: exactly what today's SON function does, so every later step can be checked against it.",
     sections:[
       {h:"Contract table", items:[
@@ -3099,7 +3087,7 @@ const HELP = {
         ["MLB","A note that the A1 policy path and the CM path are separate choices with separate approvals."],
         ["COC","A warning that acknowledging an alarm only records that someone saw it; it does not repair the cell."]]},
       {h:"Related", items:[["Where each answer came from","Run step 1 in Migration run and open its step details: every contract field is listed with its source, such as settings, logs, change history, interviews or operator policy, plus the YAML document as stored."]]},
-      HELP_GLOSSARY, HELP_COMMON]},
+      HELP_GLOSSARY]},
   mapping:{title:"Help: R1 mapping", intro:"The dependency ledger: every input the rApp needs and every action it may take, mapped to an R1 service family and checked against the selected platform profile.",
     sections:[
       {h:"Filters and search", items:[
@@ -3129,7 +3117,7 @@ const HELP = {
         ["Required","Needed in every mode."],["Required to act","Needed only in controlled action mode, for example a write permission."],
         ["Action path option","One of several ways to act, such as A1 or CM for MLB. A missing option does not stop the run by itself."],["Optional","Useful, but the run continues without it."]]},
       {h:"What changes the ledger", items:[["Profile, scenario, policy","Profile B introduces one gap per use case. Some scenarios make data stale. The freshness gate in operator policy decides what counts as stale."]]},
-      HELP_GLOSSARY, HELP_COMMON]},
+      HELP_GLOSSARY]},
   run:{title:"Help: Migration run", intro:"The workbench. Step through the migration one action at a time and see exactly what each step did, who did it and why.",
     sections:[
       {h:"Workflow (left column)", items:[
@@ -3194,7 +3182,7 @@ const HELP = {
         ["COC: Stale alarm or missing neighbor measurements","Blocked at Collect, listing the missing evidence."],
         ["COC: Recovery with intervening change","After compensation the cell recovers, but a neighbor was changed meanwhile: Restoration review required, never an automatic restore."],
         ["Profile B","PCI: write not authorized. MLB: load data type has no data. COC: Network Information unavailable."]]},
-      HELP_GLOSSARY, HELP_COMMON]},
+      HELP_GLOSSARY]},
   evidence:{title:"Help: Evidence and audit", intro:"Did it work, and can we prove what happened? This tab keeps the evidence, the full report, the audit trail and the downloadable rApp.",
     sections:[
       {h:"Status banner", items:[["What it says","The same run status as on Migration run: the next step, a decision waiting, a block or the final result."]]},
@@ -3227,7 +3215,7 @@ const HELP = {
       {h:"Export", items:[
         ["Export audit JSON / CSV","Downloads the audit trail with use case, scenario, mode, profile, policy, sources and every event. Every record carries synthetic: true."],
         ["Copy","If the download is blocked, the text appears below with a Copy button."]]},
-      HELP_GLOSSARY, HELP_COMMON]},
+      HELP_GLOSSARY]},
   portability:{title:"Help: Portability and sources", intro:"Would the same rApp work on another platform? This tab compares two fictional platforms, tests them, credits the author and lists every public source.",
     sections:[
       {h:"Profile comparison", items:[
@@ -3254,14 +3242,96 @@ const HELP = {
         ["S7","O-RAN February 2026 document summary: R1 conformance and interoperability test coverage."],
         ["S8","Ericsson R1 explanation, December 2023: service abstraction, conflict avoidance, R1* extensions."]]},
       {h:"Limits of this simulation", items:[["Summary","Independent and synthetic. Operation names are concept labels, JSON keys are fictional, thresholds are example operator policy, specifications keep evolving, and nothing here promises network safety, conformance, portability or production suitability."]]},
-      HELP_GLOSSARY, HELP_COMMON]}
+      HELP_GLOSSARY]}
 };
 function helpHTML(){
   const h = HELP[S.tab];
   const toc = h.sections.map((s,i) => '<li><a href="#help-' + i + '" data-helpjump="' + i + '">' + esc(s.h) + '</a></li>').join("");
   return '<h2 id="drawerTitle">' + esc(h.title) + '</h2><p class="small">' + esc(h.intro) + '</p>' +
+    '<p class="hh-pointer small">Looking for the header: use case, scenario, mode, platform profile, view? <button class="btn ghost" type="button" data-headhelp="current">Open header help</button></p>' +
     '<nav aria-label="On this help page"><h3 style="font-size:13px">On this page</h3><ul class="help-toc">' + toc + '</ul></nav>' +
     h.sections.map((s,i) => '<div class="help-sec" id="help-' + i + '"><h3>' + esc(s.h) + '</h3><dl>' + s.items.map(([t,d]) => '<div><dt>' + esc(t) + '</dt><dd>' + esc(d) + '</dd></div>').join("") + '</dl></div>').join("") +
+    '<div class="callout warn">' + icon("i-flask") + '<div><b>Synthetic reference workflow.</b> All cells, values and outcomes are fictional. Press Escape or click outside to close this panel.</div></div>';
+}
+
+/* ------------------------------ Header help (its own panel view) ------------------------------ */
+function headerHelpSections(){
+  const on = (b) => b ? " (selected now)" : "";
+  const ucItems = Object.entries(USE_CASES).map(([id,u]) => [u.label + on(S.useCase===id), u.blurb + " Scenarios: " + u.scenarios.map(x=>x.label).join(", ") + "."]);
+  const scnSecs = Object.entries(USE_CASES).map(([id,u]) => [u.label + " scenarios" + (S.useCase===id ? " (current use case)" : ""), u.scenarios.map(x => "• " + x.label + (S.useCase===id && S.scenario===x.id ? " (selected now)" : "") + ": " + x.desc).join("\n")]);
+  const gapItems = Object.entries(PROFILE_B_GAPS).map(([id,g]) => ["Profile B gap for " + USE_CASES[id].label + on(S.useCase===id && S.platformProfile==="limited"), g.note]);
+  return [
+    {id:"now", h:"Your current settings", items:[
+      ["Use case", UC().label],
+      ["Scenario", scenarioObj().label + ": " + scenarioObj().desc],
+      ["Mode", S.mode==="recommendation" ? "Recommendation mode: proposes a change, sends nothing." : "Controlled action: can act after the operator approves."],
+      S.useCase==="pci" ? ["PCI design", S.pciDesign==="distributed" ? "Distributed SON: the run stops at step 2 for an ownership review." : "Centralized SON: the rApp takes over the PCI decision."] : ["PCI design", "Not shown. It applies only to PCI Optimization."],
+      ["Platform profile", S.platformProfile==="limited" ? "Profile B: Limited example. " + PROFILE_B_GAPS[S.useCase].note : "Profile A: Complete example. Everything the use case needs is offered."],
+      ["View", S.view==="developer" ? "Developer transactions" : "Network engineer"],
+      ["Run status", phaseStatus().text]]},
+    {id:"top", h:"Top bar", items:[
+      ["Kaldrivon logo and name","The name of this workbench."],
+      ["Synthetic reference workflow","The amber badge. Every cell, value, rule, approval and outcome in the app is fictional. Nothing here reaches a live RAN."],
+      ["Title and subtitle","What the workbench does: trace a SON function from its original contract through R1 services to an observed outcome."],
+      ["Guided tour","A two-minute walk through the whole app, one element at a time. It switches tabs for you and runs step 1 so the details panel has content. Next, Back, End tour, or the arrow keys and Escape."],
+      ["About this model","Side panel: what the app is, how to read it, which parts come from standards and which are simulated, the author card and the build id."],
+      ["Sources and limitations","Side panel: every public source (S1 to S8) and the limits of the simulation."],
+      ["Context line","Why the topic matters (public AT&T and Ericsson material on moving SON toward rApps) and a reminder that nothing here controls a network."]]},
+    {id:"path", h:"Migration path at a glance", items:[
+      ["How to read it","Six boxes, left to right: the contract feeds the rApp, the rApp only talks R1, and the platform reaches the network over O1 and A1. It is the same for every use case."],
+      ["Legacy SON contract","A written description of what today's SON function does: what starts it, what it reads, what it decides, what it may change and how success is judged. Extracted first, before any code moves. See the SON contract tab."],
+      ["rApp","The new application holding the decision logic. It runs on the SMO platform and never talks to network equipment directly."],
+      ["R1 services","The rApp's only doorway: service discovery and access control, data subscriptions, network information, alarms, measurements, configuration and A1 policies. A family of services, not one API. See the R1 mapping tab."],
+      ["SMO / Non-RT RIC","The platform that hosts rApps, checks what each one may do, and carries approved requests to the network."],
+      ["O1 and A1","The platform's own links toward the network. O1 configures and monitors RAN functions; A1 sends policies to the Near-RT RIC. The rApp only reaches them through R1."],
+      ["Simulated RAN","The fictional cells in this demo, drawn in the Migration run topology."],
+      ["What does each box mean?","Opens the same explanations under the strip. Hide explanation closes them."]]},
+    {id:"start", h:"Start here", items:[
+      ["The three steps","Work top to bottom: 1 pick a SON function, 2 decide how the run behaves, 3 open the Migration run and step through it. Every tab reads the same settings."],
+      ["Changing settings mid-run","Any change in step 1 or step 2 (except View and Reduce motion) restarts a run in progress with a clean state, so nothing carries over from the old settings. A message at the bottom of the screen confirms it."]]},
+    {id:"uc", h:"Step 1: Pick a use case", items: ucItems.concat([["What changes","The whole app follows the choice: contract fields, dependency ledger, cells in the topology, available scenarios, evidence, the rApp package and the examples in help."]])},
+    {id:"scn", h:"Step 2: Scenario", items: [["What it is","A variant of the use case. Some run cleanly to an outcome; others show the process correctly stopping, which is the point: a safe migration stops when evidence, ownership or services are missing. Hover the list to read the selected scenario."]].concat(scnSecs)},
+    {id:"mode", h:"Step 2: Mode", items:[
+      ["Recommendation mode","The rApp reads the network, builds a proposal and stops. Nothing is sent. Use it to compare the rApp's decisions with today's SON before trusting it to act. The run ends at the proposal."],
+      ["Controlled action","After the operator approves, the rApp asks the platform to apply the change, reads the value back and checks the network actually improved over the observation window. Every gate still applies: freshness, conflicts, ownership, approval."],
+      ["Which to choose","Start with Recommendation to see the decision, then switch to Controlled action to see execution, readback and observation."]]},
+    {id:"pci", h:"Step 2: PCI design (PCI only)", items:[
+      ["When it shows","Only when PCI Optimization is the use case. It is hidden for the other two."],
+      ["Centralized SON","A central function collects measurements, decides the new PCI and pushes it through provisioning (3GPP TS 28.313 §8.3.1.2). That decision can move into the rApp, so the run continues."],
+      ["Distributed SON","A function inside the network picks the PCI from a list it was given (3GPP TS 28.313 §8.2.3.2). Moving that into an rApp changes who decides, so the run stops at step 2 (Map dependencies) for an ownership review. The SON contract tab shows a warning explaining this."]]},
+    {id:"prof", h:"Step 2: Platform profile", items: [
+      ["Profile A: Complete example","The platform offers every R1 service, permission and data instance the use case needs."],
+      ["Profile B: Limited example","One thing is missing, different per use case, so you can watch the run stop at discovery with the gap named. The R1 mapping ledger marks the row."]].concat(gapItems).concat([["Why it matters","Portability: the same rApp can pass on one platform and stop on another. The Portability tab compares the two profiles."]])},
+    {id:"view", h:"Step 2: View and Reduce motion", items:[
+      ["Network engineer","Transaction trace in plain summaries, with the specification section for each call."],
+      ["Developer transactions","Adds the simplified request and response for every R1 call. JSON keys are fictional; no normative API is implied."],
+      ["Reduce motion","Turns off animations and smooth scrolling. Also follows your system setting."],
+      ["Remembered","View and Reduce motion are saved in this browser and do not restart a run."],
+      ["Hover explanations","Every control in step 2 shows a short explanation on hover or when reached with the Tab key."],
+      ["Note line","The small text under the controls describes the selected scenario."]]},
+    {id:"run", h:"Step 3: Run it", items:[
+      ["Open Migration run","Switches to the Migration run tab and puts the keyboard focus on Run next step. From there, step through the eleven steps, approve or reject at decision points, and read each step's details."],
+      ["After the run","Evidence and audit holds the three evidence stages, the audit trail and the rApp package download."]]},
+    {id:"tabs", h:"Tab bar and run status", items:[
+      ["Tabs","Overview, SON contract, R1 mapping, Migration run, Evidence and audit, Portability and sources. All share one state. The bar stays at the top as you scroll."],
+      ["Keyboard","With a tab focused: Left and Right move between tabs, Home and End jump to the first and last."],
+      ["Run status","Right side of the tab bar, hidden on the Overview. Shows Not started, the next step, Awaiting approval, Conflict review, Restoration review required, Blocked with its reason, or the final result. Click it to open Migration run."],
+      ["Direct links","Add #overview, #contract, #mapping, #run, #evidence or #portability to the page address to open that tab."]]},
+    {id:"more", h:"Help, messages and footer", items:[
+      ["? buttons in the header","Each header area has a small ? that opens this panel at the matching section."],
+      ["Help for this tab","The ? tab on the right edge opens the reference for the tab you are on. Tab help and Header help at the top of the panel switch between the two."],
+      ["Closing the panel","×, Escape, or click anywhere outside it."],
+      ["Messages","Short notes at the bottom of the screen after actions such as switching profile or exporting. Screen readers hear the same messages."],
+      ["Footer","Author credit with links to kaldrivon.com, LinkedIn and info@kaldrivon.com, and a statement that the app is not affiliated with AT&T, Ericsson, ETSI, O-RAN ALLIANCE or 3GPP."]]}
+  ];
+}
+function headerHelpHTML(){
+  const secs = headerHelpSections();
+  const toc = secs.map(s => '<li><a href="#hh-' + s.id + '" data-hhjump="' + s.id + '">' + esc(s.h) + '</a></li>').join("");
+  const dd = t => esc(t).replace(/\n/g, "<br>");
+  return '<h2 id="drawerTitle">Help: header and settings</h2><p class="small">Everything above the tab bar: the top bar, the migration path, and the three steps that set up a run. These settings are shared by every tab.</p>' +
+    '<nav aria-label="On this help page"><h3 style="font-size:13px">On this page</h3><ul class="help-toc">' + toc + '</ul></nav>' +
+    secs.map(s => '<div class="help-sec' + (s.id==="now" ? ' hh-now' : '') + '" id="hh-' + s.id + '" tabindex="-1"><h3>' + esc(s.h) + '</h3><dl>' + s.items.map(([t,d]) => '<div><dt>' + esc(t) + '</dt><dd>' + dd(d) + '</dd></div>').join("") + '</dl></div>').join("") +
     '<div class="callout warn">' + icon("i-flask") + '<div><b>Synthetic reference workflow.</b> All cells, values and outcomes are fictional. Press Escape or click outside to close this panel.</div></div>';
 }
 </script>
@@ -3278,7 +3348,7 @@ const TOUR = [
   {tab:"overview", sel:".head-actions", title:"About, sources and this tour", body:"About this model explains what is standard and what is simulated. Sources and limitations lists every public source. Guided tour brings you back here any time."},
   {tab:"overview", sel:".strip-wrap", title:"Migration path at a glance", body:"Read left to right: the legacy SON contract feeds the rApp, the rApp talks only to R1 services, and the SMO / Non-RT RIC platform reaches the network over O1 and A1. What does each box mean? explains every box."},
   {tab:"overview", sel:"#ucSelect", title:"Step 1: pick a use case", body:"PCI Optimization, Mobility Load Balancing or Cell Outage Compensation. The whole app follows your choice: contract, ledger, cells, scenarios and evidence."},
-  {tab:"overview", sel:"#controlbar", title:"Step 2: set scenario, mode and platform", body:"Scenario picks a variant, including ones where the process correctly stops. Mode decides whether the rApp may act. PCI design (PCI only) and platform profile change what happens too. Hover any control for an explanation."},
+  {tab:"overview", sel:"#controlbar", title:"Step 2: set scenario, mode and platform", body:"Scenario picks a variant, including ones where the process correctly stops. Mode decides whether the rApp may act. PCI design (PCI only) and platform profile change what happens too. Hover any control for an explanation, or use the ? beside the step title for the full reference."},
   {tab:"overview", sel:"#startRun", title:"Step 3: run it", body:"Opens the Migration run tab, where you step through the migration yourself."},
   {tab:"overview", sel:".tabs-inner", title:"Six tabs, one state", body:"Overview, SON contract, R1 mapping, Migration run, Evidence and audit, Portability and sources. They share the same settings and run. On other tabs, the run status appears on the right of this bar."},
   {tab:"overview", sel:".process", title:"The process in eleven steps", body:"Every use case goes through the same steps, from extracting the contract to closing with evidence. Each line names who leads the step."},
@@ -3301,7 +3371,7 @@ const TOUR = [
   {tab:"evidence", sel:"#view-evidence .timeline", title:"Audit trail", body:"Every event with time, actor, network revision and reason. Filter it, or export it as JSON or CSV, always flagged as synthetic."},
   {tab:"portability", sel:"#view-portability .matrix", title:"Portability", body:"Profile A against Profile B, and a small test matrix. Passing an interface test is one layer; services, data meaning and network outcome matter too."},
   {tab:"portability", sel:"#view-portability .author", title:"Author and sources", body:"Janos Korognai, Founder and CTO of Kaldrivon. Below the card: every public source used and the limits of this simulation."},
-  {tab:"run", sel:"#helpEdge", title:"Help for every tab", body:"The ? tab on the right edge opens a full reference for whichever tab you are on. That is the end of the tour. Enjoy the workbench."}
+  {tab:"run", sel:"#helpEdge", title:"Help for every tab and the header", body:"The ? tab on the right edge opens a full reference for whichever tab you are on. The small ? buttons in the header, and Header help beside Start here, open the reference for the header settings. That is the end of the tour. Enjoy the workbench."}
 ];
 let tourIdx = -1;
 function tourStops(){ return TOUR; }
@@ -3410,7 +3480,14 @@ function copyExport(){
   const fallback = () => { ta.focus(); ta.select(); toast("Text selected. Press Ctrl+C or Cmd+C to copy."); };
   try { if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(done, fallback); else fallback(); } catch(e){ fallback(); }
 }
-function closeDrawer(){ const w = S.drawer; S.drawer = null; render(); const b = $({sources:"btnSources", about:"btnAbout", help:"helpEdge"}[w] || "btnAbout"); if(b) b.focus(); }
+let headHelpOpener = null;
+function closeDrawer(){ const w = S.drawer; S.drawer = null; render(); const b = w==="headhelp" && headHelpOpener && document.contains(headHelpOpener) ? headHelpOpener : $({sources:"btnSources", about:"btnAbout", help:"helpEdge"}[w] || "btnAbout"); if(b) b.focus({preventScroll:true}); }
+function scrollHeadHelp(sec){ const t = $("hh-" + sec); if(!t) return; t.scrollIntoView({block:"start"}); t.focus({preventScroll:true}); }
+function openHeadHelp(sec, opener){
+  if(opener && !opener.closest("#drawer")) headHelpOpener = opener;
+  S.drawer = "headhelp"; render();
+  if(sec && sec!=="current" && sec!=="top") scrollHeadHelp(sec); else { $("drawerBody").scrollTop = 0; $("drawerClose").focus({preventScroll:true}); }
+}
 function openDrawer(which){ S.drawer = S.drawer===which ? null : which; render(); if(S.drawer) $("drawerClose").focus(); }
 
 function bind(){
@@ -3428,6 +3505,11 @@ function bind(){
   $("dAbout").addEventListener("click", () => { S.drawer = "about"; render(); });
   $("dSources").addEventListener("click", () => { S.drawer = "sources"; render(); });
   $("dHelp").addEventListener("click", () => { S.drawer = "help"; render(); });
+  $("dHead").addEventListener("click", () => { S.drawer = "headhelp"; render(); $("drawerBody").scrollTop = 0; });
+  document.addEventListener("click", e => {
+    const h = e.target.closest("[data-headhelp]"); if(h){ e.preventDefault(); openHeadHelp(h.dataset.headhelp, h); return; }
+    const j = e.target.closest("[data-hhjump]"); if(j){ e.preventDefault(); scrollHeadHelp(j.dataset.hhjump); }
+  });
   $("helpEdge").addEventListener("click", () => openDrawer("help"));
   $("startRun").addEventListener("click", () => { setTab("run"); $("btnNext").focus(); });
   $("stripToggle").addEventListener("click", () => { const x = $("stripExplain"); x.hidden = !x.hidden; $("stripToggle").setAttribute("aria-expanded", String(!x.hidden)); $("stripToggle").textContent = x.hidden ? "What does each box mean?" : "Hide explanation"; });
@@ -3457,7 +3539,7 @@ function bind(){
   // Click outside the side panel closes it; the click still does its normal job
   document.addEventListener("click", e => {
     if(!S.drawer) return;
-    if(e.target.closest("#drawer,#helpEdge,#btnAbout,#btnSources")) return;
+    if(e.target.closest("#drawer,#helpEdge,#btnAbout,#btnSources,[data-headhelp]")) return;
     S.drawer = null; render();
   }, true);
 
