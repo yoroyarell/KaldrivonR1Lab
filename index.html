@@ -4165,8 +4165,22 @@ function guideStops(i){
 
 /* ------------------------------ rendering a stop ------------------------------ */
 function gEls(sel){ return (Array.isArray(sel) ? sel : [sel]).filter(Boolean).map(s => document.querySelector(s)).filter(el => { if(!el) return false; const r = el.getBoundingClientRect(); return r.width || r.height; }); }
+/* An element's visible box: its rect cut down to every scrolling or clipping ancestor, so the highlight never spills past a panel. */
+function gClipRect(el){
+  const b = el.getBoundingClientRect(); let t = b.top, l = b.left, r = b.right, bo = b.bottom;
+  for(let a = el.parentElement; a && a !== document.body && a !== document.documentElement; a = a.parentElement){
+    const cs = getComputedStyle(a);
+    if(/(auto|scroll|hidden|clip)/.test(cs.overflowX + cs.overflowY)){
+      const ar = a.getBoundingClientRect();
+      if(cs.overflowX !== "visible"){ l = Math.max(l, ar.left); r = Math.min(r, ar.right); }
+      if(cs.overflowY !== "visible"){ t = Math.max(t, ar.top); bo = Math.min(bo, ar.bottom); }
+    }
+  }
+  return {top:t, left:l, right:r, bottom:bo};
+}
 function gRect(els){
-  const rs = els.map(e => e.getBoundingClientRect());
+  const rs = els.map(gClipRect).filter(r => r.right > r.left && r.bottom > r.top);
+  if(!rs.length) rs.push(els[0].getBoundingClientRect());
   const top = Math.min(...rs.map(r => r.top)), left = Math.min(...rs.map(r => r.left)), bottom = Math.max(...rs.map(r => r.bottom)), right = Math.max(...rs.map(r => r.right));
   return {top, left, bottom, right, width:right-left, height:bottom-top};
 }
@@ -4245,6 +4259,12 @@ function showGuide(){
     window.scrollTo({top:Math.max(0, y), behavior:"auto"});
   }
   guidePlace(gRect(els));
+  // desktop: if the card had to sit on top of the target, lift the target toward the top so the card fits below it
+  if(!phone){
+    const r = gRect(els), c = $("tourCard").getBoundingClientRect();
+    const overlap = c.left < r.right && c.right > r.left && c.top < r.bottom && c.bottom > r.top;
+    if(overlap && Math.abs(r.top - 72) > 8 && r.height + 210 + 96 <= window.innerHeight){ window.scrollBy(0, r.top - 72); guidePlace(gRect(els)); }
+  }
   const sp = $("tourSpot"); sp.classList.remove("fresh"); void sp.offsetWidth; sp.classList.add("fresh");
 }
 function guideRect(){
@@ -4260,21 +4280,36 @@ function guidePlace(r){
     Object.assign(spot.style, {top:top+"px", left:left+"px", width:Math.min(W - left - 4, r.width + pad*2)+"px", height:Math.max(8, Math.min(H - top - 4, r.height + pad*2))+"px"});
   }
   const phone = W < 700;
-  card.classList.toggle("sheet", phone && !card.classList.contains("center"));
+  card.classList.toggle("sheet", phone && !card.classList.contains("center")); card.style.maxHeight = "";
   if(card.classList.contains("center")){
     const cw = Math.min(520, W - 24); card.style.width = cw + "px";
     card.style.left = ((W - cw)/2) + "px"; card.style.top = Math.max(12, (H - card.offsetHeight)/2) + "px";
   } else if(phone){
     card.style.width = (W - 16) + "px"; card.style.left = "8px"; card.style.top = Math.max(8, H - card.offsetHeight - 8) + "px";
   } else {
-    const cw = Math.min(430, W - 24); card.style.width = cw + "px";
-    const ch = card.offsetHeight; let cx, cy;
+    const cw = Math.min(430, W - 24); card.style.width = cw + "px"; card.style.maxHeight = "";
+    const ch = card.offsetHeight, MIN = 210; let cx, cy, mh = 0;
+    const hx = r ? Math.min(Math.max(12, r.left), W - cw - 12) : W - cw - 16;
+    const below = r ? H - 8 - (r.bottom + 14) : 0, above = r ? r.top - 14 - 8 : 0;
     if(r && r.right + 16 + cw <= W - 12){ cx = r.right + 16; cy = r.top; }
     else if(r && r.left - 16 - cw >= 12){ cx = r.left - 16 - cw; cy = r.top; }
-    else if(r && r.bottom + 14 + ch <= H - 8){ cx = Math.min(Math.max(12, r.left), W - cw - 12); cy = r.bottom + 14; }
-    else if(r && r.top - 14 - ch >= 8){ cx = Math.min(Math.max(12, r.left), W - cw - 12); cy = r.top - 14 - ch; }
-    else { cx = W - cw - 16; cy = H - ch - 16; }
-    cy = Math.min(Math.max(8, cy), Math.max(8, H - ch - 8));
+    else if(r && below >= ch){ cx = hx; cy = r.bottom + 14; }
+    else if(r && above >= ch){ cx = hx; cy = r.top - 14 - ch; }
+    else if(r && Math.max(below, above) >= MIN){
+      // not enough room for the whole card: shorten it (its text scrolls) rather than cover the target
+      if(below >= above){ mh = below; cx = hx; cy = r.bottom + 14; } else { mh = above; cx = hx; cy = 8; }
+    }
+    else {
+      // nothing fits cleanly: take the corner that covers the least of the target
+      let best = null;
+      for(const x of [W - cw - 12, 12]) for(const y of [H - ch - 8, 8]){
+        const ov = r ? Math.max(0, Math.min(r.right, x + cw) - Math.max(r.left, x)) * Math.max(0, Math.min(r.bottom, y + ch) - Math.max(r.top, y)) : 0;
+        if(!best || ov < best[0]) best = [ov, x, y];
+      }
+      cx = best[1]; cy = best[2];
+    }
+    if(mh){ card.style.maxHeight = mh + "px"; }
+    else cy = Math.min(Math.max(8, cy), Math.max(8, H - ch - 8));
     card.style.left = cx + "px"; card.style.top = cy + "px";
   }
   const nb = $("tourNext"); if(nb && document.activeElement && !card.contains(document.activeElement)) nb.focus({preventScroll:true});
