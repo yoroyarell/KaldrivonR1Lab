@@ -380,8 +380,12 @@ details.x>div{padding:0 10px 10px;display:grid;gap:8px}
 /* ---------- Guided tour and help TOC ---------- */
 .tourbtn{border-color:var(--r1);color:var(--r1)}
 .tour{position:fixed;inset:0;z-index:90}
-.tour-spot{position:fixed;border-radius:10px;box-shadow:0 0 0 9999px rgba(3,7,16,.72);outline:2px solid var(--r1);transition:top .2s,left .2s,width .2s,height .2s;pointer-events:none}
-.tour-card{position:fixed;background:var(--panel2);border:1px solid var(--r1-line);border-radius:10px;padding:14px 16px;box-shadow:0 14px 40px rgba(0,0,0,.55);display:grid;gap:8px}
+.tour-spot{position:fixed;border-radius:10px;box-shadow:0 0 0 9999px rgba(5,8,12,.66);outline:2px solid var(--amber);pointer-events:none}
+.tour-spot.fresh{animation:gspot .35s ease-out}
+@keyframes gspot{from{outline-color:rgba(242,169,59,0);outline-offset:6px}to{outline-color:var(--amber);outline-offset:0}}
+body.rm .tour-spot.fresh{animation:none}
+body.rm .tour-spot{transition:none}
+.tour-card{position:fixed;background:var(--panel);border:1px solid rgba(242,169,59,.5);border-radius:10px;padding:14px 16px;box-shadow:0 14px 40px rgba(0,0,0,.6);display:grid;gap:8px;max-height:calc(100vh - 16px);overflow:auto;overscroll-behavior:contain}
 .tour-card h2{font-size:17px}
 .tour-card p{font-size:var(--fs-sm);line-height:1.55}
 .tour-top{display:flex;justify-content:space-between;align-items:center}
@@ -534,6 +538,45 @@ table.prodt{min-width:760px}
 .ha-btn svg{width:15px;height:15px}
 .ha-btn .in{font:700 12px var(--sans);letter-spacing:-.02em}
 @media (max-width:620px){ .hdr-author{padding:14px} .ha-btn{flex:1 1 100%;justify-content:center} }
+
+/* ---------- Learning Guide ---------- */
+.tour-card.sheet{max-height:52vh}
+.tour-card.center{max-height:calc(100vh - 24px)}
+.tour-k{color:var(--amber)}
+.tour-top{gap:8px}
+.tour-top .xs{flex:1;text-align:right}
+.tour-prog{display:grid;grid-template-columns:repeat(13,1fr);gap:3px}
+.tour-prog span{height:4px;border-radius:2px;background:var(--line2)}
+.tour-prog span.done{background:rgba(242,169,59,.55)} .tour-prog span.cur{background:var(--amber)}
+.tour-body{display:grid;gap:8px;font-size:var(--fs-sm);line-height:1.55}
+.tour-body p{margin:0}
+.tour-body code{font-size:11.5px}
+.g-sub{color:var(--amber);font-weight:600}
+.g-flow{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.g-flow .gf{border:1px solid var(--line2);background:var(--bg2);border-radius:6px;padding:3px 8px;font-size:12px;transition:background .3s,border-color .3s,color .3s}
+.g-flow .gf.hi{border-color:var(--r1);color:var(--r1)}
+.g-flow .gf.on{border-color:var(--amber);background:rgba(242,169,59,.16);color:var(--text)}
+.g-flow .ga{color:var(--faint);font-size:12px}
+.g-why{border-left:3px solid var(--amber);background:rgba(242,169,59,.08);padding:6px 10px;border-radius:0 6px 6px 0}
+.g-why b{color:var(--amber);font-weight:700;margin-right:2px}
+.g-tech{border:1px solid var(--line);border-radius:6px;background:var(--bg2)}
+.g-tech summary{cursor:pointer;padding:5px 10px;font-size:12px;font-weight:650;color:var(--r1)}
+.g-tech-b{padding:0 10px 8px;display:grid;gap:6px}
+.g-tech pre.json{max-height:180px}
+.g-terms{margin:0;display:grid;gap:4px;border-top:1px dashed var(--line2);padding-top:6px}
+.g-terms dt{display:inline;font-weight:700;color:var(--r1)} .g-terms dt::after{content:": "}
+.g-terms dd{display:inline;margin:0;color:var(--muted)}
+.g-kv{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px}
+.g-kv dt{color:var(--muted);font-weight:600} .g-kv dd{margin:0}
+.g-list{margin:0;padding-left:18px;display:grid;gap:2px}
+.g-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g-cmp>div{border:1px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--bg2)}
+.g-chains{display:grid;gap:4px}
+.g-done{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.g-done li::before{content:"✓ ";color:var(--green);font-weight:700}
+@media (max-width:420px){ .g-cmp{grid-template-columns:1fr} .g-kv{grid-template-columns:1fr} }
+.tour-card .tour-top{position:sticky;top:-14px;background:var(--panel);padding:4px 0;z-index:1}
+.tour-card .tour-btns{position:sticky;bottom:-14px;background:var(--panel);padding:8px 0 2px;z-index:1}
 </style>
 </head>
 <body>
@@ -577,7 +620,7 @@ table.prodt{min-width:760px}
       <p class="sub">Trace a SON function from its original contract through R1 services to an observed outcome.</p>
     </div>
     <div class="head-actions">
-      <button class="btn tourbtn" type="button" id="btnTour"><svg aria-hidden="true"><use href="#i-play"/></svg>Guided tour</button>
+      <button class="btn tourbtn" type="button" id="btnTour" title="Follow a SON function from legacy automation to an rApp-based workflow."><svg aria-hidden="true"><use href="#i-book"/></svg>Learning Guide</button>
       <button class="btn" type="button" id="btnAbout" aria-controls="drawer" aria-expanded="false"><svg aria-hidden="true"><use href="#i-info"/></svg>About this model</button>
       <button class="btn" type="button" id="btnSources" aria-controls="drawer" aria-expanded="false"><svg aria-hidden="true"><use href="#i-book"/></svg>Sources and limitations</button>
     </div>
@@ -620,7 +663,7 @@ table.prodt{min-width:760px}
   <div class="hstep"><span class="hnum">2</span><h2 class="hlab">Set scenario, mode and platform</h2><button class="hq" type="button" data-headhelp="scn" aria-label="Help: scenario, mode and platform" title="Help: scenario, mode and platform">?</button><span class="xs muted">Shared by every tab. Changing any of these restarts a Migration run in progress.</span></div>
 <div class="controlbar" id="controlbar">
   <div class="field cb-scn" id="scnField" data-tip=""><label for="selScenario">Scenario</label><select id="selScenario"></select></div>
-  <div class="field"><span class="lab" id="lblMode">Mode</span>
+  <div class="field" id="modeField"><span class="lab" id="lblMode">Mode</span>
     <div class="seg" role="group" aria-labelledby="lblMode">
       <button type="button" id="modeRec" data-mode="recommendation" data-tip="The rApp reads the network and proposes a change, but nothing is sent to the network. Used to compare the new rApp with today's SON before trusting it to act.">Recommendation mode</button>
       <button type="button" id="modeCtl" data-mode="controlled-action" data-tip="After the operator approves, the rApp asks the platform to apply the change, then checks it was applied and that the network improved. Every safety gate still applies.">Controlled action mode</button>
@@ -728,11 +771,12 @@ table.prodt{min-width:760px}
 <div class="tipbox" id="tipbox" role="tooltip" hidden></div>
 <div class="tour" id="tour" hidden>
   <div class="tour-spot" id="tourSpot"></div>
-  <div class="tour-card" id="tourCard" role="dialog" aria-modal="true" aria-labelledby="tourTitle" aria-describedby="tourBody">
-    <div class="tour-top"><span class="tour-k" id="tourKind">Quick tour</span><span class="xs muted" id="tourCount"></span><button class="btn ghost bsm" type="button" id="tourMode">Full tour</button></div>
+  <div class="tour-card" id="tourCard" role="dialog" aria-modal="true" aria-labelledby="tourTitle">
+    <div class="tour-top"><span class="tour-k" id="tourKind">Learning Guide</span><span class="xs muted" id="tourCount"></span><button class="btn ghost bsm" type="button" id="tourEnd" aria-label="Close the Learning Guide">Close ✕</button></div>
+    <div class="tour-prog" id="tourProg" aria-hidden="true"></div>
     <h2 id="tourTitle"></h2>
-    <p id="tourBody"></p>
-    <div class="tour-btns"><button class="btn ghost" type="button" id="tourEnd">End tour</button><span style="flex:1"></span><button class="btn" type="button" id="tourBack">Back</button><button class="btn primary" type="button" id="tourNext">Next</button></div>
+    <div class="tour-body" id="tourBody"></div>
+    <div class="tour-btns" id="tourBtns"></div>
   </div>
 </div>
 <div class="sr-only" id="live" aria-live="polite"></div>
@@ -2931,16 +2975,16 @@ function archHTML(p){
   const tcount = f => S.trace.filter(t => t.family===f).length;
   const tiles = FAMILY_ORDER.map(f => '<button type="button" class="tile ' + (p==="ov" ? "neutral" : (traced.has(f)?"used":"unused")) + (lastFams.has(f) && !S.reduceMotion ? " flash":"") + '" id="' + p + '-tile-' + f + '" data-fam="' + f + '" data-where="' + p + '" aria-pressed="' + (p==="ov" ? S.ovFamily===f : S.serviceFilter===f) + '" aria-label="' + esc(FAMILIES[f].name) + (p==="ov" ? ", select for an explanation" : (traced.has(f) ? ", " + tcount(f) + " transaction(s) in the trace" : ", no transactions yet")) + '"><b>' + FAMILIES[f].short + '</b><span>' + esc(FAMILIES[f].tile) + '</span></button>').join("");
   return '<div class="arch">' +
-    '<div class="a-node' + act("legacy") + '"><h5>Legacy SON contract</h5><span class="d">' + esc(UC().short) + ': ' + UC().contract.length + ' fields. Owner: SON specialist</span></div>' +
+    '<div class="a-node' + act("legacy") + '" id="' + p + '-legacy"><h5>Legacy SON contract</h5><span class="d">' + esc(UC().short) + ': ' + UC().contract.length + ' fields. Owner: SON specialist</span></div>' +
     '<div class="a-link" aria-hidden="true"></div>' +
-    '<div class="a-node' + act("rapp") + '"><h5>rApp</h5><span class="d">Decision engine for ' + esc(UC().short) + '. Consumes R1 services only.</span><span class="d mono">' + esc(p==="ov" ? "registered at run time" : (S.flags.rappId || "not registered")) + '</span></div>' +
-    '<div class="a-link r1' + (lastFams.size && ran!=="contract" && ran!=="map" ? " on":"") + '" aria-hidden="true"><span>R1</span></div>' +
-    '<div class="framework"><div class="fh"><h5 style="margin:0;font-size:12.5px">SMO / Non-RT RIC framework</h5><span class="tag">exposes R1</span></div>' +
-      '<div class="r1-edge"><span class="lbl">R1 SERVICE FAMILIES</span><div class="tiles">' + tiles + '</div></div>' +
+    '<div class="a-node' + act("rapp") + '" id="' + p + '-rapp"><h5>rApp</h5><span class="d">Decision engine for ' + esc(UC().short) + '. Consumes R1 services only.</span><span class="d mono">' + esc(p==="ov" ? "registered at run time" : (S.flags.rappId || "not registered")) + '</span></div>' +
+    '<div class="a-link r1' + (lastFams.size && ran!=="contract" && ran!=="map" ? " on":"") + '" id="' + p + '-r1link" aria-hidden="true"><span>R1</span></div>' +
+    '<div class="framework" id="' + p + '-fw"><div class="fh"><h5 style="margin:0;font-size:12.5px">SMO / Non-RT RIC framework</h5><span class="tag">exposes R1</span></div>' +
+      '<div class="r1-edge" id="' + p + '-r1edge"><span class="lbl">R1 SERVICE FAMILIES</span><div class="tiles">' + tiles + '</div></div>' +
       '<div class="authz"><span>Authorization and access control</span><span class="mono">' + (S.platformProfile==="complete"?"Profile A":"Profile B") + '</span></div></div>' +
-    '<div class="southlinks" aria-hidden="true"><div class="slink' + (o1On?" on":"") + '"><span>O1</span></div><div class="slink' + (a1On?" on":"") + (a1Rel?"":" off") + '"><span>A1</span></div></div>' +
-    '<div class="south"><div class="a-node' + (o1On?" active":"") + '"><h5>Managed RAN functions</h5><span class="d">Simulated. Reached over O1 by the framework, never directly by the rApp.</span></div>' +
-      '<div class="a-node' + (a1On?" active":"") + '"><h5>Near-RT RIC</h5><span class="d">Simulated. A1 from the framework ' + (a1Rel ? "for an eligible policy." : "(not used in this use case).") + '</span></div></div>' +
+    '<div class="southlinks" id="' + p + '-southlinks" aria-hidden="true"><div class="slink' + (o1On?" on":"") + '" id="' + p + '-o1"><span>O1</span></div><div class="slink' + (a1On?" on":"") + (a1Rel?"":" off") + '" id="' + p + '-a1"><span>A1</span></div></div>' +
+    '<div class="south" id="' + p + '-south"><div class="a-node' + (o1On?" active":"") + '" id="' + p + '-ran"><h5>Managed RAN functions</h5><span class="d">Simulated. Reached over O1 by the framework, never directly by the rApp.</span></div>' +
+      '<div class="a-node' + (a1On?" active":"") + '" id="' + p + '-nrt"><h5>Near-RT RIC</h5><span class="d">Simulated. A1 from the framework ' + (a1Rel ? "for an eligible policy." : "(not used in this use case).") + '</span></div></div>' +
   '</div>';
 }
 function legendHTML(){ return '<div class="legend"><span><i></i>R1 service use (rApp to framework)</span><span><i class="s"></i>Southbound O1 / A1 from the framework (simulated)</span><span>' + pill("ok","Supported") + '</span><span>' + pill("warn","Needs review") + '</span><span>' + pill("bad","Blocked") + '</span>' + ILL + '</div>'; }
@@ -3120,7 +3164,7 @@ function renderTrace(){
     const hl = S.serviceFilter && t.family===S.serviceFilter;
     const stc = {ok:"ok", warn:"warn", bad:"bad", skipped:"idle"}[t.status] || "info";
     const stl = {ok:"OK", warn:"Warning", bad:"Failed", skipped:"Skipped"}[t.status] || t.status;
-    let row = '<tr class="' + (hl?"hl":"") + '"><td class="mono">' + t.step + '</td><td class="small">' + esc(t.actor) + '</td><td>' + famTag(t.family) + '</td><td><span class="op">' + esc(t.op) + '</span>' + (S.view==="engineer" ? '<div class="spec">' + esc(t.spec||"") + '</div>' : '') + '</td><td class="small">' + esc(t.req) + '</td><td class="small">' + esc(t.resp) + '</td><td class="mono xs">' + fmtSimShort(t.t) + '</td><td>' + pill(stc, stl) + '</td></tr>';
+    let row = '<tr id="tr-' + t.step + '" class="' + (hl?"hl":"") + '"><td class="mono">' + t.step + '</td><td class="small">' + esc(t.actor) + '</td><td>' + famTag(t.family) + '</td><td><span class="op">' + esc(t.op) + '</span>' + (S.view==="engineer" ? '<div class="spec">' + esc(t.spec||"") + '</div>' : '') + '</td><td class="small">' + esc(t.req) + '</td><td class="small">' + esc(t.resp) + '</td><td class="mono xs">' + fmtSimShort(t.t) + '</td><td>' + pill(stc, stl) + '</td></tr>';
     if(S.view==="developer") row += '<tr class="' + (hl?"hl":"") + '"><td></td><td colspan="7"><div class="jt"><span>Illustrative exchange, simplified</span>' + ILL + '</div><pre class="json">' + esc(JSON.stringify(t.json||{}, null, 2)) + '</pre><div class="xs muted" style="margin-top:4px">Specification concept: ' + esc(FAMILIES[t.family] ? FAMILIES[t.family].name : t.family) + ', ' + esc(t.op) + ' · ' + esc(t.spec||"") + '</div></td></tr>';
     return row;
   }).join("");
@@ -3689,7 +3733,7 @@ function headerHelpSections(){
       ["Kaldrivon logo and name","The name of this workbench."],
       ["Synthetic reference workflow","The amber badge. Every cell, value, rule, approval and outcome in the app is fictional. Nothing here reaches a live RAN."],
       ["Title and subtitle","What the workbench does: trace a SON function from its original contract through R1 services to an observed outcome."],
-      ["Guided tour","A two-minute walk through the whole app, one element at a time. It switches tabs for you and runs step 1 so the details panel has content. Next, Back, End tour, or the arrow keys and Escape."],
+      ["Learning Guide","Follow a SON function from legacy automation to an rApp-based workflow. 22 sections and about 68 stops on the real workbench: the migration problem, the SON functions, run settings, the SON contract, R1 mapping, how the rApp is built, registration, R1 services, discovery, network data, the decision, policy and approval, the SMO / Non-RT RIC, O1 and A1, the pre-write checks, execution, readback, feedback, the rApp package, the path to production, coexistence with legacy SON and a before-and-after summary. It loads a clean run of the selected use case and drives it as you go. Nothing moves until you press Next or Back. Each stop has a Why does this matter note and, where useful, Technical details. Back, Next, Skip section, Close, or the arrow keys and Escape."],
       ["About this model","Side panel: what the app is, how to read it, which parts come from standards and which are simulated, the author card and the build id."],
       ["Sources and limitations","Side panel: every public source (S1 to S19) and the limits of the simulation."],
       ["About the author","Card under the context line: Janos Korognai, 21 years in telecom pre-sales and solution architecture, with kaldrivon.com, LinkedIn and email buttons. The Portability and sources tab has the full author card with related Kaldrivon demos."],
@@ -3756,109 +3800,519 @@ function headerHelpHTML(){
 <script>
 "use strict";
 /* =====================================================================
-   GUIDED TOUR
-   A spotlight and a small card walk through the app. Each stop names a
-   tab and an element. Stops whose element is hidden are skipped. The tour
-   may run one step of the simulation so the Step details panel has content.
+   LEARNING GUIDE
+   The former guided tour, rebuilt as an architecture lesson that runs on
+   the real workbench. Same spotlight, card, Back / Next / Close and
+   keyboard handling. It follows one SON function from legacy automation
+   to an rApp-based workflow, section by section. Every stop reads the
+   live run and the app's own data, so nothing here is invented.
+   Nothing moves on its own: the highlight only changes on Next or Back.
    ===================================================================== */
-const TOUR = [
-  {tab:"overview", sel:".app-head .brand", quick:true, title:"Welcome to KaldrivonR1Lab", body:"A workbench that shows how a legacy SON function can be migrated into an rApp that uses R1 services. Everything you will see is fictional and labelled as a synthetic reference workflow. This quick tour takes about a minute; Full tour, at the top of this card, visits every panel."},
-  {tab:"overview", sel:"#hdrAuthor", title:"About the author", body:"Janos Korognai, 21 years in telecom pre-sales and solution architecture. Links to kaldrivon.com, LinkedIn and email. An independent, hands-on project, not affiliated with any vendor."},
-  {tab:"overview", sel:".head-actions", title:"About, sources and this tour", body:"About this model explains what is standard and what is simulated. Sources and limitations lists every public source. Guided tour brings you back here any time."},
-  {tab:"overview", sel:".strip-wrap", quick:true, title:"Migration path at a glance", body:"Read left to right: the legacy SON contract feeds the rApp, the rApp talks only to R1 services, and the SMO / Non-RT RIC platform reaches the network over O1 and A1. What does each box mean? explains every box."},
-  {tab:"overview", sel:"#ucSelect", quick:true, title:"Step 1: pick a use case", body:"PCI Optimization, Mobility Load Balancing or Cell Outage Compensation. The whole app follows your choice: contract, ledger, cells, scenarios and evidence."},
-  {tab:"overview", sel:"#controlbar", quick:true, title:"Step 2: set scenario, mode and platform", body:"Scenario picks a variant, including ones where the process correctly stops, a legacy SON that is still active and a shadow run. Mode decides whether the rApp may act. PCI design (PCI only) and platform profile change what happens too. Hover any control for an explanation, or use the ? beside the step title for the full reference."},
-  {tab:"overview", sel:"#startRun", quick:true, title:"Step 3: run it", body:"Opens the Migration run tab, where you step through the migration yourself."},
-  {tab:"overview", sel:".tabs-inner", title:"Eight tabs, one state", body:"Overview, SON contract, R1 mapping, rApp build, Migration run, Evidence and audit, Path to production, Portability and sources. They share the same settings and run. On other tabs, the run status appears on the right of this bar."},
-    {tab:"overview", sel:"#scope", quick:true, title:"What this app covers", body:"Three levels of a migration: running one decision (all here), migrating one function (partly), and the operator programme (named only). Nothing is hidden."},
-  {tab:"overview", sel:".process", title:"The process in twelve steps", body:"Every use case goes through the same steps, from extracting the contract to closing with evidence. Each line names who leads the step."},
-  {tab:"overview", sel:"#view-overview .arch", title:"Architecture", body:"The rApp only uses the R1 service families inside the framework. Select a service tile here for a plain-English explanation of what it does."},
-  {tab:"overview", sel:"#view-overview .roles", title:"Who owns what", body:"Five roles: operator, legacy SON specialist, rApp developer, platform team and RAN operations, with the steps each one leads."},
-  {tab:"contract", sel:"#view-contract .contract", title:"The SON contract", body:"Eleven fields written down before migration: trigger, inputs, decision, allowed actions, checks, stop conditions, rollback and owner. Select a row to read its definition."},
-  {tab:"contract", sel:"#view-contract .grid2 > .stack > .panel:last-child", title:"Why meaning matters", body:"Unit, sample interval, object identity, freshness and missing-value behavior for the key measurement. The same label on two platforms can hide different data."},
-  {tab:"mapping", sel:"#view-mapping .ledger", title:"The dependency ledger", body:"Every input and action mapped to an R1 service, with its permission, freshness rule and status on the selected platform. Filters and search sit above it; select a row for full detail."},
-  {tab:"build", sel:"#view-build .bpipe", quick:true, title:"How the rApp is built", body:"Seven stages turn the SON contract and the R1 mapping into an installable rApp: inputs, design, decision logic, R1 adapter, safety rules, tests and packaging. Select a stage for who does it and what it produces."},
-  {tab:"build", sel:"#bAnatomy", title:"What is inside the rApp", body:"Twelve components in four lanes: what decides, what controls, what talks R1 and what ships. Select one to read what it does and open its actual code."},
-  {tab:"build", sel:"#bTrace", title:"Contract to code to test", body:"Every contract field, where it lives in the rApp, and the named test in the package that proves it."},
-  {tab:"run", sel:".rail .stepper", quick:true, title:"Workflow", body:"The twelve steps with their owners and status. Finished steps become links you can select to reread their details. This column scrolls on its own."},
-  {tab:"run", sel:".rail .ctrls", title:"Run controls", body:"Run next step does one step. Run all stops at any approval, gap or block. Approve and Reject appear at decision points. Step back rewinds; Reset starts clean."},
-  {tab:"run", sel:"#policyGrid", title:"Operator policy", body:"Example limits: data freshness gate, observation window, change window and the minimum time between changes on a cell. Changing one restarts a run in progress."},
-  {tab:"run", sel:"#runBanner", quick:true, title:"Status banner", before:"runOne", body:"The tour just ran step 1 for you. The banner says what comes next and who owns it. Read what this step did jumps to the full explanation."},
-  {tab:"run", sel:"#archRun", title:"Services light up as they are used", body:"A tile lights up once the transaction trace has a call to that service. Select a tile to highlight its calls and filter the ledger."},
-  {tab:"run", sel:"#topo", title:"Simulated topology", body:"Fictional cells and their neighbor relations. Teal marks a proposal target, amber needs attention, red dashed is an outage. Select a cell to inspect it; the list beside it says the same in text."},
-  {tab:"run", sel:"#trace", title:"Transaction trace", body:"Every R1 call in order: who called, which service, what was asked and answered. Switch the header View to Developer transactions to see simplified requests and responses."},
-  {tab:"run", sel:"#stepDetail", quick:true, title:"Step details", body:"Plain English first, then every record the step produced with its format, for example the contract document with where each answer came from. Technical readers can open the API calls and the code behind the step."},
-  {tab:"run", sel:"#inspector", title:"Inspector", body:"The latest step in short (who, what, how, why, what changes), the current recommendation, conflicts, restoration reviews and anything you select."},
-  {tab:"evidence", sel:"#view-evidence .stages", title:"Three stages of evidence", body:"Request accepted, value read back, network actually better. They are kept separate so nobody mistakes an accepted request for a success."},
-  {tab:"evidence", sel:"#pkgPanel", quick:true, title:"Download the rApp", body:"When a run finishes, download the migrated rApp as a zip. Pick the Simulation rApp package (mock-based, not deployable), or the platform integration package for Nokia MantaRay SMO, whose readiness is blocked pending integration. Both default to recommendation mode."},
-  {tab:"evidence", sel:"#view-evidence .timeline", title:"Audit trail", body:"Every event with time, actor, network revision and reason. Filter it, or export it as JSON or CSV, always flagged as synthetic."},
-  {tab:"production", sel:"#prodStages", quick:true, title:"Path to production", body:"Fifteen stages for one SON function, from contract to retirement, each marked Runs here, Explained here or Named only, with sources and a jump to where the app shows it."},
-  {tab:"production", sel:"#testLadder", title:"Testing ladder and deployment chain", body:"What happens between Build and Register on a real platform, and the six rungs of testing from developer tests to a field pilot."},
-  {tab:"portability", sel:"#coexist", title:"Legacy SON and the rApp side by side", body:"How to avoid double control during a migration: per-function switches, confirming the switch reads off, parameter ownership, and three safe ways to coexist."},
-  {tab:"portability", sel:"#view-portability .matrix", title:"Portability", body:"Profile A against Profile B, and a small test matrix. Passing an interface test is one layer; services, data meaning and network outcome matter too."},
-  {tab:"portability", sel:"#view-portability .src-list", title:"Sources and limits", body:"Every public source used in the app, numbered S1 to S19, and the limits of this simulation."},
-  {tab:"run", sel:"#helpEdge", quick:true, title:"Help for every tab and the header", body:"The ? tab on the right edge opens a full reference for whichever tab you are on. The small ? buttons in the header, and Header help beside Start here, open the reference for the header settings. That is the end of the tour. Enjoy the workbench."}
-];
-let tourIdx = -1, tourFull = false, TOUR_ACTIVE = TOUR.filter(t => t.quick);
-function tourStops(){ return TOUR_ACTIVE; }
-function setTourMode(full){ tourFull = full; TOUR_ACTIVE = full ? TOUR : TOUR.filter(t => t.quick); $("tourKind").textContent = full ? "Full tour" : "Quick tour"; $("tourMode").textContent = full ? "Quick tour" : "Full tour"; }
-function startTour(full){
-  S.drawer = null; hideTip(); tourIdx = 0; setTourMode(!!full);
+const GUIDE_SECTIONS = ["Migration problem","SON functions","Run settings","SON contract","R1 mapping","rApp build","Registration","R1 services","Discovery","Network data","Decision","Policy and approval","SMO / Non-RT RIC","O1 and A1","Pre-write checks","Execution","Readback","Feedback","rApp package","Path to production","Coexistence","Migration summary"];
+const GN = GUIDE_SECTIONS.length;
+const GUIDE_FINAL = GN + 1;
+let tourIdx = -1;          // -1 closed, 0 intro, 1..GN sections, GN+1 final screen
+let guideSub = 0, guideStopsCache = [];
+
+const G_TERMS = {
+  "SON":"Self-Organizing Network: automation that tunes the radio network, for example fixing clashing cell identities or spreading load.",
+  "rApp":"A non-real-time application running in the SMO / Non-RT RIC environment.",
+  "SMO / Non-RT RIC":"The operator's management and orchestration platform (SMO) and its non-real-time RAN Intelligent Controller, which hosts rApps.",
+  "R1":"The service interface through which rApps consume capabilities exposed by the platform.",
+  "SME":"Service Management and Exposure: the R1 services for registration, discovery and access control.",
+  "O1":"A management interface used between the SMO and managed network functions or elements.",
+  "A1":"The interface between the Non-RT RIC and the Near-RT RIC for supported policy and information exchange.",
+  "Near-RT RIC":"The near-real-time RAN Intelligent Controller, closer to the radio, which applies policies within its own control loops.",
+  "PCI":"Physical Cell Identity, a number from 0 to 1007 each cell broadcasts so phones can tell cells apart.",
+  "Revision":"A version number of the network snapshot. It changes whenever the network changes."
+};
+
+/* ------------------------------ small builders ------------------------------ */
+function gFlow(items, hi){ return '<div class="g-flow">' + items.map((x,i) => '<span class="gf' + (hi===i ? " hi" : "") + '">' + x + '</span>').join('<span class="ga" aria-hidden="true">→</span>') + '</div>'; }
+function gWhy(t){ return '<div class="g-why"><b>Why does this matter?</b> ' + t + '</div>'; }
+function gTech(h){ return '<details class="g-tech"><summary>Technical details</summary><div class="g-tech-b">' + h + '</div></details>'; }
+function gTerms(keys){ return '<dl class="g-terms">' + keys.map(k => '<div><dt>' + esc(k) + '</dt><dd>' + esc(G_TERMS[k]) + '</dd></div>').join("") + '</dl>'; }
+function gP(t){ return '<p>' + t + '</p>'; }
+function gNote(t){ return '<p class="xs muted">' + t + '</p>'; }
+function gList(items){ return '<ul class="g-list">' + items.map(x => '<li>' + x + '</li>').join("") + '</ul>'; }
+function gKV(rows){ return '<dl class="g-kv">' + rows.map(([k,v]) => '<dt>' + esc(k) + '</dt><dd>' + v + '</dd>').join("") + '</dl>'; }
+function gUsesA1(){ return !!(S.recommendation && S.recommendation.path==="A1"); }
+function gFam(f){ return f==="A1" ? "A1-P" : f; }
+function gRow(t){ return t ? "#tr-" + t.step : null; }
+function gTraceTech(t){ return t ? gTech('<p class="xs muted">Trace step ' + t.step + ' · ' + esc(t.op) + ' · ' + esc(t.spec || "") + '</p><pre class="json">' + esc(JSON.stringify(t.json || {}, null, 2)) + '</pre><p class="xs muted">Keys and values are fictional; no normative R1 message is implied.</p>') : ""; }
+function gMsg(t, why){ return t ? gKV([["Sender", esc(t.actor)],["Receiver", esc(t.actor.startsWith("rApp") ? "SMO / Non-RT RIC framework, R1 " + FAMILIES[t.family].name + " service" : (t.actor.includes("framework") ? "Recorded by the framework" : "Reported to the platform"))],["Asked", esc(t.req)],["Answer", esc(t.resp)],["Why", esc(why)]]) + gTraceTech(t) : gP("This exchange did not happen in this run."); }
+function gShowDetail(ph){ const k = S.stepLog.map(r => r.phase).lastIndexOf(ph); if(k >= 0){ S.detailIdx = k; render(); } }
+
+/* ------------------------------ driving the real simulation ------------------------------ */
+function gSetup(){
+  const u = UC();
+  applyScenario({scenario:u.scenarios[0].id, mode:"controlled-action", platformProfile:"complete", policy:defaultPolicy(),
+    pciDesign: S.useCase==="pci" ? "centralized" : S.pciDesign, reason:"Clean run loaded by the Learning Guide"});
+  S.drawer = null; S.serviceFilter = null; S.detailIdx = null; S.buildStage = 0; S.buildComp = "logic";
+}
+function gAt(ph){ return TERMINAL.includes(S.phase) || PHASE_IDX[S.phase] >= PHASE_IDX[ph]; }
+function gRunUntil(pred, allowApprove){
+  let n = 0;
+  while(!pred() && n < 40){
+    n++;
+    if(S.gate){ if(allowApprove && S.gate==="approval") approveRecommendation(); else break; }
+    else if(canRun()) advancePhase();
+    else break;
+  }
+}
+
+/* ------------------------------ the sections ------------------------------ */
+function guideStops(i){
+  const u = UC(), rec = S.recommendation, T = S.trace;
+  const fv = k => (u.contract.find(c => c.k===k) || {}).v || "";
+  const cf = k => "#cf-" + u.contract.findIndex(c => c.k===k);
+  switch(i){
+  /* 1 ---------------------------------------------------------------- */
+  case 1: return [
+    {tab:"overview", sel:".strip-wrap", title:"The migration problem",
+      html: gP("Traditional SON platforms often combine data collection, optimization logic, network integration and execution within the same solution, usually inside one vendor's management system.") +
+        gP("R1Lab explores what happens when a SON function is restructured as an rApp running in an SMO / Non-RT RIC environment.") +
+        gFlow(["Legacy SON module","rApp + SMO services + standardized interfaces"], 1) + gTerms(["SON","rApp","SMO / Non-RT RIC"])},
+    {tab:"overview", sel:".strip-wrap", title:"Reading the migration path",
+      html: gP("This strip is the whole story in one line. The legacy SON contract describes what the old function does; the rApp holds the decision logic; R1 is the only door the rApp uses; the platform reaches the network over its own interfaces; the network here is simulated.") +
+        gFlow(["Legacy SON contract","rApp","R1 services","SMO / Non-RT RIC","O1 / A1","Simulated RAN"]) +
+        gWhy("Every later section of the guide is one box or one arrow of this strip seen up close.")},
+    {tab:"overview", sel:"#scope", title:"What this workbench covers, honestly",
+      html: gP("A migration has three levels: running one decision end to end, migrating one function from contract to retirement, and the operator's wider programme. R1Lab runs the first completely, explains much of the second and names the third.") +
+        gWhy("Knowing the scope keeps expectations right: this is a synthetic teaching workbench, not a production rApp or a certified platform.")}];
+  /* 2 ---------------------------------------------------------------- */
+  case 2: return [
+    {tab:"overview", sel:"#ucSelect", title:"Three SON functions to migrate",
+      html: gList(Object.keys(USE_CASES).map(k => '<b>' + esc(USE_CASES[k].label) + '</b>: ' + esc(USE_CASES[k].blurb))) +
+        gP("The method is the same for all three; the data, decisions and network paths differ. This guide follows <b>" + esc(u.label) + "</b>.") +
+        (S.useCase==="pci" ? gTerms(["PCI"]) : "")},
+    {tab:"overview", sel:"#view-overview .process", title:"The same twelve steps for every function",
+      html: gP("Each migration in R1Lab runs through twelve steps, from extracting the contract to closing with evidence. Each step names the roles that lead it: SON specialist, operator, rApp developer, platform team and RAN operations.") +
+        gWhy("A migration is a team effort. The same step can fail for a technical reason or an ownership reason, and the workbench shows both.")}];
+  /* 3 ---------------------------------------------------------------- */
+  case 3: return [
+    {tab:"overview", sel:"#scnField", title:"Scenario: the story being told",
+      html: gP("Each use case has several scenarios. Some run cleanly; others show the process correctly stopping: old data, a changed network, a conflicting rApp, or a legacy SON function that is still switched on.") +
+        gP("The guide loaded <b>" + esc(u.scenarios[0].label) + "</b>, the clean path, so you can follow a complete run.") +
+        gWhy("A safe migration is proven as much by where it stops as by where it succeeds.")},
+    {tab:"overview", sel:"#modeField", title:"Mode: how far the rApp may go",
+      html: gP("<b>Recommendation mode</b> proposes a change and sends nothing. <b>Controlled action</b> may act, but only after an operator approves and every gate passes. The guide uses controlled action so you can see execution.") +
+        gWhy("Operators can start with recommendations only and allow action later, function by function.")},
+    {tab:"overview", sel:"#profField", title:"Platform profile: same rApp, different platform",
+      html: gP("Profile A offers everything this rApp needs. Profile B is missing one thing: " + esc(PROFILE_B_GAPS[S.useCase].note)) +
+        gWhy("Portability depends on what the platform actually exposes and authorizes, not only on the rApp.")}];
+  /* 4 ---------------------------------------------------------------- */
+  case 4: return [
+    {tab:"contract", sel:"#view-contract .contract", prep:() => gRunUntil(() => gAt("map")), title:"Start with the legacy SON function",
+      html: gP("Before designing an rApp, we first need to understand what the existing SON function actually does. R1Lab writes it down as a SON contract of " + u.contract.length + " fields.") +
+        gP("The rApp is then designed against this contract. It is not the legacy source code recompiled for a new platform.") +
+        gWhy("A migration should preserve the required network outcome even when the software architecture changes.")},
+    {tab:"contract", sel:[cf("Trigger"), cf("Source observations"), cf("Network objects")], title:"What starts it and what it reads",
+      html: gKV([["Trigger", esc(fv("Trigger"))],["Consumes", esc(fv("Source observations"))],["Covers", esc(fv("Network objects"))]]) +
+        gP("These three fields become the rApp's inputs, and later the rows of the R1 mapping.")},
+    {tab:"contract", sel:[cf("Decision"), cf("Action candidates"), cf("Action path")], title:"What it decides and what it may change",
+      html: gKV([["Decides", esc(fv("Decision"))],["May change", esc(fv("Action candidates"))],["Through", esc(fv("Action path"))]]) +
+        gP("The action path is already an architecture decision: the rApp may only act through R1, never directly on network equipment.")},
+    {tab:"contract", sel:[cf("Pre-checks"), cf("Post-checks"), cf("Stop conditions")], title:"How it stays safe",
+      html: gKV([["Before acting", esc(fv("Pre-checks"))],["Afterwards", esc(fv("Post-checks"))],["Must stop when", esc(fv("Stop conditions"))]]) +
+        gWhy("Legacy SON often enforced these inside the vendor system. After migration they must be explicit in the rApp and the platform.")},
+    {tab:"contract", sel:[cf("Rollback candidate"), cf("Responsible party")], title:"Undo and ownership",
+      html: gKV([["Undo", esc(fv("Rollback candidate"))],["Owner", esc(fv("Responsible party"))]]) +
+        gP("R1Lab never undoes a change automatically: putting an old value back blindly could overwrite a newer, valid change.")},
+    {tab:"contract", sel:"#view-contract .grid2 > .stack > .panel:last-child", title:"Why the meaning of data matters",
+      html: gP("The same label can mean different things on two platforms: a different unit, time window or cell identity. This panel records what the key measurement really means for " + esc(u.short) + ".") +
+        gWhy("If the meaning changes silently, the rApp can make the right calculation on the wrong data.")},
+    {tab:"run", sel:"#stepDetail", prep:() => gShowDetail("contract"), title:"The contract as a recorded step",
+      html: gP("In the Migration run, extracting the contract is step 1. Its step details show every field together with where the answer came from: settings, logs, interviews or change history.") +
+        gNote("Every run step has these details: plain English first, then the records produced, then the API calls and code for technical readers.")}];
+  /* 5 ---------------------------------------------------------------- */
+  case 5: {
+    const crit = u.ledger.filter(r => r.critical==="always");
+    return [
+    {tab:"mapping", sel:"#view-mapping .ledger", prep:() => gRunUntil(() => gAt("build")), title:"Map every dependency to R1",
+      html: gP("The dependency ledger takes each input and action from the contract and names the R1 service family that supplies or carries it, the permission needed, how fresh the data must be, and what happens if it is missing.") +
+        gP("This " + esc(u.short) + " rApp has " + u.ledger.length + " dependencies; " + crit.length + " are required in every mode.") +
+        gWhy("Mapping before coding exposes gaps early: a service that does not exist on the target platform is found on paper, not in the network.")},
+    {tab:"mapping", sel:"#view-mapping > .panel:last-child", title:"Five capability statuses",
+      html: gList(["<b>Supported and authorized</b>: ready to use","<b>Service unavailable</b>: the platform does not offer it","<b>Found but unauthorized</b>: it exists, but this rApp's role may not use it","<b>Data type discovered, no instance</b>: the kind of data exists but none is produced","<b>Stale data</b>: older than the freshness gate"]) +
+        gP("On Profile A every row here is supported. Profile B turns one row into a gap, and the run stops at the matching step.") +
+        gTech(gList(u.ledger.map(r => '<b>' + esc(r.item) + '</b> · ' + gFam(r.family) + ' · ' + esc(r.op) + ' · ' + esc(critLabel(r.critical).toLowerCase()) + ' · if missing: ' + esc(r.fallback || "n/a"))))}];
+  }
+  /* 6 ---------------------------------------------------------------- */
+  case 6: return [
+    {tab:"build", sel:"#view-build .bpipe", prep:() => gRunUntil(() => gAt("register")), title:"Building the rApp from contract and mapping",
+      html: gP("The build turns the contract and the mapping into software in seven stages: agree the inputs, design the components, write the decision logic, connect to R1 through an adapter, build in the safety rules, test against the recorded run, and package for the platform.") +
+        gNote("Select any stage on screen after the guide to read who does it and what it produces.")},
+    {tab:"build", sel:"#bAnatomy", title:"Separate the algorithm from the platform",
+      html: gP("The optimization logic now becomes the responsibility of the rApp.") +
+        '<div class="g-cmp"><div><b>Legacy SON module</b> may contain:' + gList(["data access","algorithm","integration","execution logic"]) + '</div><div><b>rApp</b> focuses more strongly on:' + gList(["domain logic","optimization decisions","application-specific behavior"]) + '</div></div>' +
+        gP("Platform capabilities can then be provided by the SMO environment, depending on the platform implementation.") +
+        gWhy("Common platform services reduce the need for every application to build the same integration mechanisms independently.")},
+    {tab:"build", sel:"#bTrace", title:"Every contract field has code and a test",
+      html: gP("The traceability table takes each contract field to the part of the rApp that implements it and the named test that proves it. The test names are the real tests in the downloadable package.") +
+        gWhy("It turns the contract from a document into something that can be checked automatically.")},
+    {tab:"build", sel:"#bLedger", title:"The adapter: the only platform-specific part",
+      html: gP("Each ledger row becomes one method of an adapter contract. The rApp never builds a platform address itself; moving to another SMO means writing a new adapter, not changing the logic.") +
+        gTech(gP("In the package: <code>rapp/logic.py</code> and <code>rapp/model.py</code> hold the " + esc(u.short) + " behavior; <code>rapp/r1.py</code> and <code>rapp/adapters/</code> hold the platform side. The Nokia MantaRay SMO adapter is a stub, blocked pending integration because its R1 API documentation is not public."))}];
+  /* 7 ---------------------------------------------------------------- */
+  case 7: {
+    const reg = T.find(t => t.op==="Register rApp");
+    return [
+    {tab:"run", sel:"#run-rapp", title:"The rApp arrives on the platform",
+      html: gP("The packaged rApp is installed on the SMO / Non-RT RIC. In R1Lab it has now been built and registered; the architecture panel shows its identity: <code>" + esc(S.flags.rappId || "not registered") + "</code> (illustrative).") +
+        gNote("On a real platform, signing, onboarding and deployment happen before this point. The Path to production tab explains those steps.")},
+    {tab:"run", sel:gRow(reg) || "#trace", title:"Registration through SME",
+      html: gTerms(["SME"]) + gMsg(reg, "The platform must know the rApp and its role before it can authorize anything.")}];
+  }
+  /* 8 ---------------------------------------------------------------- */
+  case 8: {
+    const fams = FAMILY_ORDER.filter(f => u.ledger.some(r => r.family===f));
+    return [{tab:"run", sel:"#run-r1edge", title:"R1: how the rApp reaches platform services",
+      html: gP("R1 is the service interface used by rApps to access capabilities exposed by the SMO / Non-RT RIC environment.") +
+        gP("The rApp may need network information, measurements, alarms or configuration-related capabilities. Instead of implementing every integration itself, it can consume services exposed by the platform. Next: the " + fams.length + " service families this " + esc(u.short) + " rApp uses.") +
+        gTerms(["R1"]) + gWhy("Applications can consume reusable platform capabilities rather than building every integration independently.") +
+        gTech(gP("R1 is specified by the O-RAN ALLIANCE (R1 General Aspects and Principles; ETSI TS 104 228 V11.0.0 in this app). It is a family of services, not one API. Operation names in R1Lab are concept labels."))}]
+      .concat(fams.map((f,k) => {
+        const rows = u.ledger.filter(r => r.family===f);
+        return {tab:"run", sel:"#run-tile-" + f, title:"R1 service " + (k+1) + " of " + fams.length + ": " + FAMILIES[f].name,
+          html: gKV([["What it gives the rApp", esc(FAMILIES[f].plain)],["Why the rApp needs it", esc(rows.map(r => r.purpose).join("; ")) + "."]]) +
+            gTech(gList(rows.map(r => '<b>' + esc(r.item) + '</b>: ' + esc(r.op) + ' · permission ' + esc(r.perm) + ' · ' + esc(critLabel(r.critical).toLowerCase()))) + '<p class="xs muted">' + SPEC[f] + '</p>')};
+      }));
+  }
+  /* 9 ---------------------------------------------------------------- */
+  case 9: {
+    const dsc = S.trace.find(t => t.op==="Discover services");
+    const leg = S.trace.find(t => /exampleLegacySonSwitch/.test(t.req));
+    return [
+    {tab:"run", sel:"#trace", prep:() => gRunUntil(() => gAt("collect")), title:"Discovery: what may this rApp use here?",
+      html: gP("The rApp now asks the platform which of the services it needs exist on this platform, and which its role may use. The answer depends on who the rApp is: two rApps on the same platform can get different answers.") +
+        gWhy("A required service that is missing or denied stops the run here, before any data is read or any change is requested.")},
+    {tab:"run", sel:gRow(dsc) || "#trace", title:"Message: discover services",
+      html: gMsg(dsc, "The rApp learns which services exist here and which it may use; a missing required service stops the run.")},
+    {tab:"run", sel:gRow(leg) || "#trace", title:"Is the legacy SON function still switched on?",
+      html: gP("Before it may act, the rApp checks the legacy function's switch for every cell in scope. If the old function is still on, both would change the same parameters: double control.") +
+        gMsg(leg, "In controlled action, a legacy function that is still on stops the run; recommendation mode and shadow runs may run alongside it.") +
+        gNote("Try the scenario 'Legacy SON still active' after the guide to see the stop.")}];
+  }
+  /* 10 --------------------------------------------------------------- */
+  case 10: {
+    const col = S.trace.filter(t => t.phase==="collect");
+    return [
+    {tab:"run", sel:"#topo", prep:() => gRunUntil(() => gAt("assess")), title:"How the rApp gets network context",
+      html: gP("An optimization algorithm cannot make a useful decision without network context. For " + esc(u.label) + " the rApp needs: " + esc(fv("Source observations").replace(/\.$/,"")) + ".") +
+        gP("The simulated cells on screen are that context, as the rApp now sees it: circles are cells, lines are neighbor relations, colors mark what needs attention.")},
+    {tab:"run", sel:["#run-ran","#run-fw","#run-r1edge","#run-rapp"], title:"Network information → platform → rApp",
+      html: gFlow(["Network (simulated)","SMO / Non-RT RIC platform","R1 services","rApp"]) +
+        gP("The rApp does not necessarily talk to every network element. The platform holds what it collected from the network, and the rApp reads it through R1 services: " + esc([...new Set(col.map(t => gFam(t.family)))].join(", ")) + ".")},
+    {tab:"run", sel:col.length ? col.map(gRow) : "#trace", title:"The reads, one per service",
+      html: gList(col.map(t => '<b>' + gFam(t.family) + ' · ' + esc(t.op) + '</b>: ' + esc(t.resp))) +
+        gWhy("Each input comes through its own service with its own permission, so a missing piece is visible and named.")},
+    {tab:"run", sel:"#policyGrid", title:"The data gates",
+      html: gP("Before deciding anything, the rApp checks that the data is fresh (within the freshness gate, " + S.policy.freshnessMin + " min here) and complete. Stale or missing data stops the run at this point with a named reason.") +
+        gWhy("A wrong automatic change costs more than a delayed one.") +
+        gNote("Scenarios with old or missing data show this stop.")}];
+  }
+  /* 11 --------------------------------------------------------------- */
+  case 11: return [
+    {tab:"run", sel:"#inspector", prep:() => gRunUntil(() => !!S.gate || TERMINAL.includes(S.phase)), title:"The rApp makes a decision",
+      html: gP("Once the required information is available, the rApp applies its optimization logic. Here it proposes: <b>" + esc(rec ? rec.proposal : "no proposal") + "</b>.") +
+        gFlow(["Observe","Analyze","Recommend","Execute"], 2) +
+        gP("Producing a recommendation and changing the live network are separate architectural concerns. Nothing has been sent to the network yet.") +
+        gWhy("Operators may want to validate an application's decisions before allowing automated execution.")},
+    {tab:"run", sel:"#stepDetail", prep:() => gShowDetail("assess"), title:"The reasoning, shown in full",
+      html: gP("The step details keep the worksheet behind the proposal: every option tested and why it passed or failed. The approver sees this before deciding.") +
+        (rec ? gTech(gList(rec.rationale.map(esc)) + gKV([["Evidence", esc(rec.evidence)],["Computed on revision", String(rec.inputRevision)],["Action path", esc(rec.pathNote)]])) : "") +
+        gWhy("An explainable proposal can be challenged, corrected and trusted; an opaque one can only be accepted or refused.")},
+    {tab:"run", sel:"#inspector", title:"Evidence quality and the network revision",
+      html: gP("The proposal records how strong its evidence is and the network revision it was computed from (" + (rec ? rec.inputRevision : "n/a") + "). If the network changes before execution, the proposal is thrown away and redone.") +
+        gTerms(["Revision"]) + gNote("The scenario with an intervening change shows this happening after approval.")}];
+  /* 12 --------------------------------------------------------------- */
+  case 12: return [
+    {tab:"run", sel:"#policyGrid", title:"Policy and operator control",
+      html: gP("Network automation needs governance. The operator policy sets limits the rApp must respect: data freshness, observation window, change window and how often a cell may be changed.") +
+        gFlow(["Observe","Recommend","Approve","Automate"]) +
+        gWhy("This allows operators to introduce automation progressively rather than immediately handing full control to a new application.")},
+    {tab:"run", sel:"#policyGrid", title:"Four levels of automation",
+      html: gKV([["Observe","The application analyzes network conditions without proposing or executing a change. In R1Lab: the Collect step, and shadow runs that compare with legacy SON."],
+             ["Recommend","The application proposes an optimization. In R1Lab: Recommendation mode, which never sends a change."],
+             ["Approve","A human or policy mechanism authorizes the action. In R1Lab: the approval gate in Controlled action mode."],
+             ["Automate","Approved actions can execute automatically within defined rules. R1Lab does not simulate unattended execution: every controlled action still waits for approval."]])},
+    {tab:"run", sel:"#modeField", title:"The Mode setting",
+      html: gP("Mode is that progression in the app. Recommendation mode proposes and stops. Controlled action mode may act, but only after approval and every gate: fresh data, an unchanged network, the change window and the per-cell rate limit.") +
+        gWhy("Operators need explicit control over which automation is allowed to affect the network.")},
+    {tab:"run", sel:".rail .ctrls", title:"The approval gate",
+      html: gP("The run is waiting here for the operator. An approval covers exactly this proposal, for the network revision it was computed from; if the network changes before the write, the approval no longer applies.") +
+        gP("Conflicts between rApps are also settled here. In the MLB conflict scenario an Energy Saving rApp wants the opposite on the same cell, and an operator rule decides.") +
+        gP("<b>When you press Next, the guide approves the proposal</b>, as the operator would with the Approve button.") +
+        (rec ? gTech(gKV([["Proposal", esc(rec.proposal)],["Targets", esc(rec.targets.join(", "))],["Valid for revision", String(rec.inputRevision)]])) : "")}];
+  /* 13 --------------------------------------------------------------- */
+  case 13: return [
+    {tab:"run", sel:"#run-fw", prep:() => gRunUntil(() => !S.gate || S.gate!=="approval", true), title:"The platform: SMO and Non-RT RIC",
+      html: gP("The proposal is approved. The rApp does not exist in isolation: it runs within a platform environment that provides services, governance and integration.") +
+        gKV([["SMO","Supports service management, orchestration and platform capabilities."],["Non-RT RIC","Supports non-real-time RAN intelligence, optimization and policy functions associated with rApps."]]) +
+        gWhy("The platform provides common capabilities that can be reused by multiple applications.")},
+    {tab:"run", sel:"#run-fw .authz", title:"Authorization lives in the platform",
+      html: gP("Access control decides, per service and per rApp role, what is allowed. The rApp cannot grant itself a permission; on Profile B one permission or service is missing and the run stops with that reason.") +
+        gWhy("Several rApps from different suppliers can share one platform only if each one is limited to what it was approved for.")}];
+  /* 14 --------------------------------------------------------------- */
+  case 14: {
+    const a1 = gUsesA1();
+    return [
+    {tab:"run", sel:["#run-southlinks","#run-south"], title:"O1 and A1, only where relevant",
+      html: gP("After the rApp has made a decision, the appropriate network-facing path depends on what the application is trying to accomplish. R1Lab represents two paths; this " + esc(u.short) + " run uses the <b>" + (a1 ? "policy-oriented path over A1" : "management-oriented path over O1") + "</b>.") +
+        gTerms(["O1","A1","Near-RT RIC"]) +
+        gP("The exact path depends on the use case, operator architecture and supported platform capabilities.") +
+        gWhy("An rApp should not be thought of as simply connecting directly to radio nodes and changing parameters.")},
+    {tab:"run", sel:["#run-rapp","#run-r1link","#run-fw","#run-o1","#run-ran"], title:"Management-oriented workflow",
+      html: gFlow(["rApp","R1","SMO","O1","Managed network element"]) +
+        gP("A configuration change requested through the R1 configuration service is carried by the platform over O1. In R1Lab: PCI and COC always, and MLB only on its separate CM path.")},
+    {tab:"run", sel:["#run-rapp","#run-r1link","#run-fw","#run-a1","#run-nrt"], title:"Policy-oriented workflow",
+      html: gFlow(["rApp","R1 / Non-RT RIC","A1","Near-RT RIC"]) +
+        gP("MLB uses this path when a suitable A1 policy type is advertised: the rApp asks the platform to create a policy and the platform delivers it over A1. The Near-RT RIC then applies it in its own faster loops. PCI and COC in R1Lab do not use A1.")}];
+  }
+  /* 15 --------------------------------------------------------------- */
+  case 15: {
+    const rev = S.trace.find(t => t.req==="Pre-write revision check");
+    const snap = S.trace.find(t => /^Snapshot before write/.test(t.req));
+    const stops = [
+    {tab:"run", sel:gRow(rev) || "#trace", prep:() => gRunUntil(() => gAt("readback"), true), title:"Last checks before any write",
+      html: gP("Right before acting, the rApp re-reads the network revision. If it moved since the proposal, the proposal and its approval are discarded and a fresh assessment starts.") +
+        gMsg(rev, "Never write from an old view of the network.")},
+    {tab:"run", sel:"#policyGrid", title:"Change window and rate limit",
+      html: gP("The operator policy may allow automated changes only in certain hours (change window: " + esc(S.policy.changeWindow==="any" ? "any time" : S.policy.changeWindow) + ") and not too often on the same cell (at least " + S.policy.minMinutesBetweenChanges + " min between changes).") +
+        gP(gUsesA1() ? "An A1 policy is not a configuration write, so the per-cell rate limit does not apply to this MLB run; the change window does." : "Both apply to this configuration write.") +
+        gWhy("Legacy SON policies had the same kind of limits; after migration they must still hold.")}];
+    if(snap) stops.push({tab:"run", sel:gRow(snap), title:"Backup before action",
+      html: gP("The rApp reads and keeps the current values, and the time each cell was last changed, before sending the change. The snapshot supports a reviewed rollback; it is never written back automatically.") +
+        gMsg(snap, "3GPP self-healing also backs up configuration before acting; the last-change time feeds the rate limit.")});
+    return stops;
+  }
+  /* 16 --------------------------------------------------------------- */
+  case 16: {
+    const a1 = gUsesA1();
+    const act = S.trace.find(t => t.op==="Write configuration" || t.op==="Create A1 policy");
+    const path = a1 ? ["#run-rapp","#run-r1link","#run-tile-A1","#run-fw","#run-a1","#run-nrt"] : ["#run-rapp","#run-r1link","#run-tile-CM","#run-fw","#run-o1","#run-ran"];
+    return [
+    {tab:"run", sel:gRow(act) || "#trace", title: a1 ? "The rApp requests an A1 policy" : "The rApp requests the change",
+      html: gMsg(act, "The approved proposal is handed to the platform, which carries it to the network. The response only proves the request was accepted.")},
+    {tab:"run", sel:path, title:"Execute the change",
+      html: gP("Once the decision passes the required policy and approval controls, the platform can carry out the network change through the appropriate management or control interface.") +
+        gFlow(a1 ? ["rApp","R1 A1-P service","SMO / Non-RT RIC","A1","Near-RT RIC"] : ["rApp","R1 CM service","SMO / Non-RT RIC","O1","Managed RAN functions"]) +
+        gP("R1 gives the rApp access to platform services; it does not modify the RAN itself. The network-facing operation happens on the platform's side, here over " + (a1 ? "A1" : "O1") + " (simulated).")}];
+  }
+  /* 17 --------------------------------------------------------------- */
+  case 17: {
+    const rb = S.trace.find(t => t.phase==="readback");
+    return [
+    {tab:"run", sel:gRow(rb) || "#trace", prep:() => gRunUntil(() => gAt("observe"), true), title:"Read it back",
+      html: gMsg(rb, "A separate read proves the change is really in place. Whether the network improved is judged later, over the observation window.") +
+        (S.useCase==="coc" ? gNote("For outage compensation the operator is also notified now that compensation has begun, as 3GPP self-healing requires.") : "")},
+    {tab:"run", sel:"#stepDetail", prep:() => gShowDetail("readback"), title:"Expected versus read back",
+      html: gP("The readback record compares the requested value with what the network reports. Accepted and in place are two different facts, and the workbench never lets one stand in for the other.")}];
+  }
+  /* 18 --------------------------------------------------------------- */
+  case 18: {
+    const o = S.observation;
+    return [
+    {tab:"evidence", sel:"#view-evidence .stages", prep:() => gRunUntil(() => TERMINAL.includes(S.phase), true), title:"Close the loop",
+      html: gP("Automation does not end when a parameter is changed. R1Lab keeps three separate observations: the request was accepted, the value is in place, and the network outcome over the observation window.") +
+        gFlow(["Measure","Analyze","Decide","Act","Measure again"], 4) +
+        gWhy("Optimization is a control loop, not a one-time configuration operation.")},
+    {tab:"evidence", sel:"#view-evidence .stages + .panel", title:"Did it help?",
+      html: gP("The rApp or the surrounding platform can evaluate whether the action produced the expected result. Every indicator has a limit set by the operator, and the outcome passes only if all of them hold.") +
+        gP("Here: <b>" + esc(S.completion ? S.completion.label : "not finished") + "</b>" + (o ? ", over " + esc(o.window) : "") + ".") +
+        (o ? gTech(gList(o.metrics.map(m => esc(m.cell + " · " + m.metric + ": " + m.before + " → " + m.after + " (limit " + m.policy + ") " + (m.pass ? "within limit" : "outside limit"))))) : "") +
+        gNote("In the MLB neighbor risk scenario the busy cell improves but the neighbor's quality drops, and the outcome fails.")},
+    {tab:"evidence", sel:"#view-evidence .timeline", title:"The audit trail",
+      html: gP("Every event is recorded with time, actor, role and network revision: who proposed, who approved, what was written and what was measured. It can be exported as JSON or CSV, flagged as synthetic.") +
+        gWhy("Architects and auditors need to know which component owns each step of the workflow.")}];
+  }
+  /* 19 --------------------------------------------------------------- */
+  case 19: return [
+    {tab:"evidence", sel:"#pkgPanel", title:"The rApp you can download",
+      html: gP("The finished run produces the migrated " + esc(u.short) + " function as a real Python rApp: decision logic, R1 client and adapter, safety rules, tests that replay this exact run, a container image recipe and a Kubernetes chart.") +
+        gP("Two classes: a simulation package that runs anywhere against fictional data, and a platform integration package for Nokia MantaRay SMO whose adapter is blocked pending integration.")},
+    {tab:"evidence", sel:"#pkgPanel #secGate", title:"What a security gate would still require",
+      html: gP("An operator would ask for a signed package, a software bill of materials and secured, least-privilege access before onboarding. The package says openly which of these it does not have.") +
+        gWhy("Being explicit about gaps is what makes a demo trustworthy to architects.")}];
+  /* 20 --------------------------------------------------------------- */
+  case 20: return [
+    {tab:"production", sel:"#prodStages", title:"Path to production",
+      html: gP("Running one decision is only part of migrating a function. This tab lists 15 stages from contract to retirement, each marked Runs here, Explained here or Named only, with sources.") +
+        gWhy("Most of the effort in a real migration sits outside R1: onboarding, security, testing against the real platform and a controlled cutover.")},
+    {tab:"production", sel:"#deployChain", title:"Between build and registration",
+      html: gP("On a real platform the package is signed, onboarded, catalogued, prepared and deployed before the running rApp can register. R1Lab explains this chain with open-source state names; it does not simulate it.")},
+    {tab:"production", sel:"#testLadder", title:"The testing ladder",
+      html: gP("From developer tests through R1 conformance, integration with the target SMO, emulator or twin testing and shadow runs, to a field pilot. Passing a lower rung never proves the next one.")}];
+  /* 21 --------------------------------------------------------------- */
+  case 21: return [
+    {tab:"portability", sel:"#coexist", title:"Legacy SON and the rApp side by side",
+      html: gP("During a migration both exist at the same time. The safe ways to coexist: shadow (legacy acts, the rApp only compares), split scope (legacy off only for the pilot cells) and hybrid (the network-side function keeps deciding and the rApp steers its inputs).") +
+        gNote("After the guide, try the Shadow run scenario, and for PCI the Hybrid design in the header.")},
+    {tab:"portability", sel:"#view-portability .matrix", title:"Same rApp, two platforms",
+      html: gP("The test matrix runs the same checks on Profile A and Profile B. A pass on one platform says nothing about the next: services, permissions and data meaning all have to be checked again.") +
+        gWhy("Portability is a property of the rApp and the platform together.")}];
+  /* 22 --------------------------------------------------------------- */
+  case 22: return [
+    {tab:"overview", sel:"#view-overview .arch", title:"What actually changed from legacy SON?",
+      html: '<div class="g-cmp"><div><b>Legacy SON</b> often combines:' + gList(["network integration","data collection","optimization logic","execution","workflow control"]) + '</div><div><b>rApp architecture</b> separates responsibilities across:' + gList(["rApp domain logic","R1 services","SMO / Non-RT RIC platform","policy and governance","O1, A1 or other applicable network-facing interfaces"]) + '</div></div>'},
+    {tab:"overview", sel:"#view-overview .arch", title:"The two models side by side",
+      html: '<div class="g-chains"><span class="xs muted">Legacy</span>' + gFlow(["SON module","Network"]) + '<span class="xs muted">Conceptual rApp model</span>' + gFlow(["rApp","R1","SMO / Non-RT RIC","Appropriate network interface","RAN"]) + '</div>' +
+        gP("This separation is one of the key architectural ideas behind the migration represented by R1Lab.")}];
+  }
+  return [];
+}
+
+/* ------------------------------ rendering a stop ------------------------------ */
+function gEls(sel){ return (Array.isArray(sel) ? sel : [sel]).filter(Boolean).map(s => document.querySelector(s)).filter(el => { if(!el) return false; const r = el.getBoundingClientRect(); return r.width || r.height; }); }
+function gRect(els){
+  const rs = els.map(e => e.getBoundingClientRect());
+  const top = Math.min(...rs.map(r => r.top)), left = Math.min(...rs.map(r => r.left)), bottom = Math.max(...rs.map(r => r.bottom)), right = Math.max(...rs.map(r => r.right));
+  return {top, left, bottom, right, width:right-left, height:bottom-top};
+}
+function startTour(){
+  S.drawer = null; hideTip(); tourIdx = 0; guideSub = 0;
   $("tour").hidden = false; document.body.classList.add("touring");
-  showTourStop(0);
+  showGuide();
 }
 function endTour(){
   tourIdx = -1; $("tour").hidden = true; document.body.classList.remove("touring");
-  const b = $("btnTour"); if(b) b.focus();
+  const b = $("btnTour"); if(b) b.focus({preventScroll:true});
 }
-function tourTarget(stop){ const el = document.querySelector(stop.sel); if(!el) return null; const r = el.getBoundingClientRect(); return (r.width || r.height) ? el : null; }
-function showTourStop(i, dir){
-  dir = dir || 1;
+/* Runs a stop's prep (advancing the real simulation), then rebuilds the section so its text reflects the new state. */
+function guideApplyPrep(i, k){
+  const st = (guideStops(i) || [])[k];
+  if(st && st.prep){ st.prep(); render(); }
+  guideStopsCache = guideStops(i);
+}
+function guideGo(i, sub){
   if(i < 0) i = 0;
-  if(i >= TOUR_ACTIVE.length){ endTour(); return; }
-  const stop = TOUR_ACTIVE[i];
-  if(S.tab!==stop.tab){ S.tab = stop.tab; render(); }
-  if(stop.before==="runOne" && S.stepLog.length===0){ advancePhase(); render(); }
-  if(stop.sel==="#pkgPanel" || stop.sel==="#view-evidence .timeline" ){ render(); }
-  const el = tourTarget(stop);
-  if(!el){ showTourStop(i + dir, dir); return; }
+  if(i > GUIDE_FINAL){ endTour(); return; }
   tourIdx = i;
-  const tall = el.getBoundingClientRect().height > window.innerHeight * 0.6;
-  el.scrollIntoView({block: tall ? "start" : "center", behavior:"auto"});
-  if(tall) window.scrollBy(0, -72);            // clear the sticky tab bar
-  placeTour(el, stop);
+  if(i>=1 && i<=GN){
+    guideApplyPrep(i, 0);
+    guideSub = sub==="last" ? guideStopsCache.length - 1 : Math.max(0, Math.min(sub || 0, guideStopsCache.length - 1));
+    if(guideSub > 0) guideApplyPrep(i, guideSub);
+  } else guideStopsCache = [];
+  showGuide();
 }
-function placeTour(el, stop){
-  const pad = 6, r = el.getBoundingClientRect(), W = document.documentElement.clientWidth, H = window.innerHeight;
-  const spot = $("tourSpot");
-  const top = Math.max(4, r.top - pad), left = Math.max(4, r.left - pad);
-  spot.style.top = top + "px"; spot.style.left = left + "px";
-  spot.style.width = Math.min(W - left - 4, r.width + pad*2) + "px"; spot.style.height = Math.min(H - top - 4, r.height + pad*2) + "px";
-  const card = $("tourCard");
-  $("tourTitle").textContent = stop.title; $("tourBody").textContent = stop.body;
-  $("tourCount").textContent = (tourIdx+1) + " of " + TOUR_ACTIVE.length;
-  $("tourBack").disabled = tourIdx===0;
-  $("tourNext").textContent = tourIdx===TOUR_ACTIVE.length-1 ? "Finish" : "Next";
-  const cw = Math.min(360, W - 24), ch = card.offsetHeight || 200;
-  card.style.width = cw + "px";
-  let cy = r.bottom + 14; if(cy + ch > H - 8) cy = r.top - ch - 14; if(cy < 8) cy = Math.max(8, H - ch - 12);
-  let cx = Math.min(Math.max(12, r.left), W - cw - 12);
-  card.style.top = cy + "px"; card.style.left = cx + "px";
-  $("tourNext").focus({preventScroll:true});
+function showGuide(){
+  const i = tourIdx, card = $("tourCard");
+  card.scrollTop = 0;
+  card.classList.toggle("center", i===0 || i===GUIDE_FINAL);
+  $("tourProg").style.gridTemplateColumns = "repeat(" + GN + ",1fr)";
+  $("tourProg").innerHTML = GUIDE_SECTIONS.map((s,k) => '<span class="' + (k+1 < i ? "done" : (k+1===i ? "cur" : "")) + '" title="' + esc(s) + '"></span>').join("");
+  if(i===0){
+    const u = UC();
+    $("tourCount").textContent = "Introduction";
+    $("tourTitle").textContent = "Learn how SON becomes an rApp";
+    $("tourBody").innerHTML = '<p class="g-sub">Follow a SON function from legacy automation to an rApp-based workflow.</p>' +
+      gP("Follow an optimization function through R1Lab and see how legacy SON logic maps into an rApp, how R1 connects the application to SMO services, and how a controlled network action moves through the architecture.") +
+      gP("No detailed O-RAN knowledge is required. The guide has " + GN + " sections; each explains what you are looking at, why it matters and how it fits the migration. Nothing moves until you press Next.") +
+      '<p class="xs muted">Starting loads a clean ' + esc(u.label) + ' run (' + esc(u.scenarios[0].label) + ', controlled action, Profile A, default policy) and replaces the current run. Pick another use case in the header first if you prefer. Everything is synthetic.</p>';
+    $("tourBtns").innerHTML = '<button class="btn ghost" type="button" id="guideSelf">Explore on my own</button><span style="flex:1"></span><button class="btn primary" type="button" id="tourNext">Start Learning Guide</button>';
+    guidePlace(null); return;
+  }
+  if(i===GUIDE_FINAL){
+    $("tourCount").textContent = "Complete";
+    $("tourTitle").textContent = "You now understand the R1Lab flow";
+    $("tourBody").innerHTML = gP("You followed:") + '<ul class="g-done">' + ["a legacy SON function and its contract","the mapping of every dependency to R1","its transformation into rApp logic","registration and the services provided through R1","discovery, authorization and the legacy SON check","network data, the decision and its evidence","policy and approval controls","the role of the SMO / Non-RT RIC","O1 / A1 where applicable","the pre-write checks and an end-to-end transaction","execution, readback and feedback","the downloadable rApp, the path to production and coexistence"].map(x => '<li>' + x + '</li>').join("") + '</ul>' +
+      '<p class="xs muted">The workbench now shows the finished ' + esc(UC().label) + ' run. Every tab, step detail and the downloadable rApp are there to explore.</p>';
+    $("tourBtns").innerHTML = '<button class="btn" type="button" id="guideReplay">Replay Learning Guide</button><button class="btn" type="button" id="guideAnother">Try another SON function</button><span style="flex:1"></span><button class="btn primary" type="button" id="tourNext">Explore R1Lab</button>';
+    guidePlace(null); return;
+  }
+  const stops = guideStopsCache, st = stops[guideSub];
+  if(S.tab!==st.tab){ S.tab = st.tab; render(); }
+  $("tourCount").textContent = i + " of " + GN + ": " + GUIDE_SECTIONS[i-1] + (stops.length > 1 ? " · " + (guideSub+1) + "/" + stops.length : "");
+  $("tourTitle").textContent = st.title;
+  $("tourBody").innerHTML = st.html;
+  const lastStop = i===GN && guideSub===stops.length-1;
+  $("tourBtns").innerHTML = '<button class="btn" type="button" id="tourBack">Back</button>' +
+    (stops.length > 1 && guideSub < stops.length-1 ? '<button class="btn ghost" type="button" id="guideSkip" title="Skip the rest of this section">Skip section</button>' : '') +
+    '<span style="flex:1"></span><button class="btn primary" type="button" id="tourNext">' + (lastStop ? "Finish" : "Next") + '</button>';
+  const els = gEls(st.sel);
+  if(!els.length){ guidePlace(null); return; }
+  const phone = window.innerWidth < 700;
+  const tall = gRect(els).height > window.innerHeight * 0.55;
+  if(els.length===1){
+    els[0].scrollIntoView({block: (tall || phone) ? "start" : "center", behavior:"auto"});
+    if(tall || phone) window.scrollBy(0, -72);
+  } else {
+    // bring each element into view inside its own scroll container, then position the window on the group
+    els.forEach(el => el.scrollIntoView({block:"nearest", behavior:"auto"}));
+    const g = gRect(els);
+    const y = g.top + window.scrollY - (phone ? 70 : (g.height > window.innerHeight*0.55 ? 72 : Math.max(72, (window.innerHeight - g.height)/2)));
+    window.scrollTo({top:Math.max(0, y), behavior:"auto"});
+  }
+  guidePlace(gRect(els));
+  const sp = $("tourSpot"); sp.classList.remove("fresh"); void sp.offsetWidth; sp.classList.add("fresh");
+}
+function guideRect(){
+  if(tourIdx<1 || tourIdx>GN) return null;
+  const st = guideStopsCache[guideSub]; if(!st) return null;
+  const els = gEls(st.sel); return els.length ? gRect(els) : null;
+}
+function guidePlace(r){
+  const W = document.documentElement.clientWidth, H = window.innerHeight, spot = $("tourSpot"), card = $("tourCard"), pad = 6;
+  if(!r){ Object.assign(spot.style, {top:(H/2)+"px", left:(W/2)+"px", width:"0px", height:"0px"}); }
+  else {
+    const top = Math.max(4, r.top - pad), left = Math.max(4, r.left - pad);
+    Object.assign(spot.style, {top:top+"px", left:left+"px", width:Math.min(W - left - 4, r.width + pad*2)+"px", height:Math.max(8, Math.min(H - top - 4, r.height + pad*2))+"px"});
+  }
+  const phone = W < 700;
+  card.classList.toggle("sheet", phone && !card.classList.contains("center"));
+  if(card.classList.contains("center")){
+    const cw = Math.min(520, W - 24); card.style.width = cw + "px";
+    card.style.left = ((W - cw)/2) + "px"; card.style.top = Math.max(12, (H - card.offsetHeight)/2) + "px";
+  } else if(phone){
+    card.style.width = (W - 16) + "px"; card.style.left = "8px"; card.style.top = Math.max(8, H - card.offsetHeight - 8) + "px";
+  } else {
+    const cw = Math.min(430, W - 24); card.style.width = cw + "px";
+    const ch = card.offsetHeight; let cx, cy;
+    if(r && r.right + 16 + cw <= W - 12){ cx = r.right + 16; cy = r.top; }
+    else if(r && r.left - 16 - cw >= 12){ cx = r.left - 16 - cw; cy = r.top; }
+    else if(r && r.bottom + 14 + ch <= H - 8){ cx = Math.min(Math.max(12, r.left), W - cw - 12); cy = r.bottom + 14; }
+    else if(r && r.top - 14 - ch >= 8){ cx = Math.min(Math.max(12, r.left), W - cw - 12); cy = r.top - 14 - ch; }
+    else { cx = W - cw - 16; cy = H - ch - 16; }
+    cy = Math.min(Math.max(8, cy), Math.max(8, H - ch - 8));
+    card.style.left = cx + "px"; card.style.top = cy + "px";
+  }
+  const nb = $("tourNext"); if(nb && document.activeElement && !card.contains(document.activeElement)) nb.focus({preventScroll:true});
+}
+/* Follows the user's own scrolling and window resizes; never moves to another stop. */
+function guideReposition(){ if(tourIdx < 0) return; if(tourIdx===0 || tourIdx===GUIDE_FINAL){ guidePlace(null); return; } guidePlace(guideRect()); }
+function guideNext(){
+  if(tourIdx===0){ gSetup(); render(); guideGo(1, 0); return; }
+  if(tourIdx===GUIDE_FINAL){ endTour(); return; }
+  if(guideSub < guideStopsCache.length - 1){ guideSub++; guideApplyPrep(tourIdx, guideSub); showGuide(); return; }
+  guideGo(tourIdx + 1, 0);
+}
+function guideBack(){
+  if(tourIdx<=0) return;
+  if(tourIdx===1 && guideSub===0){ guideGo(0); return; }
+  if(guideSub > 0){ guideSub--; showGuide(); return; }
+  guideGo(tourIdx - 1, "last");
 }
 function bindTour(){
-  $("btnTour").addEventListener("click", () => startTour(false));
-  $("tourMode").addEventListener("click", () => { const cur = TOUR_ACTIVE[tourIdx]; setTourMode(!tourFull); const k = TOUR_ACTIVE.indexOf(cur); showTourStop(k >= 0 ? k : 0, 1); });
-  $("tourNext").addEventListener("click", () => showTourStop(tourIdx + 1, 1));
-  $("tourBack").addEventListener("click", () => showTourStop(tourIdx - 1, -1));
+  $("btnTour").addEventListener("click", startTour);
   $("tourEnd").addEventListener("click", endTour);
+  $("tourCard").addEventListener("click", e => {
+    const b = e.target.closest("button"); if(!b) return;
+    if(b.id==="tourNext") guideNext();
+    else if(b.id==="tourBack") guideBack();
+    else if(b.id==="guideSkip") guideGo(tourIdx + 1, 0);
+    else if(b.id==="guideSelf") endTour();
+    else if(b.id==="guideReplay"){ gSetup(); render(); guideGo(1, 0); }
+    else if(b.id==="guideAnother"){ const ks = Object.keys(USE_CASES), nx = ks[(ks.indexOf(S.useCase)+1) % ks.length]; applyScenario({useCase:nx}); gSetup(); render(); guideGo(1, 0); }
+  });
+  $("tourCard").addEventListener("toggle", () => guideReposition(), true);
   document.addEventListener("keydown", e => {
     if(tourIdx < 0) return;
     if(e.key==="Escape"){ e.preventDefault(); e.stopImmediatePropagation(); endTour(); }
-    if(e.key==="ArrowRight"){ e.preventDefault(); showTourStop(tourIdx + 1, 1); }
-    if(e.key==="ArrowLeft" && tourIdx>0){ e.preventDefault(); showTourStop(tourIdx - 1, -1); }
+    else if(e.key==="ArrowRight" && !e.target.closest("summary")){ e.preventDefault(); guideNext(); }
+    else if(e.key==="ArrowLeft"){ e.preventDefault(); guideBack(); }
   }, true);
-  window.addEventListener("resize", () => { if(tourIdx>=0){ const el = tourTarget(TOUR_ACTIVE[tourIdx]); if(el) placeTour(el, TOUR_ACTIVE[tourIdx]); } });
+  window.addEventListener("resize", guideReposition);
 }
 </script>
 <script>
@@ -4422,7 +4876,7 @@ function bindTips(){
   if(TABS.some(t=>t.id===h)) S.tab = h;
   resetUseCase();
   bind(); bindTips(); bindTour();
-  window.addEventListener("scroll", () => { if(tourIdx>=0){ const el = tourTarget(TOUR_ACTIVE[tourIdx]); if(el) placeTour(el, TOUR_ACTIVE[tourIdx]); } }, {passive:true});
+  window.addEventListener("scroll", () => { guideReposition(); }, {passive:true});
   render();
 })();
 </script>
